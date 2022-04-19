@@ -7,19 +7,29 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="edu.juandecuesta.t_fitprogress.ui.home.HomeFragment"
+        android:name="edu.juandecuesta.t_fitprogress.entrenador_ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/ent_fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="edu.juandecuesta.t_fitprogress.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_clientes"
+        android:name="edu.juandecuesta.t_fitprogress.entrenador_ui.clientes.ClientesFragment"
+        android:label="@string/menu_clientes"
+        tools:layout="@layout/ent_fragment_clientes" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="edu.juandecuesta.t_fitprogress.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_ejercicios"
+        android:name="edu.juandecuesta.t_fitprogress.entrenador_ui.ejercicios.EjerciciosFragment"
+        android:label="@string/menu_ejercicios"
+        tools:layout="@layout/ent_fragment_ejercicios" />
+    <fragment
+        android:id="@+id/nav_entrenamientos"
+        android:name="edu.juandecuesta.t_fitprogress.entrenador_ui.entrenamientos.EntrenamientosFragment"
+        android:label="@string/menu_entrenamientos"
+        tools:layout="@layout/ent_fragment_entrenamientos" />
+    <fragment
+        android:id="@+id/nav_mensajes"
+        android:name="edu.juandecuesta.t_fitprogress.entrenador_ui.mensajes.MensajesFragment"
+        android:label="@string/menu_mensajes"
+        tools:layout="@layout/fragment_mensajes" />
 </navigation>

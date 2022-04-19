@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.ui.slideshow
+package edu.juandecuesta.t_fitprogress.entrenador_ui.ejercicios
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.FragmentSlideshowBinding
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEjerciciosBinding
 
-class SlideshowFragment : Fragment() {
+class EjerciciosFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
-    private var _binding: FragmentSlideshowBinding? = null
+    private lateinit var ejerciciosViewModel: EjerciciosViewModel
+    private var _binding: EntFragmentEjerciciosBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +24,14 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        ejerciciosViewModel =
+            ViewModelProvider(this).get(EjerciciosViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = EntFragmentEjerciciosBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textEjercicios
+        ejerciciosViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
