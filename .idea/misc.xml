@@ -12,6 +12,7 @@
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/side_nav_bar.xml" value="0.3828125" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/tab_color_selected.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout-w936dp/activity_login.xml" value="0.275" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/activity_login.xml" value="0.25" />
@@ -27,6 +28,7 @@
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/fragment_gallery.xml" value="0.20520833333333333" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/fragment_home.xml" value="0.20520833333333333" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/fragment_mensajes.xml" value="0.2826086956521739" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/fragment_register_deportista.xml" value="0.1" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/nav_header_main.xml" value="0.2767210144927536" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/rv_entrenador_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
