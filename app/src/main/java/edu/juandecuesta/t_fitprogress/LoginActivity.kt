@@ -24,13 +24,16 @@ class LoginActivity : AppCompatActivity() {
 
         val password = binding.password
         val login = binding.login
-        val loading = binding.loading
 
         login.setOnClickListener {
-            loading.visibility = View.VISIBLE
             val myIntent = Intent (this, MainActivity::class.java)
             startActivity(myIntent)
             finish()
+        }
+
+        binding.signUp.setOnClickListener {
+            val myIntent = Intent (this, RegisterActivity::class.java)
+            startActivity(myIntent)
         }
     }
 

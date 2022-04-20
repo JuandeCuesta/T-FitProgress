@@ -59,25 +59,12 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.nav_logout ->{
-                val myIntent = Intent (this, LoginActivity::class.java)
-                startActivity(myIntent)
-                finish()
-                return true
-            }else -> super.onOptionsItemSelected(item)
+        binding.logout.setOnClickListener {
+            val myIntent = Intent (this, LoginActivity::class.java)
+            startActivity(myIntent)
+            finish()
         }
-
-
 
     }
 
@@ -91,6 +78,5 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.close()
         }else super.onBackPressed()
     }
-
 
 }

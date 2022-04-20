@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">T-Fit Progress</string>
+    <string name="register_name">Registro</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Cerrar Sesión</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="sinCuenta">¿Aún no estás registrado?</string>
+    <string name="registrate"><u>Regístrate</u></string>
+
 
     <string name="menu_home">Inicio</string>
     <string name="menu_clientes">Clientes</string>

@@ -1,14 +1,17 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentHomeBinding
+import android.view.MenuInflater
+
+
+
 
 class HomeFragment : Fragment() {
 
@@ -34,6 +37,8 @@ class HomeFragment : Fragment() {
         binding.textHome.text = homeViewModel.fecha
         setUpRecyclerView()
 
+        setHasOptionsMenu(true);
+
         return root
     }
 
@@ -56,6 +61,25 @@ class HomeFragment : Fragment() {
 
             recyclerAdapter.RecyclerAdapter(homeViewModel.deportistas!!, requireContext())
             binding.rvhome.adapter = recyclerAdapter
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // First clear current all the menu items
+        menu.clear()
+
+        // Add the new menu items
+        inflater.inflate(R.menu.main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+
+            R.id.nav1 -> {
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
