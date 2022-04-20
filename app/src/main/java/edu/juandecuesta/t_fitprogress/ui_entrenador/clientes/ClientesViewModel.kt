@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.entrenador_ui.clientes
+package edu.juandecuesta.t_fitprogress.ui_entrenador.clientes
 
 import androidx.lifecycle.ViewModel
 

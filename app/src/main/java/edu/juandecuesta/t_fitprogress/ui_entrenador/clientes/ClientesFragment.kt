@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.entrenador_ui.entrenamientos
+package edu.juandecuesta.t_fitprogress.ui_entrenador.clientes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEntrenamientosBinding
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 
-class EntrenamientosFragment:Fragment() {
-    private lateinit var entrenamientosViewModel: EntrenamientosViewModel
-    private var _binding: EntFragmentEntrenamientosBinding? = null
+class ClientesFragment : Fragment() {
+
+    private lateinit var clientesViewModel: ClientesViewModel
+    private var _binding: EntFragmentClientesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -21,14 +22,14 @@ class EntrenamientosFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        entrenamientosViewModel =
-            ViewModelProvider(this).get(EntrenamientosViewModel::class.java)
+        clientesViewModel =
+            ViewModelProvider(this).get(ClientesViewModel::class.java)
 
-        _binding = EntFragmentEntrenamientosBinding.inflate(inflater, container, false)
+        _binding = EntFragmentClientesBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
-        binding.textEntrenamiento.text = entrenamientosViewModel.texto
+        binding.textClientes.text = clientesViewModel.texto
 
         return root
     }

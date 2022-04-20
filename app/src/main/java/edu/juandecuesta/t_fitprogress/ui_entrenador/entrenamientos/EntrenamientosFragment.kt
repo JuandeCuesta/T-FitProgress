@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.entrenador_ui.mensajes
+package edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import edu.juandecuesta.t_fitprogress.databinding.FragmentMensajesBinding
-import edu.juandecuesta.t_fitprogress.entrenador_ui.entrenamientos.EntrenamientosViewModel
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEntrenamientosBinding
 
-class MensajesFragment:Fragment() {
-    private lateinit var mensajesViewModel: MensajesViewModel
-    private var _binding: FragmentMensajesBinding? = null
+class EntrenamientosFragment:Fragment() {
+    private lateinit var entrenamientosViewModel: EntrenamientosViewModel
+    private var _binding: EntFragmentEntrenamientosBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +21,14 @@ class MensajesFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mensajesViewModel =
-            ViewModelProvider(this).get(MensajesViewModel::class.java)
+        entrenamientosViewModel =
+            ViewModelProvider(this).get(EntrenamientosViewModel::class.java)
 
-        _binding = FragmentMensajesBinding.inflate(inflater, container, false)
+        _binding = EntFragmentEntrenamientosBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
-        binding.textMensaje.text = mensajesViewModel.texto
+        binding.textEntrenamiento.text = entrenamientosViewModel.texto
 
         return root
     }
@@ -38,5 +37,4 @@ class MensajesFragment:Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

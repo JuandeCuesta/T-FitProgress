@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.entrenador_ui.ejercicios
+package edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

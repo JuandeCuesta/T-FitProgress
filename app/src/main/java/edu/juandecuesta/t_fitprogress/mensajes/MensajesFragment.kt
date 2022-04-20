@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.entrenador_ui.clientes
+package edu.juandecuesta.t_fitprogress.mensajes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
+import edu.juandecuesta.t_fitprogress.databinding.FragmentMensajesBinding
 
-class ClientesFragment : Fragment() {
-
-    private lateinit var clientesViewModel: ClientesViewModel
-    private var _binding: EntFragmentClientesBinding? = null
+class MensajesFragment:Fragment() {
+    private lateinit var mensajesViewModel: MensajesViewModel
+    private var _binding: FragmentMensajesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +21,14 @@ class ClientesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        clientesViewModel =
-            ViewModelProvider(this).get(ClientesViewModel::class.java)
+        mensajesViewModel =
+            ViewModelProvider(this).get(MensajesViewModel::class.java)
 
-        _binding = EntFragmentClientesBinding.inflate(inflater, container, false)
+        _binding = FragmentMensajesBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
-        binding.textClientes.text = clientesViewModel.texto
+        binding.textMensaje.text = mensajesViewModel.texto
 
         return root
     }
@@ -38,4 +37,5 @@ class ClientesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
