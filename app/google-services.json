@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "369830483803",
+    "project_id": "t-fitprogress",
+    "storage_bucket": "t-fitprogress.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369830483803:android:ff0f7261950ee72a6bec7e",
+        "android_client_info": {
+          "package_name": "edu.juandecuesta.t_fitprogress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369830483803-7gvuas2g80odc7og2ha4hb3tvdrrhria.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZmGmEItqsBUqPkMW1Wa6NxyydVbXjruI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369830483803-7gvuas2g80odc7og2ha4hb3tvdrrhria.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

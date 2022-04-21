@@ -10,8 +10,7 @@
     <string name="sign_in">Iniciar Sesión</string>
     <string name="sinCuenta">¿Aún no estás registrado?</string>
     <string name="registrate"><u>Regístrate</u></string>
-    <string name="fragmentEntrenador"><u>Entrenador</u></string>
-    <string name="fragmentDeportista"><u>Deportista</u></string>
+    <string name="crearCuenta">Crear usuario</string>
 
     <string name="menu_home">Inicio</string>
     <string name="menu_clientes">Clientes</string>
@@ -30,7 +29,13 @@
 
     <string name="btn_calendario_completo">Mostrar calendario</string>
     <string name="msgRecyclerHome">No tienes clientes con entrenamientos para hoy</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="nivel_experiencia">
+        <item><u>Experiencia previa</u></item>
+        <item>Ninguna</item>
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
+    </string-array>
 
 </resources>

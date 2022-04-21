@@ -27,6 +27,11 @@ class Deportista:Usuario() {
         set(value) {
             field = value
         }
+    var pesoInicial:Float = 0.0f
+        get() = field
+        set(value) {
+            field = value
+        }
     var evoluacionFisica: MutableList<CondicionFisica>?=null
         get() = field
         set(value) {
