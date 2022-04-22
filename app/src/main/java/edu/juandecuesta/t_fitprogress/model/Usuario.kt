@@ -1,6 +1,8 @@
 package edu.juandecuesta.t_fitprogress.model
 
-open class Usuario {
+import java.io.Serializable
+
+open class Usuario: Serializable {
     var id:String = ""
         get() = field
         set(value) {
@@ -11,12 +13,7 @@ open class Usuario {
         set(value) {
             field = value
         }
-    var apellido1:String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
-    var apellido2:String = ""
+    var apellido:String = ""
         get() = field
         set(value) {
             field = value
@@ -26,13 +23,10 @@ open class Usuario {
         set(value) {
             field = value
         }
-    var password:String = ""
+    var soyEntrenador:Boolean = true
         get() = field
         set(value) {
             field = value
         }
 
-    init {
-
-    }
 }

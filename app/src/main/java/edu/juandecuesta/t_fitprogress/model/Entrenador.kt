@@ -1,11 +1,6 @@
 package edu.juandecuesta.t_fitprogress.model
 
 class Entrenador:Usuario() {
-    var codigoEntrenador:String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
     var deportistas: MutableList<Deportista>?=null
         get() = field
         set(value) {
@@ -21,8 +16,4 @@ class Entrenador:Usuario() {
         set(value) {
             field = value
         }
-
-    init {
-
-    }
 }

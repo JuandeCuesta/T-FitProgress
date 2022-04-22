@@ -1,17 +1,13 @@
 package edu.juandecuesta.t_fitprogress.model
 
-class Deportista:Usuario() {
-    var codigoDeportista:String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
+import java.io.Serializable
+
+class Deportista:Usuario(){
     var entrenador:Entrenador?=null
         get() = field
         set(value) {
             field = value
         }
-
     var experiencia:String = ""
         get() = field
         set(value) {
@@ -42,7 +38,4 @@ class Deportista:Usuario() {
         set(value) {
             field = value
         }
-    init {
-
-    }
 }

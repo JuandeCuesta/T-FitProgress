@@ -1,8 +1,9 @@
 package edu.juandecuesta.t_fitprogress.model
 
+import java.io.Serializable
 import java.text.SimpleDateFormat
 
-class Entrenamiento_Deportista {
+class Entrenamiento_Deportista: Serializable {
 
     var fecha: SimpleDateFormat? = null
         get() = field

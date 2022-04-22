@@ -1,6 +1,8 @@
 package edu.juandecuesta.t_fitprogress.model
 
-class Ejercicio {
+import java.io.Serializable
+
+class Ejercicio: Serializable {
 
     var codigoEjercicio:String = ""
         get() = field

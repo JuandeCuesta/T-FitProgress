@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityRegisterBinding
+import edu.juandecuesta.t_fitprogress.model.Entrenador
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +40,19 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (verificarCamposEntrenador() && comprobarPassword()){
 
+                    val email = binding.etemail.text.toString()
+                    val password = binding.etpassword1.text.toString()
 
-                    Toast.makeText(this,"Entrenador creado",Toast.LENGTH_LONG).show()
-
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            Toast.makeText(this,"Entrenador creado",Toast.LENGTH_LONG).show()
+                            it.result.user?.let { it1 -> saveEntrenador(email, it1.uid) }
+                            onBackPressed()
+                        }else{
+                            Toast.makeText(this,"Error al crear el entrenador",Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
 
@@ -89,5 +103,16 @@ class RegisterActivity : AppCompatActivity() {
         binding.tLemail.error = null
         binding.tLpassword1.error = null
         binding.tLpassword2.error = null
+    }
+
+    private fun saveEntrenador(email:String, id:String){
+        var entrenador = Entrenador()
+        entrenador.nombre = binding.etNombre.text.toString()
+        entrenador.apellido = binding.apellido1.text.toString()
+        entrenador.email = email
+        entrenador.id = id
+        entrenador.soyEntrenador = true
+
+        db.collection("users").document(email).set(entrenador)
     }
 }
