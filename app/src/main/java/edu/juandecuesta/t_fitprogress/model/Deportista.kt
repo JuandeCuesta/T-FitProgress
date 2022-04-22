@@ -3,7 +3,7 @@ package edu.juandecuesta.t_fitprogress.model
 import java.io.Serializable
 
 class Deportista:Usuario(){
-    var entrenador:Entrenador?=null
+    var entrenador:Entrenador?= null
         get() = field
         set(value) {
             field = value
@@ -13,6 +13,12 @@ class Deportista:Usuario(){
         set(value) {
             field = value
         }
+    var sexo:String = ""
+        get() = field
+        set(value) {
+            field = value
+        }
+
     var edad:Int = 0
         get() = field
         set(value) {
@@ -28,14 +34,6 @@ class Deportista:Usuario(){
         set(value) {
             field = value
         }
-    var evoluacionFisica: MutableList<CondicionFisica>?=null
-        get() = field
-        set(value) {
-            field = value
-        }
-    var entrenamientos: MutableList<Entrenamiento_Deportista>?=null
-        get() = field
-        set(value) {
-            field = value
-        }
+    var evoluacionFisica: MutableList<CondicionFisica> = arrayListOf()
+    var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
 }

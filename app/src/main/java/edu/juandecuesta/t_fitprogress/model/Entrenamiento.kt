@@ -21,7 +21,7 @@ class Entrenamiento : Serializable {
             field = value
         }
 
-    var ejercicios: MutableList<Ejercicio>?=null
+    var ejercicios: MutableList<Ejercicio> = arrayListOf()
         get() = field
         set(value) {
             field = value

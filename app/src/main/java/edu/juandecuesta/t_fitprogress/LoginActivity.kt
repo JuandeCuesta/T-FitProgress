@@ -1,25 +1,17 @@
 package edu.juandecuesta.t_fitprogress
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
-import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.databinding.ActivityLoginBinding
 import edu.juandecuesta.t_fitprogress.model.Deportista
-import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenador
-import edu.juandecuesta.t_fitprogress.model.Entrenamiento
+import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,42 +25,23 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
-        val entrenador = Entrenador()
+        var entrenador = Entrenador()
+        val deportista = Deportista()
 
+        if (currentUser?.email != null){
+            db.collection("users").document(currentUser.email!!).get()
+                .addOnSuccessListener { doc ->
+                    if (doc != null){
 
-        if (currentUser != null){
+                        if (doc.get("soyEntrenador") != null && doc.get("soyEntrenador") as Boolean){
 
-            currentUser.email?.let {
-                db.collection("users").document(it).get()
-                    .addOnSuccessListener { doc ->
-                        if (doc != null){
+                            entrenador = Functions().loadEntrenador(db,currentUser?.email!!,doc)
 
-                            if (doc.get("soyEntrenador") as Boolean){
-
-                                entrenador.id = doc.get("id") as String
-                                entrenador.nombre = doc.get("nombre") as String
-                                entrenador.apellido = doc.get("apellido") as String
-                                entrenador.email = it
-                                entrenador.soyEntrenador = doc.get("soyEntrenador") as Boolean
-
-                                if (doc.get("deportistas") != null){
-                                    entrenador.deportistas = doc.get("deportistas") as MutableList<Deportista>
-                                }
-
-                                if (doc.get("ejercicios") != null){
-                                    entrenador.ejercicios = doc.get("ejercicios") as MutableList<Ejercicio>
-                                }
-
-                                if (doc.get("entrenamientos") != null){
-                                    entrenador.entrenamientos = doc.get("entrenamientos") as MutableList<Entrenamiento>
-                                }
-
-                                showHomeEntrenador(entrenador)
-                            }
-
+                            showHomeEntrenador(entrenador)
                         }
                     }
-            }
+                }
+
         }
 
         binding.login.setOnClickListener {
@@ -88,23 +61,7 @@ class LoginActivity : AppCompatActivity() {
                             if (doc != null){
                                 if (doc.get("soyEntrenador") as Boolean){
 
-                                    entrenador.id = doc.get("id") as String
-                                    entrenador.nombre = doc.get("nombre") as String
-                                    entrenador.apellido = doc.get("apellido") as String
-                                    entrenador.email = email
-                                    entrenador.soyEntrenador = doc.get("soyEntrenador") as Boolean
-
-                                    if (doc.get("deportistas") != null){
-                                        entrenador.deportistas = doc.get("deportistas") as MutableList<Deportista>
-                                    }
-
-                                    if (doc.get("ejercicios") != null){
-                                        entrenador.ejercicios = doc.get("ejercicios") as MutableList<Ejercicio>
-                                    }
-
-                                    if (doc.get("entrenamientos") != null){
-                                        entrenador.entrenamientos = doc.get("entrenamientos") as MutableList<Entrenamiento>
-                                    }
+                                    entrenador = Functions().loadEntrenador(db,email,doc)
 
                                     showHomeEntrenador(entrenador)
                                 }

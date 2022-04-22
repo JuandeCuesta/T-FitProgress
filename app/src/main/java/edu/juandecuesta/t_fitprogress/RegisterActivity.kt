@@ -3,11 +3,14 @@ package edu.juandecuesta.t_fitprogress
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityRegisterBinding
+import edu.juandecuesta.t_fitprogress.documentFirebase.deportistaDB
+import edu.juandecuesta.t_fitprogress.model.Deportista
 import edu.juandecuesta.t_fitprogress.model.Entrenador
 
 class RegisterActivity : AppCompatActivity() {
@@ -42,15 +45,83 @@ class RegisterActivity : AppCompatActivity() {
 
                     val email = binding.etemail.text.toString()
                     val password = binding.etpassword1.text.toString()
+                    val entrenador = Entrenador()
+                    entrenador.nombre = binding.etNombre.text.toString()
+                    entrenador.apellido = binding.apellido1.text.toString()
 
+                    //Creamos la autentificacion y si se crea correctamente añadimos los siguientes datos
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                         if (it.isSuccessful){
-                            Toast.makeText(this,"Entrenador creado",Toast.LENGTH_LONG).show()
-                            it.result.user?.let { it1 -> saveEntrenador(email, it1.uid) }
-                            onBackPressed()
+                            //Almacenamos el resto de datos, si esta correcto volvemos a la pagina de login
+                            db.collection("users").document(email).set(entrenador).addOnSuccessListener {
+                                Toast.makeText(this,"Entrenador creado",Toast.LENGTH_LONG).show()
+                                FirebaseAuth.getInstance().signOut()
+                                onBackPressed()
+                            }.addOnFailureListener {
+                                //Si ha habido algun error se elimina el usuario creado
+                                FirebaseAuth.getInstance().currentUser?.delete()
+                                    ?.addOnCompleteListener {
+                                        Toast.makeText(this,"Error al crear el entrenador",Toast.LENGTH_LONG).show()
+                                    }
+                            }
+
                         }else{
                             Toast.makeText(this,"Error al crear el entrenador",Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+            else {
+
+                if (verficarCamposDeportista() && comprobarPassword()){
+                    val email = binding.etemail.text.toString()
+                    val password = binding.etpassword1.text.toString()
+                    val emailEntrenador = binding.etCodeEntrenador.text.toString()
+                    val deportistaDB = saveDeportista(emailEntrenador)
+
+                    db.collection("users").document(emailEntrenador).get().addOnSuccessListener { doc->
+                        if (doc != null){
+                            if (doc.getBoolean("soyEntrenador")!!){
+
+                                var deportistas:MutableList<String> = arrayListOf()
+
+                                if (doc.get("deportistas") != null){
+                                    deportistas = doc.get("deportistas") as MutableList<String>
+                                }
+
+                                //Creamos deportista
+                                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener {
+                                        if (it.isSuccessful){
+
+                                            //Si se crea lo añadimos al entrenador
+                                            deportistas.add(email)
+                                            db.collection("users").document(emailEntrenador)
+                                                .update("deportistas", deportistas).addOnSuccessListener {
+
+                                                    db.collection("users").document(email).set(deportistaDB).addOnSuccessListener {
+                                                        Toast.makeText(this,"Deportista creado",Toast.LENGTH_LONG).show()
+                                                        FirebaseAuth.getInstance().signOut()
+                                                        onBackPressed()
+                                                    }.addOnFailureListener {
+                                                        FirebaseAuth.getInstance().currentUser?.delete()
+                                                            ?.addOnCompleteListener {
+                                                                Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
+                                                            }
+                                                    }
+
+                                                }
+                                                .addOnFailureListener { e ->  Toast.makeText(this,"Error al actualizar el entrenador",Toast.LENGTH_LONG).show()}
+
+                                        }else{
+                                            Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+
+                            }else{
+                                Toast.makeText(this,"Entrenador no encontrado",Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
                 }
@@ -86,6 +157,37 @@ class RegisterActivity : AppCompatActivity() {
         return valido
     }
 
+    private fun verficarCamposDeportista():Boolean{
+        var valido = verificarCamposEntrenador()
+
+        if (TextUtils.isEmpty(binding.etCodeEntrenador.text.toString())){
+            binding.tLcodeEntrenador.error = "Información requerida"
+            valido = false
+        } else binding.tLcodeEntrenador.error = null
+
+        if (TextUtils.isEmpty(binding.etEdad.text.toString())){
+            binding.tLedad.error = "Información requerida"
+            valido = false
+        } else binding.tLedad.error = null
+
+        if (TextUtils.isEmpty(binding.altura.text.toString())){
+            binding.tLAltura.error = "Información requerida"
+            valido = false
+        } else binding.tLAltura.error = null
+
+        if (TextUtils.isEmpty(binding.Peso.text.toString())){
+            binding.tLPeso.error = "Información requerida"
+            valido = false
+        } else binding.tLPeso.error = null
+
+        if (binding.spExperiencia.selectedItemPosition == 0){
+            (binding.spExperiencia.getSelectedView() as TextView).error = "Información requerida"
+            valido = false
+        } else (binding.spExperiencia.getSelectedView() as TextView).error = null
+
+        return valido
+    }
+
     private fun comprobarPassword():Boolean{
 
         if (TextUtils.equals(binding.etpassword1.text.toString(),binding.etpassword2.text.toString())){
@@ -103,16 +205,28 @@ class RegisterActivity : AppCompatActivity() {
         binding.tLemail.error = null
         binding.tLpassword1.error = null
         binding.tLpassword2.error = null
+
+        if (binding.rbDeportista.isChecked){
+            binding.tLcodeEntrenador.error = null
+            binding.tLedad.error = null
+            binding.tLPeso.error = null
+            binding.tLAltura.error = null
+            (binding.spExperiencia.getSelectedView() as TextView).error = null
+        }
     }
 
-    private fun saveEntrenador(email:String, id:String){
-        var entrenador = Entrenador()
-        entrenador.nombre = binding.etNombre.text.toString()
-        entrenador.apellido = binding.apellido1.text.toString()
-        entrenador.email = email
-        entrenador.id = id
-        entrenador.soyEntrenador = true
+    private fun saveDeportista(entrenador: String):deportistaDB{
+        var deportista = deportistaDB()
+        deportista.nombre = binding.etNombre.text.toString()
+        deportista.apellido = binding.apellido1.text.toString()
+        deportista.altura = binding.altura.text.toString().toFloat()
+        deportista.pesoInicial = binding.Peso.text.toString().toFloat()
+        deportista.edad = binding.etEdad.text.toString().toInt()
+        deportista.experiencia = binding.spExperiencia.selectedItem.toString()
+        deportista.entrenador=entrenador
+        deportista.sexo = if (binding.rbHombre.isChecked) "Hombre" else "Mujer"
 
-        db.collection("users").document(email).set(entrenador)
+        return deportista
     }
+
 }

@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
             binding.rvhome.setHasFixedSize(true)
             binding.rvhome.layoutManager = LinearLayoutManager(requireContext())
 
-            recyclerAdapter.RecyclerAdapter(homeViewModel.deportistas!!, requireContext())
+            //recyclerAdapter.RecyclerAdapter(homeViewModel.deportistas!!, requireContext())
             binding.rvhome.adapter = recyclerAdapter
         }
     }

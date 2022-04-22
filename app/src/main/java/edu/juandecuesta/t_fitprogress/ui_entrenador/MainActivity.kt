@@ -22,6 +22,7 @@ import edu.juandecuesta.t_fitprogress.model.Deportista
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenador
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
+import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val headView: View = navView.getHeaderView(0)
         val emailText = headView.findViewById<TextView>(R.id.tvEmail)
         val nombre = headView.findViewById<TextView>(R.id.tvNombreUser)
-        emailText.text = entrenador.email
+        emailText.text = FirebaseAuth.getInstance().currentUser?.email ?: ""
         nombre.text = entrenador.nombre
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
