@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.ui_entrenador.home
+package edu.juandecuesta.t_fitprogress.ui_entrenador.clientes
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,16 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
+import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Deportista
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterClientesEntrenador.ViewHolder>() {
 
     lateinit var context: Context
-    var deportistas: MutableList<Deportista> = ArrayList()
+    var deportistas: MutableList<DeportistaDB> = ArrayList()
 
-    fun RecyclerAdapter(deportistas: MutableList<Deportista> ,context: Context){
+    fun RecyclerAdapter(deportistas: MutableList<DeportistaDB> ,context: Context){
         this.deportistas = deportistas
         this.context = context
     }
@@ -36,11 +37,10 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         private val binding = RvEntrenadorHomeBinding.bind(view)
 
-        fun bind(deportista: Deportista, context: Context) {
+        fun bind(deportista: DeportistaDB, context: Context) {
             binding.tvNombre.text = deportista.nombre
 
-            val entreno = deportista.entrenamientos?.find { e->e.fecha == Date() }
-            binding.tvTipoEntrenamiento.text = entreno?.entrenamiento?.tipo
+            binding.tvTipoEntrenamiento.text = deportista.apellido
         }
 
     }

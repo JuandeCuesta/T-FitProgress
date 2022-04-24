@@ -9,7 +9,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.databinding.ActivityLoginBinding
-import edu.juandecuesta.t_fitprogress.model.Deportista
+import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
+import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Entrenador
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
@@ -25,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
-        var entrenador = Entrenador()
-        val deportista = Deportista()
+        var entrenador = EntrenadorDB()
+        val deportista = DeportistaDB()
 
         if (currentUser?.email != null){
             db.collection("users").document(currentUser.email!!).get()
@@ -35,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
                         if (doc.get("soyEntrenador") != null && doc.get("soyEntrenador") as Boolean){
 
-                            entrenador = Functions().loadEntrenador(db,currentUser?.email!!,doc)
+                            entrenador = Functions().loadEntrenador(doc)
 
                             showHomeEntrenador(entrenador)
                         }
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                             if (doc != null){
                                 if (doc.get("soyEntrenador") as Boolean){
 
-                                    entrenador = Functions().loadEntrenador(db,email,doc)
+                                    entrenador = Functions().loadEntrenador(doc)
 
                                     showHomeEntrenador(entrenador)
                                 }
@@ -110,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
         return valido
     }
 
-    private fun showHomeEntrenador (entrenador: Entrenador){
+    private fun showHomeEntrenador (entrenador: EntrenadorDB){
         val homeIntent:Intent = Intent(this, MainActivity::class.java).apply {
             putExtra("entrenador", entrenador)
         }

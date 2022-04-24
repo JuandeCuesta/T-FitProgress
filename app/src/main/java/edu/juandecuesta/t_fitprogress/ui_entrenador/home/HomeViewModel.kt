@@ -12,7 +12,7 @@ class HomeViewModel : ViewModel() {
     var deportistas: MutableList<Deportista>?=null
         get() = field
         set(value) {
-            field = MainActivity.entrenador.deportistas
+            field = value
         }
 
 }

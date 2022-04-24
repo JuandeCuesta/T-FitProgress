@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.LoginActivity
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityMainBinding
+import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Deportista
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenador
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
 
     companion object{
-        lateinit var entrenador: Entrenador
+        lateinit var entrenador: EntrenadorDB
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        entrenador = intent.getSerializableExtra("entrenador") as Entrenador
+        entrenador = intent.getSerializableExtra("entrenador") as EntrenadorDB
 
         setSupportActionBar(binding.appBarMain.toolbar)
 

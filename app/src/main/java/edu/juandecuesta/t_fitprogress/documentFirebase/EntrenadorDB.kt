@@ -1,6 +1,8 @@
 package edu.juandecuesta.t_fitprogress.documentFirebase
 
-class entrenadorDB {
+import java.io.Serializable
+
+class EntrenadorDB:Serializable {
     var apellido:String = ""
     var nombre:String = ""
     var soyEntrenador:Boolean = true

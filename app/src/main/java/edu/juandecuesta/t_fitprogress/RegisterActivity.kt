@@ -9,9 +9,17 @@ import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityRegisterBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.deportistaDB
-import edu.juandecuesta.t_fitprogress.model.Deportista
+import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenador
+import android.widget.DatePicker
+
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+
+import edu.juandecuesta.t_fitprogress.dialog.DatePickerFragment
+
+
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -33,6 +41,10 @@ class RegisterActivity : AppCompatActivity() {
             if (binding.rbEntrenador.isChecked){
                 binding.linearLayout2.isVisible = false
             }
+        }
+
+        binding.etEdad.setOnClickListener {
+            showDatePickerDialog()
         }
 
         binding.btnRegistrar.setOnClickListener {
@@ -130,6 +142,16 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    private fun showDatePickerDialog() {
+        val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            // +1 because January is zero
+            val selectedDate = day.toString() + " / " + (month + 1) + " / " + year
+            binding.etEdad.setText(selectedDate)
+        })
+
+        newFragment.show(supportFragmentManager, "datePicker")
+    }
+
     //Método para verificar que se han introducido los campos de nombre, descripción y url para poder avanzar
     private fun verificarCamposEntrenador():Boolean{
         var valido = true
@@ -169,17 +191,6 @@ class RegisterActivity : AppCompatActivity() {
             binding.tLedad.error = "Información requerida"
             valido = false
         } else binding.tLedad.error = null
-
-        if (TextUtils.isEmpty(binding.altura.text.toString())){
-            binding.tLAltura.error = "Información requerida"
-            valido = false
-        } else binding.tLAltura.error = null
-
-        if (TextUtils.isEmpty(binding.Peso.text.toString())){
-            binding.tLPeso.error = "Información requerida"
-            valido = false
-        } else binding.tLPeso.error = null
-
         if (binding.spExperiencia.selectedItemPosition == 0){
             (binding.spExperiencia.getSelectedView() as TextView).error = "Información requerida"
             valido = false
@@ -209,22 +220,18 @@ class RegisterActivity : AppCompatActivity() {
         if (binding.rbDeportista.isChecked){
             binding.tLcodeEntrenador.error = null
             binding.tLedad.error = null
-            binding.tLPeso.error = null
-            binding.tLAltura.error = null
             (binding.spExperiencia.getSelectedView() as TextView).error = null
         }
     }
 
-    private fun saveDeportista(entrenador: String):deportistaDB{
-        var deportista = deportistaDB()
+    private fun saveDeportista(entrenador: String):DeportistaDB{
+        var deportista = DeportistaDB()
         deportista.nombre = binding.etNombre.text.toString()
         deportista.apellido = binding.apellido1.text.toString()
-        deportista.altura = binding.altura.text.toString().toFloat()
-        deportista.pesoInicial = binding.Peso.text.toString().toFloat()
-        deportista.edad = binding.etEdad.text.toString().toInt()
-        deportista.experiencia = binding.spExperiencia.selectedItem.toString()
+        deportista.fechanacimiento = binding.etEdad.text.toString()
         deportista.entrenador=entrenador
         deportista.sexo = if (binding.rbHombre.isChecked) "Hombre" else "Mujer"
+        deportista.experiencia = binding.spExperiencia.selectedItem.toString()
 
         return deportista
     }

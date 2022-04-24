@@ -31,7 +31,7 @@
     <string name="msgRecyclerHome">No tienes clientes con entrenamientos para hoy</string>
 
     <string-array name="nivel_experiencia">
-        <item><u>Experiencia previa</u></item>
+        <item><u>Experiencia previa*</u></item>
         <item>Ninguna</item>
         <item>Baja</item>
         <item>Media</item>
