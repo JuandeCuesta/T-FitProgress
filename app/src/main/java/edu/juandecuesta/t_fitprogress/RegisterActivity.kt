@@ -145,7 +145,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
             // +1 because January is zero
-            val selectedDate = day.toString() + " / " + (month + 1) + " / " + year
+            val selectedDate = day.toString() + "/" + (month + 1) + "/" + year
             binding.etEdad.setText(selectedDate)
         })
 

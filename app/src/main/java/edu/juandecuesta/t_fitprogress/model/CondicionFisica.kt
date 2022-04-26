@@ -4,6 +4,10 @@ import java.io.Serializable
 import java.text.SimpleDateFormat
 
 class CondicionFisica:Serializable {
+
+    //Condicion fisica
+    var altura:Float = 0.0f
+
     var fecha:SimpleDateFormat? = null
         get() = field
         set(value) {

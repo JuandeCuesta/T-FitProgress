@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Deportista
@@ -22,7 +23,7 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(RvEntrenadorHomeBinding.inflate(layoutInflater,parent,false).root)
+        return ViewHolder(RvEntrenadorClienteBinding.inflate(layoutInflater,parent,false).root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -35,12 +36,12 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
     }
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
-        private val binding = RvEntrenadorHomeBinding.bind(view)
+        private val binding = RvEntrenadorClienteBinding.bind(view)
 
         fun bind(deportista: DeportistaDB, context: Context) {
-            binding.tvNombre.text = deportista.nombre
-
-            binding.tvTipoEntrenamiento.text = deportista.apellido
+            val nombreCompleto = (deportista.nombre + " " + deportista.apellido)
+            binding.tvNombre.text = nombreCompleto
+            binding.tvFecha.text = deportista.fechanacimiento
         }
 
     }

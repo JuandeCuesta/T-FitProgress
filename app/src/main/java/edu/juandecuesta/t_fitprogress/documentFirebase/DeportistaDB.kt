@@ -17,7 +17,4 @@ class DeportistaDB:Serializable {
     var sexo:String = ""
 
 
-    //Condicion fisica
-    var altura:Float = 0.0f
-    var pesoInicial:Float = 0.0f
 }

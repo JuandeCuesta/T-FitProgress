@@ -79,7 +79,7 @@ class ClientesFragment : Fragment() {
                     recyclerAdapter.notifyDataSetChanged()
                 }
             }.addOnFailureListener {
-                binding.textClientes.text = "Error"
+                //binding.textClientes.text = "Error"
             }
 
         }
