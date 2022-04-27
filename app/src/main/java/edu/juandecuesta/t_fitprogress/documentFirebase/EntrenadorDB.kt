@@ -5,6 +5,7 @@ import java.io.Serializable
 class EntrenadorDB:Serializable {
     var apellido:String = ""
     var nombre:String = ""
+    var email:String = ""
     var soyEntrenador:Boolean = true
     var deportistas:MutableList<String> = arrayListOf()
     var ejercicios:MutableList<String> = arrayListOf()

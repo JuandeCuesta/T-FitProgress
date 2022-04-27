@@ -36,8 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
                         if (doc.get("soyEntrenador") != null && doc.get("soyEntrenador") as Boolean){
 
-                            entrenador = Functions().loadEntrenador(doc)
-
+                            entrenador = doc.toObject(EntrenadorDB::class.java)!!
                             showHomeEntrenador(entrenador)
                         }
                     }
@@ -62,8 +61,7 @@ class LoginActivity : AppCompatActivity() {
                             if (doc != null){
                                 if (doc.get("soyEntrenador") as Boolean){
 
-                                    entrenador = Functions().loadEntrenador(doc)
-
+                                    entrenador = doc.toObject(EntrenadorDB::class.java)!!
                                     showHomeEntrenador(entrenador)
                                 }
 

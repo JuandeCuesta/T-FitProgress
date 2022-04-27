@@ -28,7 +28,9 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="btn_calendario_completo">Mostrar calendario</string>
-    <string name="msgRecyclerHome">No tienes clientes con entrenamientos para hoy</string>
+    <string name="msgRecyclerHome">Sin entrenamientos programados</string>
+    <string name="msgRecyclerClientes">Aún no tienes deportistas asignados</string>
+    <string name="tvFechaActual">Hoy - %1$s</string>
 
     <string-array name="nivel_experiencia">
         <item><u>Experiencia previa*</u></item>

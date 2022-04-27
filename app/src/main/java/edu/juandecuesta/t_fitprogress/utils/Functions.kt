@@ -12,11 +12,4 @@ class Functions {
                 "/${hoy.get(Calendar.MONTH) + 1}" +
                 "/${hoy.get(Calendar.YEAR)}"
     }
-
-    fun loadEntrenador (doc: DocumentSnapshot): EntrenadorDB {
-
-        val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
-
-        return entrenadorDb!!
-    }
 }

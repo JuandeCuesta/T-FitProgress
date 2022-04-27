@@ -8,6 +8,7 @@ import java.io.Serializable
 class DeportistaDB:Serializable {
     var apellido:String = ""
     var nombre:String = ""
+    var email:String = ""
     var soyEntrenador:Boolean = false
     var entrenador: String= ""
     var fechanacimiento:String = ""

@@ -19,4 +19,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSinClientes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/custom_edittext"
+        android:padding="4dp"
+        android:text="@string/msgRecyclerClientes"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/rvCliente"
+        app:layout_constraintStart_toStartOf="@+id/rvCliente"
+        app:layout_constraintTop_toTopOf="@+id/rvCliente" />
 </androidx.constraintlayout.widget.ConstraintLayout>

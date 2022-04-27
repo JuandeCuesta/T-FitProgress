@@ -17,8 +17,7 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 
 import edu.juandecuesta.t_fitprogress.dialog.DatePickerFragment
-
-
+import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -57,9 +56,10 @@ class RegisterActivity : AppCompatActivity() {
 
                     val email = binding.etemail.text.toString()
                     val password = binding.etpassword1.text.toString()
-                    val entrenador = Entrenador()
+                    val entrenador = EntrenadorDB()
                     entrenador.nombre = binding.etNombre.text.toString()
                     entrenador.apellido = binding.apellido1.text.toString()
+                    entrenador.email = email
 
                     //Creamos la autentificacion y si se crea correctamente añadimos los siguientes datos
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -107,25 +107,28 @@ class RegisterActivity : AppCompatActivity() {
                                     .addOnCompleteListener {
                                         if (it.isSuccessful){
 
-                                            //Si se crea lo añadimos al entrenador
-                                            deportistas.add(email)
-                                            db.collection("users").document(emailEntrenador)
-                                                .update("deportistas", deportistas).addOnSuccessListener {
+                                            db.collection("users").document(email).set(deportistaDB).addOnSuccessListener {
 
-                                                    db.collection("users").document(email).set(deportistaDB).addOnSuccessListener {
-                                                        Toast.makeText(this,"Deportista creado",Toast.LENGTH_LONG).show()
+                                                //Si se crea lo añadimos al entrenador
+                                                deportistas.add(email)
+                                                db.collection("users").document(emailEntrenador)
+                                                    .update("deportistas", deportistas).addOnSuccessListener {
+
+                                                        Toast.makeText(
+                                                            this,
+                                                            "Deportista creado",
+                                                            Toast.LENGTH_LONG
+                                                        ).show()
                                                         FirebaseAuth.getInstance().signOut()
                                                         onBackPressed()
-                                                    }.addOnFailureListener {
-                                                        FirebaseAuth.getInstance().currentUser?.delete()
-                                                            ?.addOnCompleteListener {
-                                                                Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
-                                                            }
+
+                                                    }.addOnFailureListener { e ->  Toast.makeText(this,"Error al actualizar el entrenador",Toast.LENGTH_LONG).show()}
+                                            }.addOnFailureListener {
+                                                FirebaseAuth.getInstance().currentUser?.delete()
+                                                    ?.addOnCompleteListener {
+                                                        Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
                                                     }
-
-                                                }
-                                                .addOnFailureListener { e ->  Toast.makeText(this,"Error al actualizar el entrenador",Toast.LENGTH_LONG).show()}
-
+                                            }
                                         }else{
                                             Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
                                         }
@@ -229,6 +232,7 @@ class RegisterActivity : AppCompatActivity() {
         deportista.nombre = binding.etNombre.text.toString()
         deportista.apellido = binding.apellido1.text.toString()
         deportista.fechanacimiento = binding.etEdad.text.toString()
+        deportista.email = binding.etemail.text.toString()
         deportista.entrenador=entrenador
         deportista.sexo = if (binding.rbHombre.isChecked) "Hombre" else "Mujer"
         deportista.experiencia = binding.spExperiencia.selectedItem.toString()

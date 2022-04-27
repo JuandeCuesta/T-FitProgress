@@ -34,10 +34,10 @@ class HomeFragment : Fragment() {
         _binding = EntFragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.textHome.text = homeViewModel.fecha
+        binding.textHome.text = context!!.getString(R.string.tvFechaActual, homeViewModel.fecha)
         setUpRecyclerView()
 
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
 
         return root
     }
@@ -76,7 +76,8 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
 
-            R.id.nav1 -> {
+            R.id.app_bar_search -> {
+
                 return true
             }
             else -> super.onOptionsItemSelected(item)

@@ -16,11 +16,34 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
 
     lateinit var context: Context
     var deportistas: MutableList<DeportistaDB> = ArrayList()
+    var copy: MutableList<DeportistaDB> = ArrayList()
 
     fun RecyclerAdapter(deportistas: MutableList<DeportistaDB> ,context: Context){
         this.deportistas = deportistas
+
         this.context = context
     }
+
+    fun filter (text:String){
+
+        if (this.copy.size == 0){
+            this.copy.addAll(deportistas)
+        }
+        deportistas.clear()
+        if (text.isEmpty()) {
+            deportistas.addAll(this.copy)
+        } else {
+            for (item in this.copy) {
+                if (item.nombre.lowercase().contains(text.lowercase()) || item.apellido.lowercase()
+                        .contains(text.lowercase())
+                ) {
+                    deportistas.add(item)
+                }
+            }
+        }
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(RvEntrenadorClienteBinding.inflate(layoutInflater,parent,false).root)
