@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class Ejercicio: Serializable {
 
-    var codigoEjercicio:String = ""
+    var id:String = ""
         get() = field
         set(value) {
             field = value
@@ -19,7 +19,7 @@ class Ejercicio: Serializable {
         set(value) {
             field = value
         }
-    var categoria:String = ""
+    var grupoMuscular:String = ""
         get() = field
         set(value) {
             field = value
@@ -40,7 +40,4 @@ class Ejercicio: Serializable {
             field = value
         }
 
-    init {
-
-    }
 }

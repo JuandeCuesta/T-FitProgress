@@ -29,7 +29,7 @@
             android:layout_marginBottom="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/logo1"
+            app:srcCompat="@drawable/t_fit_hm"
             tools:layout_editor_absoluteY="176dp" />
 
 

@@ -15,9 +15,12 @@ import android.widget.DatePicker
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.content.Intent
 
 import edu.juandecuesta.t_fitprogress.dialog.DatePickerFragment
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
+import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -67,19 +70,20 @@ class RegisterActivity : AppCompatActivity() {
                         if (it.isSuccessful){
                             //Almacenamos el resto de datos, si esta correcto volvemos a la pagina de login
                             db.collection("users").document(email).set(entrenador).addOnSuccessListener {
-                                Toast.makeText(this,"Entrenador creado",Toast.LENGTH_LONG).show()
+
+                                Toast.makeText(this, "El entrenador ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
                                 FirebaseAuth.getInstance().signOut()
                                 onBackPressed()
                             }.addOnFailureListener {
                                 //Si ha habido algun error se elimina el usuario creado
                                 FirebaseAuth.getInstance().currentUser?.delete()
                                     ?.addOnCompleteListener {
-                                        Toast.makeText(this,"Error al crear el entrenador",Toast.LENGTH_LONG).show()
+                                        Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
                                     }
                             }
 
                         }else{
-                            Toast.makeText(this,"Error al crear el entrenador",Toast.LENGTH_LONG).show()
+                            Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
                         }
                     }
                 }
@@ -93,7 +97,7 @@ class RegisterActivity : AppCompatActivity() {
                     val deportistaDB = saveDeportista(emailEntrenador)
 
                     db.collection("users").document(emailEntrenador).get().addOnSuccessListener { doc->
-                        if (doc != null){
+                        if (doc.exists()){
                             if (doc.getBoolean("soyEntrenador")!!){
 
                                 var deportistas:MutableList<String> = arrayListOf()
@@ -111,32 +115,38 @@ class RegisterActivity : AppCompatActivity() {
 
                                                 //Si se crea lo añadimos al entrenador
                                                 deportistas.add(email)
+
                                                 db.collection("users").document(emailEntrenador)
                                                     .update("deportistas", deportistas).addOnSuccessListener {
-
-                                                        Toast.makeText(
-                                                            this,
-                                                            "Deportista creado",
-                                                            Toast.LENGTH_LONG
-                                                        ).show()
+                                                        Toast.makeText(this, "El deportista ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
                                                         FirebaseAuth.getInstance().signOut()
                                                         onBackPressed()
 
-                                                    }.addOnFailureListener { e ->  Toast.makeText(this,"Error al actualizar el entrenador",Toast.LENGTH_LONG).show()}
+                                                    }.addOnFailureListener { e ->
+                                                        db.collection("users").document(email).delete().addOnSuccessListener {
+                                                            FirebaseAuth.getInstance().currentUser?.delete()
+                                                                ?.addOnCompleteListener {
+                                                                    Functions().showSnackSimple(binding.root, "No existe entrenador con ese email registrado en la base de datos.")
+                                                                }
+                                                        }
+
+                                                    }
                                             }.addOnFailureListener {
                                                 FirebaseAuth.getInstance().currentUser?.delete()
                                                     ?.addOnCompleteListener {
-                                                        Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
+                                                        Functions().showSnackSimple(binding.root, "Ha habido un error a la hora de registrar al deportista.")
                                                     }
                                             }
                                         }else{
-                                            Toast.makeText(this,"Error al crear el deportista",Toast.LENGTH_LONG).show()
+                                            Functions().showSnackSimple(binding.root, "El deportista no ha podido ser registrado, ya existe una cuenta con ese email.")
                                         }
                                     }
 
                             }else{
-                                Toast.makeText(this,"Entrenador no encontrado",Toast.LENGTH_LONG).show()
+                                Functions().showSnackSimple(binding.root, "Entrenador con email $emailEntrenador no encontrado en la base de datos")
                             }
+                        }else{
+                            Functions().showSnackSimple(binding.root, "Entrenador con email $emailEntrenador no encontrado en la base de datos")
                         }
                     }
                 }

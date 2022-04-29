@@ -26,22 +26,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
-        var entrenador = EntrenadorDB()
-        val deportista = DeportistaDB()
 
         if (currentUser?.email != null){
-            db.collection("users").document(currentUser.email!!).get()
-                .addOnSuccessListener { doc ->
-                    if (doc != null){
-
-                        if (doc.get("soyEntrenador") != null && doc.get("soyEntrenador") as Boolean){
-
-                            entrenador = doc.toObject(EntrenadorDB::class.java)!!
-                            showHomeEntrenador(entrenador)
-                        }
-                    }
-                }
-
+            InicioSesion(currentUser?.email!!)
         }
 
         binding.login.setOnClickListener {
@@ -55,19 +42,7 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener {
 
                     if (it.isSuccessful){
-
-                        db.collection("users").document(email).get()
-                        .addOnSuccessListener { doc ->
-                            if (doc != null){
-                                if (doc.get("soyEntrenador") as Boolean){
-
-                                    entrenador = doc.toObject(EntrenadorDB::class.java)!!
-                                    showHomeEntrenador(entrenador)
-                                }
-
-                            }
-                        }
-
+                        InicioSesion(email)
                     }else{
                         Toast.makeText(this,"Error al autentificar el usuario",Toast.LENGTH_LONG).show()
                         binding.username.text?.clear()
@@ -87,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -120,6 +96,24 @@ class LoginActivity : AppCompatActivity() {
     private fun limpiarErrores(){
         binding.tLusername.error = null
         binding.tLpassword.error = null
+    }
+
+    private fun InicioSesion (email:String){
+        var entrenador = EntrenadorDB()
+        val deportista = DeportistaDB()
+
+        db.collection("users").document(email).get()
+            .addOnSuccessListener { doc ->
+                if (doc != null){
+
+                    if (doc.get("soyEntrenador") != null && doc.get("soyEntrenador") as Boolean){
+
+                        entrenador = doc.toObject(EntrenadorDB::class.java)!!
+                        showHomeEntrenador(entrenador)
+                    }
+                }
+            }
+
     }
 }
 

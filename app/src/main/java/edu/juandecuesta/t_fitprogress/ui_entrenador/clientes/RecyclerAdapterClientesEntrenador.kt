@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Deportista
+import edu.juandecuesta.t_fitprogress.utils.Functions
+import java.text.SimpleDateFormat
+import java.time.Year
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -64,7 +68,16 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
         fun bind(deportista: DeportistaDB, context: Context) {
             val nombreCompleto = (deportista.nombre + " " + deportista.apellido)
             binding.tvNombre.text = nombreCompleto
-            binding.tvFecha.text = deportista.fechanacimiento
+
+            if (deportista.fechanacimiento != ""){
+
+                deportista.fechanacimiento.replace(" ", "")
+
+                binding.tvFecha.text = context!!.getString(R.string.edad, (Functions().calcularEdad(deportista.fechanacimiento)))
+            }else
+            {
+                binding.tvFecha.text = ""
+            }
         }
 
     }

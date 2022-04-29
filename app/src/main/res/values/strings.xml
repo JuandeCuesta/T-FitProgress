@@ -11,6 +11,7 @@
     <string name="sinCuenta">¿Aún no estás registrado?</string>
     <string name="registrate"><u>Regístrate</u></string>
     <string name="crearCuenta">Crear usuario</string>
+    <string name="btnCrearEjerc">Crear ejercicio</string>
 
     <string name="menu_home">Inicio</string>
     <string name="menu_clientes">Clientes</string>
@@ -30,7 +31,9 @@
     <string name="btn_calendario_completo">Mostrar calendario</string>
     <string name="msgRecyclerHome">Sin entrenamientos programados</string>
     <string name="msgRecyclerClientes">Aún no tienes deportistas asignados</string>
+    <string name="msgRecyclerEjercicios">No tienes ejercicios almacenados</string>
     <string name="tvFechaActual">Hoy - %1$s</string>
+    <string name="edad">%1$d años</string>
 
     <string-array name="nivel_experiencia">
         <item><u>Experiencia previa*</u></item>

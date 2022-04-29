@@ -16,11 +16,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
+        android:layout_width="175dp"
         android:layout_height="75dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/logo2" />
+        app:srcCompat="@drawable/t_fit_peque" />
 
     <TextView
         android:id="@+id/tvNombreUser"

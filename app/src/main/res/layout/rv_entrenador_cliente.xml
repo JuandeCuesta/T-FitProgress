@@ -26,9 +26,10 @@
 
             <ImageView
                 android:id="@+id/imageCliente"
+                android:background="@color/mostaza"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                app:srcCompat="@drawable/t_fit" />
+                app:srcCompat="@drawable/ic_person_white" />
 
         </androidx.cardview.widget.CardView>
 
@@ -53,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:text="Entrenamiento de fuerza" />
+                android:text="29 años" />
         </LinearLayout>
 
 

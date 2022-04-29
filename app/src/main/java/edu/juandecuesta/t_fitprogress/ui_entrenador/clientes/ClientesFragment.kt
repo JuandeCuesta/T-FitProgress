@@ -65,7 +65,7 @@ class ClientesFragment : Fragment() {
 
         val search = menu?.findItem(R.id.app_bar_search)
         val searchView = search?.actionView as SearchView
-        searchView.queryHint = "Search something!"
+        searchView.queryHint = "Buscar deportista"
 
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -104,13 +104,9 @@ class ClientesFragment : Fragment() {
             binding.rvCliente.setHasFixedSize(true)
             binding.rvCliente.layoutManager = LinearLayoutManager(requireContext())
 
-            binding.rvCliente.setHasFixedSize(true)
-            binding.rvCliente.layoutManager = LinearLayoutManager(requireContext())
-
             recyclerAdapter.RecyclerAdapter(clientesViewModel.deportistas, requireContext())
             binding.rvCliente.adapter = recyclerAdapter
         }
-
 
     }
 
