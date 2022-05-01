@@ -36,4 +36,17 @@ class Functions {
     fun showSnackSimple(vista: View, mensaje: String) {
         Snackbar.make(vista, mensaje, Snackbar.LENGTH_LONG).show()
     }
+
+    fun buscarIdURL (url:String): String{
+        val indice:Int = url.indexOf("?v=")
+        return url.substring(indice).replace("?v=","")
+    }
+    fun buscarCodeImg (url:String): String{
+        val indice:Int = url.indexOf("image%")
+
+        if (indice != -1){
+            return url.substring(indice).replace("image%","")
+        }
+        return (0..100000).random().toString()
+    }
 }

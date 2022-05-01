@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">T-Fit Progress</string>
     <string name="register_name">Registro</string>
+    <string name="ejercicios_name">Crear ejercicio</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

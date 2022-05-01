@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="tabSelected">#FF64b5f6</color>
     <color name="red">#FF0000</color>
+    <color name="azul_marino">#163D68</color>
 </resources>

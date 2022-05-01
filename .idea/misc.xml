@@ -8,8 +8,11 @@
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/custom_textviewej.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_baseline.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.3828125" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_calendar.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_chat_24.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_error.xml" value="0.3828125" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_home.xml" value="0.18888888888888888" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_icon_play.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_lock.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3828125" />
@@ -19,7 +22,7 @@
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/drawable/tab_color_selected.xml" value="0.3828125" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout-w936dp/activity_login.xml" value="0.275" />
-        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/activity_ejercicio.xml" value="0.36666666666666664" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/activity_ejercicio.xml" value="0.24210526315789474" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/activity_main.xml" value="0.23484848484848486" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/activity_register.xml" value="0.25" />
@@ -41,6 +44,7 @@
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/layout/rv_entrenador_home.xml" value="0.33" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/menu/main.xml" value="0.1" />
+        <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/xml/file_paths.xml" value="0.17806484295845998" />
         <entry key="..\:/Juand/Escritorio/DAM/2DAM/TFC/tfitprogress/app/src/main/res/xml/network_security_config.xml" value="0.20677083333333332" />
       </map>
     </option>

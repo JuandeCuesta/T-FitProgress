@@ -4,6 +4,10 @@
     <!-- Permissions for internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +19,8 @@
         <activity
             android:name=".ui_entrenador.ejercicios.EjercicioActivity"
             android:exported="false"
+            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:label="@string/ejercicios_name"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan"/>
         <activity
@@ -44,6 +50,15 @@
             android:screenOrientation="nosensor"
             android:theme="@style/Theme.TFitProgress.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <provider
+            android:authorities="edu.juandecuesta.t_fitprogress.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
     </application>
 
 </manifest>

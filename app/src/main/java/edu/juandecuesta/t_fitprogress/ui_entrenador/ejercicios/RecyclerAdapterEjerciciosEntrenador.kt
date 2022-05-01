@@ -76,12 +76,25 @@ class RecyclerAdapterEjerciciosEntrenador: RecyclerView.Adapter<RecyclerAdapterE
             binding.tvMuscularGroup.text = ejercicio.grupoMuscular
             binding.tvTipoEj.text = ejercicio.tipo
 
-
-            if (ejercicio.urlImagen != ""){
-                Glide.with(context)
-                    .load(ejercicio.urlImagen)
-                    .centerInside()
-                    .into(binding.imageEjerc)
+            when {
+                ejercicio.urlImagen != "" -> {
+                    Glide.with(context)
+                        .load(ejercicio.urlImagen)
+                        .centerInside()
+                        .into(binding.imageEjerc)
+                }
+                ejercicio.urlVideo != "" -> {
+                    Glide.with(context)
+                        .load(R.drawable.ic_icon_play)
+                        .centerInside()
+                        .into(binding.imageEjerc)
+                }
+                else -> {
+                    Glide.with(context)
+                        .load(ejercicio.urlImagen)
+                        .centerInside()
+                        .into(binding.imageEjerc)
+                }
             }
         }
 
