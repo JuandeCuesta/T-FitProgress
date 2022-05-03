@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_200"
-    tools:context=".ui_entrenador.ejercicios.EjercicioActivity">
-
+    tools:context=".ui_entrenador.ejercicios.EditEjercicioActivity"
+    android:background="@color/blue_200">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -35,77 +34,29 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="Nombre del ejercicio*"
+                android:hint="Nombre del ejercicio"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
                 app:endIconMode="clear_text"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNombreEjerc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_edittext"
-                    android:singleLine="true" />
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+
+            <ImageView
+                android:id="@+id/imageEjerc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_edittext"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_edittext"
-                    android:labelFor="@id/rgMultimedia"
-                    android:padding="10dp"
-                    android:text="¿Añadir contenido multimedia?"
-                    android:textSize="16sp" />
-
-                <RadioGroup
-                    android:id="@+id/rgMultimedia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checkedButton="@id/rbNada"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/rbNada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="No subir video ni imagen"
-                        android:textSize="14sp" />
-
-                    <RadioButton
-                        android:id="@+id/rbImagen"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Subir imagen"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <RadioButton
-                        android:id="@+id/rbVideo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Link al video de youtube"
-                        android:textSize="14sp" />
-                    <RadioButton
-                        android:id="@+id/rbAmbos"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Imagen y video"
-                        android:textSize="14sp" />
-
-
-                </RadioGroup>
-
-            </LinearLayout>
+                android:layout_height="250dp"
+                android:layout_marginVertical="4dp"
+                android:scaleType="fitCenter"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/linLayImagen"
@@ -115,18 +66,10 @@
                 android:visibility="gone"
                 android:layout_marginVertical="4dp">
 
-                <ImageView
-                    android:id="@+id/imageEjerc"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btnHacerFoto"
@@ -145,14 +88,24 @@
                         android:layout_weight="1"
                         android:text="Abrir galeria"
                         app:icon="@drawable/ic_menu_gallery" />
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnQuitarFoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quitar imagen"
+                    android:backgroundTint="@color/red"
+                    app:icon="@android:drawable/ic_menu_close_clear_cancel" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linLayVideo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -160,8 +113,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
                     android:hint="URL video Youtube"
+                    android:layout_marginVertical="4dp"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
                     app:endIconMode="clear_text"
@@ -172,69 +125,89 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_edittext"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:focusable="false"/>
+
+                    <Button
+                        android:id="@+id/btnVerVideo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Visualizar video" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/btnVerVideo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Visualizar video" />
+
             </LinearLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlGrupoMuscular"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Grupo muscular*"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                android:layout_marginTop="4dp"
-                app:endIconMode="clear_text"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etGrupoMuscular"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginVertical="4dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlGrupoMuscular"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_edittext"
-                    android:gravity="start"
-                    android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlTipoEjerc"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Tipo de ejercicio*"
-                app:boxStrokeWidth="0dp"
-                android:layout_marginVertical="4dp"
-                app:boxStrokeWidthFocused="0dp"
-                app:endIconMode="clear_text"
-                app:layout_constraintTop_toTopOf="parent">
+                    android:layout_weight="1"
+                    android:layout_marginEnd="2dp"
+                    android:hint="Grupo muscular"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTipoEjerc"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etGrupoMuscular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edittext"
+                        android:gravity="start"
+                        android:singleLine="true"
+                        android:focusable="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlTipoEjerc"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_edittext"
-                    android:gravity="start"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:hint="Tipo de ejercicio"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTipoEjerc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edittext"
+                        android:gravity="start"
+                        android:imeOptions="actionDone"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        android:focusable="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlInstrucciones"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Instrucciones (Opcional)"
+                android:hint="Instrucciones"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
                 app:endIconMode="clear_text"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etInstrucciones"
@@ -244,7 +217,8 @@
                     android:gravity="start"
                     android:inputType="textMultiLine"
                     android:lines="6"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>
@@ -257,12 +231,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/blue_700"
-        android:text="Guardar ejercicio"
+        android:text="Guardar cambios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lyProgress"
@@ -280,7 +254,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView"
@@ -299,7 +273,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

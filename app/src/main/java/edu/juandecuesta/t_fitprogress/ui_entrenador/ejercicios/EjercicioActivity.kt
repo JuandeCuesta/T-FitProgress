@@ -101,23 +101,27 @@ class EjercicioActivity : AppCompatActivity() {
             if (binding.rbNada.isChecked){
                 if (comprobarCamposObligatorios()){
                     binding.lyProgress.isVisible = true
+                    binding.btnGuardar.isVisible = false
                     val ejercicio = crearEjercicio()
                     guardarEjercicio(ejercicio)
                 }
             } else if (binding.rbVideo.isChecked){
                 if (comprobarCamposObligatorios() && comprobarURL()){
                     binding.lyProgress.isVisible = true
+                    binding.btnGuardar.isVisible = false
                     val ejercicio = crearEjercicio()
                     guardarEjercicio(ejercicio)
                 }
             } else if (binding.rbImagen.isChecked) {
                 if (comprobarCamposObligatorios() && imgCorrecta){
                     binding.lyProgress.isVisible = true
+                    binding.btnGuardar.isVisible = false
                     guardarImagen()
                 }
             }else{
                 if (comprobarCamposObligatorios() && imgCorrecta && comprobarURL()){
                     binding.lyProgress.isVisible = true
+                    binding.btnGuardar.isVisible = false
                     guardarImagen()
                 }
             }
@@ -141,6 +145,7 @@ class EjercicioActivity : AppCompatActivity() {
             guardarEjercicio(ejercicio)
         }. addOnFailureListener {
             binding.lyProgress.isVisible = false
+            binding.btnGuardar.isVisible = true
             Functions().showSnackSimple(binding.root,"Ha habido un error al subir la imagen a la nube")
         }
     }
@@ -168,18 +173,21 @@ class EjercicioActivity : AppCompatActivity() {
                                 onBackPressed()
                             }.addOnFailureListener {
                                 binding.lyProgress.isVisible = false
+                                binding.btnGuardar.isVisible = true
                                 Functions().showSnackSimple(binding.root,"Ha habido un error al crear el ejercicio")
                             }
                     }
 
                 }.addOnFailureListener {
                     binding.lyProgress.isVisible = false
+                    binding.btnGuardar.isVisible = true
                     Functions().showSnackSimple(binding.root,"Ha habido un error al crear el ejercicio")
                 }
             }
 
         }.addOnFailureListener {
             binding.lyProgress.isVisible = false
+            binding.btnGuardar.isVisible = true
             Functions().showSnackSimple(binding.root,"Ha habido un error al crear el ejercicio")
         }
 
@@ -252,7 +260,6 @@ class EjercicioActivity : AppCompatActivity() {
         }
     }
     private fun takePhoto(){
-
         // Se crea el fichero done se guardará la imagen.
         photoFile = File(getExternalFilesDir(null),"test.jpg")
 
@@ -282,9 +289,6 @@ class EjercicioActivity : AppCompatActivity() {
                 else -> requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
         }else {
-            // Se llamará a la función para APIs 22 o inferior
-            // Esto debido a que se aceptaron los permisos
-            // al momento de instalar la aplicación
             pickPhotoFromGallery()
         }
     }

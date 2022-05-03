@@ -26,8 +26,6 @@ class EjerciciosFragment : Fragment() {
     private lateinit var ejerciciosViewModel: EjerciciosViewModel
     private var _binding: EntFragmentEjerciciosBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private val recyclerAdapter = RecyclerAdapterEjerciciosEntrenador()
     private val db:FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -89,16 +87,6 @@ class EjerciciosFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-
-            R.id.nav1 -> {
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     private fun setUpRecyclerView() {
 

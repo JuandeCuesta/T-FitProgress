@@ -1,9 +1,12 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
@@ -15,6 +18,7 @@ import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Deportista
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
+import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 import java.time.Year
@@ -85,16 +89,25 @@ class RecyclerAdapterEjerciciosEntrenador: RecyclerView.Adapter<RecyclerAdapterE
                 }
                 ejercicio.urlVideo != "" -> {
                     Glide.with(context)
-                        .load(R.drawable.ic_icon_play)
+                        .load(R.drawable.icon_video)
                         .centerInside()
                         .into(binding.imageEjerc)
                 }
                 else -> {
                     Glide.with(context)
-                        .load(ejercicio.urlImagen)
+                        .load(R.drawable.icon_noimagen)
                         .centerInside()
                         .into(binding.imageEjerc)
                 }
+            }
+
+            itemView.setOnClickListener {
+
+                val ejercIntent = Intent (context, EditEjercicioActivity::class.java).apply {
+                    putExtra("ejercicio", ejercicio)
+                }
+                ContextCompat.startActivity(context,ejercIntent, Bundle.EMPTY)
+
             }
         }
 

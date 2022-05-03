@@ -1,6 +1,10 @@
 package edu.juandecuesta.t_fitprogress.utils
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
@@ -49,4 +53,5 @@ class Functions {
         }
         return (0..100000).random().toString()
     }
+
 }

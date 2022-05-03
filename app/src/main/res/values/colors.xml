@@ -3,11 +3,12 @@
     <color name="blue_200">#FFC5E5FF</color>
     <color name="blue_500">#FF2099FA</color>
     <color name="blue_700">#FF1C73CA</color>
-    <color name="mostaza">#FFF9B60E</color>
+    <color name="mostaza_500">#FFF9B60E</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tabSelected">#FF64b5f6</color>
-    <color name="red">#FF0000</color>
+    <color name="red">#A81818</color>
     <color name="azul_marino">#163D68</color>
+    <color name="mostaza_200">#AFF9B60E</color>
 </resources>

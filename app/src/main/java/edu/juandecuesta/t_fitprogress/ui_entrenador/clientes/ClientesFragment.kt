@@ -83,15 +83,6 @@ class ClientesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-
-            R.id.nav1 -> {
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     private fun setUpRecyclerView() {
 

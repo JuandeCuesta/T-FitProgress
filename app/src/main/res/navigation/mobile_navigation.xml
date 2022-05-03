@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_nav_ejercicios_to_addEjercicios"
             app:destination="@id/addEjercicios" />
+        <action
+            android:id="@+id/action_nav_ejercicios_to_showEditEjercicio"
+            app:destination="@id/showEditEjercicio" />
     </fragment>
     <fragment
         android:id="@+id/nav_entrenamientos"
@@ -41,4 +44,9 @@
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjercicioActivity"
         android:label="@string/ejercicios_name"
         tools:layout="@layout/activity_ejercicio"/>
+    <activity
+        android:id="@+id/showEditEjercicio"
+        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EditEjercicioActivity"
+        android:label="@string/ejercicios_name"
+        tools:layout="@layout/activity_edit_ejercicio"/>
 </navigation>
