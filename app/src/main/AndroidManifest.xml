@@ -18,12 +18,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TFitProgress">
         <activity
+            android:name=".ui_entrenador.entrenamientos.EditEntrenamientoActivity"
+            android:exported="false"
+            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui_entrenador.entrenamientos.CreateEntrenamientoActivity"
+            android:exported="false"
+            android:label="@string/entrenamiento_name"
+            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui_entrenador.ejercicios.EditEjercicioActivity"
             android:exported="false"
             android:label="@string/ejercicios_name"
             android:parentActivityName=".ui_entrenador.MainActivity"
             android:screenOrientation="nosensor"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui_entrenador.ejercicios.EjercicioActivity"
             android:exported="false"

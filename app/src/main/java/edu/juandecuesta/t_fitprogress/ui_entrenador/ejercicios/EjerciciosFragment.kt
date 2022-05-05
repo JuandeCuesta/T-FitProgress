@@ -92,7 +92,7 @@ class EjerciciosFragment : Fragment() {
 
         binding.tvSinEjercicios.isVisible = true
 
-        if (MainActivity.entrenador.deportistas.size > 0){
+        if (MainActivity.entrenador.ejercicios.size > 0){
 
             binding.tvSinEjercicios.isVisible = false
 

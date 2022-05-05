@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class Entrenamiento : Serializable {
 
-    var codigoEntrenamiento:String = ""
+    var id:String = ""
         get() = field
         set(value) {
             field = value
@@ -21,13 +21,32 @@ class Entrenamiento : Serializable {
             field = value
         }
 
-    var ejercicios: MutableList<Ejercicio> = arrayListOf()
+    var descripcion:String = ""
         get() = field
         set(value) {
             field = value
         }
 
-    init {
+    var series:Int = 0
+        get() = field
+        set(value) {
+            field = value
+        }
+    var repeticiones:Int = 0
+        get() = field
+        set(value) {
+            field = value
+        }
+    var descanso:Int = 0
+        get() = field
+        set(value) {
+            field = value
+        }
 
-    }
+    var ejercicios: MutableList<String> = arrayListOf()
+        get() = field
+        set(value) {
+            field = value
+        }
+
 }

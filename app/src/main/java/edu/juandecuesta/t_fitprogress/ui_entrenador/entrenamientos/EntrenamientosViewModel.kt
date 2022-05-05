@@ -1,7 +1,12 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos
 
 import androidx.lifecycle.ViewModel
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 
 class EntrenamientosViewModel:ViewModel() {
-    val texto:String = "This is entrenamientos Fragment"
+    var entrenamientos: MutableList<Entrenamiento> = arrayListOf()
+        get() = field
+        set(value) {
+            field = value
+        }
 }

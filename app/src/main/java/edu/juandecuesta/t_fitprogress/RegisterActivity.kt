@@ -16,6 +16,7 @@ import android.widget.DatePicker
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
+import android.widget.ArrayAdapter
 
 import edu.juandecuesta.t_fitprogress.dialog.DatePickerFragment
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
@@ -33,6 +34,12 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        val type = arrayOf("Ninguno", "Bajo", "Medio", "Alto")
+
+        val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
+
+        binding.etExperiencia.setAdapter(adapter)
 
         binding.rbDeportista.setOnClickListener {
             if (binding.rbDeportista.isChecked){
@@ -204,10 +211,11 @@ class RegisterActivity : AppCompatActivity() {
             binding.tLedad.error = "Información requerida"
             valido = false
         } else binding.tLedad.error = null
-        if (binding.spExperiencia.selectedItemPosition == 0){
-            (binding.spExperiencia.getSelectedView() as TextView).error = "Información requerida"
+
+        if (TextUtils.isEmpty(binding.etExperiencia.text.toString())){
+            binding.tlExperiencia.error = "Información requerida"
             valido = false
-        } else (binding.spExperiencia.getSelectedView() as TextView).error = null
+        } else binding.tlExperiencia.error = null
 
         return valido
     }
@@ -233,7 +241,7 @@ class RegisterActivity : AppCompatActivity() {
         if (binding.rbDeportista.isChecked){
             binding.tLcodeEntrenador.error = null
             binding.tLedad.error = null
-            (binding.spExperiencia.getSelectedView() as TextView).error = null
+            binding.tlExperiencia.error = null
         }
     }
 
@@ -245,7 +253,7 @@ class RegisterActivity : AppCompatActivity() {
         deportista.email = binding.etemail.text.toString()
         deportista.entrenador=entrenador
         deportista.sexo = if (binding.rbHombre.isChecked) "Hombre" else "Mujer"
-        deportista.experiencia = binding.spExperiencia.selectedItem.toString()
+        deportista.experiencia = binding.etExperiencia.text.toString()
 
         return deportista
     }

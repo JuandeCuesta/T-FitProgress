@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_edittext"
                         android:singleLine="true"
-                        android:focusable="false"/>
+                        android:focusableInTouchMode="false"/>
 
                     <Button
                         android:id="@+id/btnVerVideo"
@@ -165,7 +165,7 @@
                         android:background="@drawable/custom_edittext"
                         android:gravity="start"
                         android:singleLine="true"
-                        android:focusable="false"/>
+                        android:focusableInTouchMode="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -190,7 +190,7 @@
                         android:imeOptions="actionDone"
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
-                        android:focusable="false"/>
+                        android:focusableInTouchMode="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -218,7 +218,7 @@
                     android:inputType="textMultiLine"
                     android:lines="6"
                     android:textAlignment="textStart"
-                    android:focusable="false"/>
+                    android:focusableInTouchMode="false"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>

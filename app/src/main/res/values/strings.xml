@@ -2,6 +2,7 @@
     <string name="app_name">T-Fit Progress</string>
     <string name="register_name">Registro</string>
     <string name="ejercicios_name">Crear ejercicio</string>
+    <string name="entrenamiento_name">Crear entrenamiento</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -13,6 +14,7 @@
     <string name="registrate"><u>Regístrate</u></string>
     <string name="crearCuenta">Crear usuario</string>
     <string name="btnCrearEjerc">Crear ejercicio</string>
+    <string name="btnCrearEntren">Crear entrenamiento</string>
 
     <string name="menu_home">Inicio</string>
     <string name="menu_clientes">Clientes</string>
@@ -33,6 +35,7 @@
     <string name="msgRecyclerHome">Sin entrenamientos programados</string>
     <string name="msgRecyclerClientes">Aún no tienes deportistas asignados</string>
     <string name="msgRecyclerEjercicios">No tienes ejercicios almacenados</string>
+    <string name="msgRecyclerEntrenamientos">No tienes entrenamientos almacenados</string>
     <string name="tvFechaActual">Hoy - %1$s</string>
     <string name="edad">%1$d años</string>
 
