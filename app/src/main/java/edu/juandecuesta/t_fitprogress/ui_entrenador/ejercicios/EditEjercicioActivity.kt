@@ -320,10 +320,6 @@ class EditEjercicioActivity : AppCompatActivity() {
         binding.etGrupoMuscular.isFocusableInTouchMode = false
         binding.etTipoEjerc.isFocusableInTouchMode = false
 
-        if (ejercicio.descripcion == ""){
-            binding.tlInstrucciones.isVisible = false
-        }
-
         binding.etInstrucciones.clearFocus()
         binding.etInstrucciones.isFocusableInTouchMode = false
         binding.btnGuardar.isVisible = false

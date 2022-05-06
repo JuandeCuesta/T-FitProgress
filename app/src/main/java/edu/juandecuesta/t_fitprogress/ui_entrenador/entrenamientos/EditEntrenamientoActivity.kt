@@ -276,18 +276,12 @@ class EditEntrenamientoActivity : AppCompatActivity() {
         binding.tlTipoVista.isVisible = true
         val tipo = "Entrenamiento de ${entrenamiento.tipo}"
         binding.etTipoVista.setText(tipo)
-        if (entrenamiento.descripcion == ""){
-            binding.tlDescripc.isVisible = false
-        }
 
         binding.etDescrip.clearFocus()
         binding.etDescrip.isFocusableInTouchMode = false
         binding.etSeries.isFocusableInTouchMode = false
         binding.etRep.isFocusableInTouchMode = false
 
-        if (entrenamiento.descanso == 0){
-            binding.tlDesc.isVisible = false
-        }
         binding.etDesc.isFocusableInTouchMode = false
         binding.btnGuardar.isVisible = false
         binding.btnAddEjerc.isVisible = false

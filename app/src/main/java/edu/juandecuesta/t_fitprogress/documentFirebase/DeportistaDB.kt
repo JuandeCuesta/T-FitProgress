@@ -16,6 +16,8 @@ class DeportistaDB:Serializable {
     var evoluacionFisica: MutableList<CondicionFisica>?=null
     var entrenamientos: MutableList<Entrenamiento_Deportista>?=null
     var sexo:String = ""
-
+    var descripcionPersonal = ""
+    var objetivo = ""
+    var fechacreacion = ""
 
 }

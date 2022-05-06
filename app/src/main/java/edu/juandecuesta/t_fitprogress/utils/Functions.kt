@@ -14,9 +14,23 @@ class Functions {
 
     fun mostrarFecha(): String {
         val hoy = Calendar.getInstance()
-        return "${hoy.get(Calendar.DAY_OF_MONTH)}" +
-                "/${hoy.get(Calendar.MONTH) + 1}" +
-                "/${hoy.get(Calendar.YEAR)}"
+        var dia = ""
+        var mes = ""
+
+        if ((hoy.get(Calendar.DAY_OF_MONTH)) < 10){
+            dia = "0${hoy.get(Calendar.DAY_OF_MONTH)}"
+        }else {
+            dia = "${hoy.get(Calendar.DAY_OF_MONTH)}"
+        }
+
+        if ((hoy.get(Calendar.MONTH) + 1) < 10){
+            mes = "0${hoy.get(Calendar.MONTH) + 1}"
+        }else {
+            mes = "${hoy.get(Calendar.MONTH) + 1}"
+        }
+
+
+        return dia + "/$mes" +"/${hoy.get(Calendar.YEAR)}"
     }
 
 

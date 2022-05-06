@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter
 
 import edu.juandecuesta.t_fitprogress.dialog.DatePickerFragment
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.model.Ejercicio
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
@@ -28,6 +30,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private val db = FirebaseFirestore.getInstance()
+    var ejerciciosDefecto:MutableList<Ejercicio> = arrayListOf()
+    var entrenamientosDefecto:MutableList<Entrenamiento> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,8 @@ class RegisterActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
 
         binding.etExperiencia.setAdapter(adapter)
+
+        //cargarEjercicios()
 
         binding.rbDeportista.setOnClickListener {
             if (binding.rbDeportista.isChecked){
@@ -75,6 +81,9 @@ class RegisterActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                         if (it.isSuccessful){
+
+                            //Guardar ejercicios por defecto
+
                             //Almacenamos el resto de datos, si esta correcto volvemos a la pagina de login
                             db.collection("users").document(email).set(entrenador).addOnSuccessListener {
 
@@ -161,6 +170,13 @@ class RegisterActivity : AppCompatActivity() {
 
         }
     }
+
+    /*private fun cargarEjercicios(){
+        db.collection("ejerciciosdefecto").get().addOnSuccessListener {
+            docs ->
+            docs.documents.forEach { e -> ejerciciosDefecto.add(e.toObject(Ejercicio::class.java)!!) }
+        }
+    }*/
 
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
@@ -254,6 +270,7 @@ class RegisterActivity : AppCompatActivity() {
         deportista.entrenador=entrenador
         deportista.sexo = if (binding.rbHombre.isChecked) "Hombre" else "Mujer"
         deportista.experiencia = binding.etExperiencia.text.toString()
+        deportista.fechacreacion = Functions().mostrarFecha()
 
         return deportista
     }

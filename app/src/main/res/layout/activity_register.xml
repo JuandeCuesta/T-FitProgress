@@ -270,7 +270,9 @@
                         android:textSize="16sp"
                         android:gravity="fill_vertical"
                         android:background="@drawable/custom_edittext"
-                        android:inputType="textAutoComplete" />
+                        android:inputType="textAutoComplete"
+                        android:clickable="true"
+                        android:focusable="false"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 

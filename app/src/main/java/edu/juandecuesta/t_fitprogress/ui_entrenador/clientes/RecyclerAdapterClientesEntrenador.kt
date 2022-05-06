@@ -1,15 +1,19 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.clientes
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Deportista
+import edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EditEjercicioActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 import java.time.Year
@@ -73,10 +77,19 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
 
                 deportista.fechanacimiento.replace(" ", "")
 
-                binding.tvFecha.text = context!!.getString(R.string.edad, (Functions().calcularEdad(deportista.fechanacimiento)))
+                binding.tvFecha.text = context.getString(R.string.edad, (Functions().calcularEdad(deportista.fechanacimiento)))
             }else
             {
                 binding.tvFecha.text = ""
+            }
+
+            itemView.setOnClickListener {
+
+                val deportIntent = Intent (context, ShowClientActivity::class.java).apply {
+                    putExtra("deportista", deportista)
+                }
+                ContextCompat.startActivity(context,deportIntent, Bundle.EMPTY)
+
             }
         }
 

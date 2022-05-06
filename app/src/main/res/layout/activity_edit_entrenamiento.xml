@@ -65,7 +65,9 @@
                 android:paddingHorizontal="16dp"
                 android:paddingTop="22dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +104,7 @@
             app:boxStrokeWidthFocused="0dp"
             app:endIconMode="clear_text"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDescrip"
@@ -111,7 +113,7 @@
                 android:background="@drawable/custom_edittext"
                 android:gravity="start"
                 android:inputType="textMultiLine"
-                android:lines="6"
+                android:lines="5"
                 android:textAlignment="textStart"
                 android:focusableInTouchMode="false" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +184,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:endIconMode="clear_text"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDesc"

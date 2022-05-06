@@ -3,6 +3,10 @@
     <string name="register_name">Registro</string>
     <string name="ejercicios_name">Crear ejercicio</string>
     <string name="entrenamiento_name">Crear entrenamiento</string>
+    <string name="fragmentPerfil">Perfil</string>
+    <string name="fragmenteCondicion">Evolución</string>
+    <string name="fragmentHistorial">Historial</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -46,5 +50,8 @@
         <item>Media</item>
         <item>Alta</item>
     </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="m_guardar">Guardar</string>
 
 </resources>
