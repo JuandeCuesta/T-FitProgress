@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Functions {
@@ -31,6 +32,22 @@ class Functions {
 
 
         return dia + "/$mes" +"/${hoy.get(Calendar.YEAR)}"
+    }
+
+    fun calcularFecha (f:String):Int{
+        val hoy = mostrarFecha()
+        val fecha: Calendar = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate:Date = sdf.parse(hoy)
+        fecha.time = currentDate
+        val currentDateEnMillis = fecha.timeInMillis
+
+        var fecha2: Calendar = Calendar.getInstance()
+        val date:Date = sdf.parse(f)
+        fecha2.time = date
+        val dateEnMillis = fecha2.timeInMillis
+
+        return currentDateEnMillis.compareTo(dateEnMillis)
     }
 
 

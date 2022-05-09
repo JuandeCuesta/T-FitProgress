@@ -1,6 +1,6 @@
 package edu.juandecuesta.t_fitprogress.model
 
-import java.io.Serializable
+import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 
 class Deportista:Usuario(){
     var entrenador:Entrenador?= null
@@ -35,5 +35,5 @@ class Deportista:Usuario(){
             field = value
         }
     var evoluacionFisica: MutableList<CondicionFisica> = arrayListOf()
-    var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
+    var entrenamientos: MutableList<Entrenamiento_DeportistaDB> = arrayListOf()
 }

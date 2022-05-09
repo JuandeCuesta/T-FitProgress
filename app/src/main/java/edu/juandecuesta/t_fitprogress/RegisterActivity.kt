@@ -24,6 +24,7 @@ import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
+import java.util.*
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -180,8 +181,24 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            // +1 because January is zero
-            val selectedDate = day.toString() + "/" + (month + 1) + "/" + year
+
+            var dia = ""
+            var mes = ""
+
+            if (day < 10){
+                dia = "0${day}"
+            }else {
+                dia = "$day"
+            }
+
+            if ((month + 1) < 10){
+                mes = "0${month + 1}"
+            }else {
+                mes = "$month + 1}"
+            }
+
+
+            val selectedDate = "$dia/$mes/$year"
             binding.etEdad.setText(selectedDate)
         })
 

@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,9 +16,11 @@ import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.
 
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import android.text.Editable
-
-
-
+import android.text.TextUtils
+import android.widget.Toast
+import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
+import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
 class FullDialogActivity : AppCompatActivity() {
@@ -86,12 +87,45 @@ class FullDialogActivity : AppCompatActivity() {
 
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            // +1 because January is zero
-            val selectedDate = day.toString() + "/" + (month + 1) + "/" + year
+
+            var dia = ""
+            var mes = ""
+
+            if (day < 10){
+                dia = "0${day}"
+            }else {
+                dia = "$day"
+            }
+
+            if ((month + 1) < 10){
+                mes = "0${month + 1}"
+            }else {
+                mes = "$month + 1}"
+            }
+
+
+            val selectedDate = "$dia/$mes/$year"
             binding.etFecha.setText(selectedDate)
         })
 
         newFragment.show(supportFragmentManager, "datePicker")
+    }
+
+    private fun comprobarCampos (): Boolean{
+        var valido = true
+
+        if (TextUtils.isEmpty(binding.etFecha.text.toString())){
+            binding.tlFecha.error = "Información requerida"
+            valido = false
+        } else binding.tlFecha.error = null
+
+        if (recyclerAdapter.itemSelected.id == ""){
+            binding.msgSelectEntren.isVisible = true
+            valido = false
+        } else binding.msgSelectEntren.isVisible = false
+
+
+        return valido
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,6 +136,31 @@ class FullDialogActivity : AppCompatActivity() {
                 true
             }
             edu.juandecuesta.t_fitprogress.R.id.action_save -> {
+                if (comprobarCampos()){
+                    var entrenamiento = Entrenamiento_DeportistaDB()
+                    entrenamiento.fecha = binding.etFecha.text.toString()
+                    entrenamiento.entrenamiento = recyclerAdapter.itemSelected.id
+                    db.collection("users").document(deportista.email).get().addOnSuccessListener {
+                        doc ->
+
+                        var entrenamientoDBS:MutableList<Entrenamiento_DeportistaDB> = arrayListOf()
+
+                        if (doc.get("entrenamientos") != null){
+                            entrenamientoDBS = doc.get("entrenamientos") as MutableList<Entrenamiento_DeportistaDB>
+                        }
+
+                        entrenamientoDBS.add(entrenamiento)
+
+                        db.collection("users").document(deportista.email)
+                            .update("entrenamientos", entrenamientoDBS).addOnSuccessListener{
+                                Toast.makeText(this, "Entrenamiento añadido con exito", Toast.LENGTH_LONG).show()
+                                onBackPressed()
+                            }.addOnFailureListener {
+                                Functions().showSnackSimple(binding.root,"Ha habido un error al añadir el entrenamiento")
+                            }
+                    }
+
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

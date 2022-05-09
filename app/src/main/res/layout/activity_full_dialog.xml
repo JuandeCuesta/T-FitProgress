@@ -71,7 +71,13 @@
                     android:background="@drawable/custom_edittext"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
-
+            <TextView
+                android:id="@+id/msgSelectEntren"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Debes seleccionar un entrenamiento"
+                android:textColor="@color/red"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSelectEntren"

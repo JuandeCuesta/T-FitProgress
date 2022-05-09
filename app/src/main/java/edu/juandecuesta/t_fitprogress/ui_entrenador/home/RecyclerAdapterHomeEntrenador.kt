@@ -39,8 +39,8 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
         fun bind(deportista: Deportista, context: Context) {
             binding.tvNombre.text = deportista.nombre
 
-            val entreno = deportista.entrenamientos?.find { e->e.fecha == Date() }
-            binding.tvTipoEntrenamiento.text = entreno?.entrenamiento?.tipo
+            //val entreno = deportista.entrenamientos?.find { e->e.fecha == Date() }
+            //binding.tvTipoEntrenamiento.text = entreno?.entrenamiento?.tipo
         }
 
     }

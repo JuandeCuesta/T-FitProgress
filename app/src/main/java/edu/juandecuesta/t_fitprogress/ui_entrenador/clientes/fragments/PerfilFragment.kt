@@ -12,15 +12,7 @@ import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PerfilFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PerfilFragment : Fragment() {
 
     private lateinit var binding:FragmentPerfilBinding

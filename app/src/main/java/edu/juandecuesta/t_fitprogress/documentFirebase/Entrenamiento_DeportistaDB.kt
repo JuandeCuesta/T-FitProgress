@@ -1,10 +1,9 @@
-package edu.juandecuesta.t_fitprogress.model
+package edu.juandecuesta.t_fitprogress.documentFirebase
 
 import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.*
 
-class Entrenamiento_Deportista: Serializable {
+class Entrenamiento_DeportistaDB: Serializable {
 
     var fecha: String = ""
         get() = field
@@ -12,9 +11,7 @@ class Entrenamiento_Deportista: Serializable {
             field = value
         }
 
-    var fechaFormat:Date?=null
-
-    var entrenamiento:Entrenamiento?=null
+    var entrenamiento:String=""
         get() = field
         set(value) {
             field = value

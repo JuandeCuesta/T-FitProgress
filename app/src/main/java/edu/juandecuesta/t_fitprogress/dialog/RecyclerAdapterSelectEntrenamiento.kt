@@ -61,7 +61,7 @@ class RecyclerAdapterSelectEntrenamiento: RecyclerView.Adapter<RecyclerAdapterSe
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = entrenamientos.get(position)
         holder.bind(item,context)
-        holder.itemView.setBackgroundColor(if (itemSelected.id == item.id) Color.GREEN else Color.TRANSPARENT)
+        holder.itemView.setBackgroundColor(if (itemSelected.id == item.id) Color.parseColor("#F9B60E") else Color.TRANSPARENT)
         holder.itemView.setOnClickListener {
             itemSelected = item
             notifyDataSetChanged()
