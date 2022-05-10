@@ -35,5 +35,5 @@ class Deportista:Usuario(){
             field = value
         }
     var evoluacionFisica: MutableList<CondicionFisica> = arrayListOf()
-    var entrenamientos: MutableList<Entrenamiento_DeportistaDB> = arrayListOf()
+    var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
 }

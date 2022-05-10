@@ -87,7 +87,7 @@ class HistorialFragment : Fragment() {
                         for (entre:Entrenamiento_DeportistaDB in deportistaDB.entrenamientos!!){
 
                             val entreno = Entrenamiento_Deportista()
-
+                            entreno.deportista = deportistaDB
                             val sdf = SimpleDateFormat("dd/MM/yyyy")
                             entreno.fechaFormat = sdf.parse(entre.fecha)
 

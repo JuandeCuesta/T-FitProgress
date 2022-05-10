@@ -109,7 +109,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/icon_ejerc_black" />
+                    app:srcCompat="@drawable/ic_baseline_check_circle_24" />
 
             </androidx.cardview.widget.CardView>
 

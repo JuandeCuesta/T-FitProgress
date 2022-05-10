@@ -9,14 +9,66 @@
     tools:context=".calendario.CalendarioActivity">
 
 
-    <CalendarView
+
+    <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:minDate="01/01/2020"
-        android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:datePicker="true"
+        app:eventsEnabled="true"
+        app:headerColor="@color/tabSelected"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:selectionColor="@color/mostaza_500"
+        app:todayLabelColor="@color/mostaza_500" />
+
+    <TextView
+        android:id="@+id/txtFechaSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:text="22/10/2022"
+        android:textColor="@color/azul_marino"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEntrenamientoFecha"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtFechaSelect" />
+
+    <TextView
+        android:id="@+id/tvInfoRV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_edittext"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/msgRecyclerHome"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/rvEntrenamientoFecha"
+        app:layout_constraintStart_toStartOf="@id/rvEntrenamientoFecha"
+        app:layout_constraintTop_toBottomOf="@+id/txtFechaSelect" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

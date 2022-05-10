@@ -44,15 +44,32 @@
     <string name="tvFechaActual">Hoy - %1$s</string>
     <string name="edad">%1$d años</string>
 
-    <string-array name="nivel_experiencia">
-        <item><u>Experiencia previa*</u></item>
-        <item>Ninguna</item>
-        <item>Baja</item>
-        <item>Media</item>
-        <item>Alta</item>
-    </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="m_guardar">Guardar</string>
+
+    <string name="material_calendar_monday">L</string>
+    <string name="material_calendar_tuesday">M</string>
+    <string name="material_calendar_wednesday">X</string>
+    <string name="material_calendar_thursday">J</string>
+    <string name="material_calendar_friday">V</string>
+    <string name="material_calendar_saturday">S</string>
+    <string name="material_calendar_sunday">D</string>
+
+    <array name="material_calendar_months_array">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </array>
+
 
 </resources>

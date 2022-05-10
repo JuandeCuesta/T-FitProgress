@@ -1,10 +1,13 @@
 package edu.juandecuesta.t_fitprogress.model
 
+import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
 class Entrenamiento_Deportista: Serializable {
+
+    var deportista:DeportistaDB = DeportistaDB()
 
     var fecha: String = ""
         get() = field

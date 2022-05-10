@@ -51,6 +51,21 @@ class Functions {
     }
 
 
+    fun calcularEntreFechas (f1:String,f2:String):Int{
+        val fecha: Calendar = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate:Date = sdf.parse(f1)
+        fecha.time = currentDate
+        val currentDateEnMillis = fecha.timeInMillis
+
+        var fecha2: Calendar = Calendar.getInstance()
+        val date:Date = sdf.parse(f2)
+        fecha2.time = date
+        val dateEnMillis = fecha2.timeInMillis
+
+        return currentDateEnMillis.compareTo(dateEnMillis)
+    }
+
     fun calcularEdad (fecha:String):Int{
         val dia = fecha.split("/")[0].toInt()
         val mes = fecha.split("/")[1].toInt()
