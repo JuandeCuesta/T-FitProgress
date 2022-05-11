@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
                         android:layout_weight="1"
-                        android:text="Tomar foto"
+                        android:text="@string/tomar_foto"
                         android:backgroundTint="#689F38"
                         app:icon="@drawable/ic_menu_camera" />
 
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:layout_weight="1"
-                        android:text="Abrir galeria"
+                        android:text="@string/abrir_galeria"
                         android:backgroundTint="#689F38"
                         app:icon="@drawable/ic_menu_gallery" />
                 </LinearLayout>
@@ -163,7 +163,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
-                    android:hint="URL video Youtube"
+                    android:hint="@string/url_video_youtube"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
                     app:endIconMode="clear_text"
@@ -182,7 +182,7 @@
                     android:id="@+id/btnVerVideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Visualizar video" />
+                    android:text="@string/visualizar_video" />
             </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlGrupoMuscular"
@@ -263,7 +263,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Guardar ejercicio"
+        android:text="@string/guardar_ejercicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -298,7 +298,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/custom_text_reload"
             android:padding="10dp"
-            android:text="Guardando cambios ..."
+            android:text="@string/guardando_cambios"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"

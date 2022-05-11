@@ -55,6 +55,27 @@
     <string name="material_calendar_friday">V</string>
     <string name="material_calendar_saturday">S</string>
     <string name="material_calendar_sunday">D</string>
+    <string name="nombre_del_entrenamiento">Nombre del entrenamiento*</string>
+    <string name="tipo_de_entrenamiento">Tipo de entrenamiento*</string>
+    <string name="descripci_n_del_entrenamiento">Descripción del entrenamiento</string>
+    <string name="series">Series*</string>
+    <string name="repeticiones">Repeticiones*</string>
+    <string name="descanso_seg">Descanso (seg)</string>
+    <string name="a_adir_ejercicio">Añadir ejercicio</string>
+    <string name="debes_a_adir_alg_n_ejercicio">Debes añadir algún ejercicio</string>
+    <string name="guardar_entrenamiento">Guardar entrenamiento</string>
+    <string name="guardando_cambios">Guardando cambios …</string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="nombre_del_ejercicio">Nombre del ejercicio</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="abrir_galeria">Abrir galeria</string>
+    <string name="quitar_imagen">Quitar imagen</string>
+    <string name="url_video_youtube">URL video Youtube</string>
+    <string name="visualizar_video">Visualizar video</string>
+    <string name="grupo_muscular">Grupo muscular</string>
+    <string name="tipo_de_ejercicio">Tipo de ejercicio</string>
+    <string name="instrucciones">Instrucciones</string>
+    <string name="guardar_ejercicio">Guardar ejercicio</string>
 
     <array name="material_calendar_months_array">
         <item>Enero</item>
