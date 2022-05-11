@@ -1,14 +1,18 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.home
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import kotlin.collections.ArrayList
 
 class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEntrenador.ViewHolder>() {
@@ -76,7 +80,7 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
                         .centerInside()
                         .into(binding.imageEntren)
                 }
-                "Potencia" -> {
+                "Fuerza" -> {
                     Glide.with(context)
                         .load(R.drawable.potencia)
                         .centerInside()
@@ -94,12 +98,7 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
                         .centerInside()
                         .into(binding.imageEntren)
                 }
-                "Hipertrofia" -> {
-                    Glide.with(context)
-                        .load(R.drawable.hipertrofia)
-                        .centerInside()
-                        .into(binding.imageEntren)
-                }
+
                 else -> {
                     Glide.with(context)
                         .load(R.drawable.prueba)
@@ -122,12 +121,14 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
                 }
             }
 
-            /*itemView.setOnClickListener {
-                val entrenIntent = Intent (context, EditEntrenamientoActivity::class.java).apply {
-                    putExtra("entrenamiento", entrenamientoDeportista.entrenamiento)
+            itemView.setOnClickListener {
+
+                val deportIntent = Intent (context, ShowClientActivity::class.java).apply {
+                    putExtra("deportista", entrenamientoDeportista.deportista)
                 }
-                ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
-            }*/
+                ContextCompat.startActivity(context,deportIntent, Bundle.EMPTY)
+
+            }
         }
 
     }

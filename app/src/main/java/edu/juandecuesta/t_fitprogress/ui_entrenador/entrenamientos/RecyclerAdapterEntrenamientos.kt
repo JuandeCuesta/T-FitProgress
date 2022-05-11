@@ -85,7 +85,7 @@ class RecyclerAdapterEntrenamientos:RecyclerView.Adapter<RecyclerAdapterEntrenam
                         .centerInside()
                         .into(binding.imageEntren)
                 }
-                "Potencia" -> {
+                "Fuerza" -> {
                     Glide.with(context)
                         .load(R.drawable.potencia)
                         .centerInside()
@@ -103,12 +103,7 @@ class RecyclerAdapterEntrenamientos:RecyclerView.Adapter<RecyclerAdapterEntrenam
                         .centerInside()
                         .into(binding.imageEntren)
                 }
-                "Hipertrofia" -> {
-                    Glide.with(context)
-                        .load(R.drawable.hipertrofia)
-                        .centerInside()
-                        .into(binding.imageEntren)
-                }
+
                 else -> {
                     Glide.with(context)
                         .load(R.drawable.prueba)

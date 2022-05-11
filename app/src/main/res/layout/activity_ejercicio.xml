@@ -135,6 +135,7 @@
                         android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         android:text="Tomar foto"
+                        android:backgroundTint="#689F38"
                         app:icon="@drawable/ic_menu_camera" />
 
                     <Button
@@ -144,6 +145,7 @@
                         android:layout_marginStart="4dp"
                         android:layout_weight="1"
                         android:text="Abrir galeria"
+                        android:backgroundTint="#689F38"
                         app:icon="@drawable/ic_menu_gallery" />
                 </LinearLayout>
             </LinearLayout>
@@ -202,27 +204,32 @@
                     android:gravity="start"
                     android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlTipoEjerc"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tipo de ejercicio*"
-                app:boxStrokeWidth="0dp"
                 android:layout_marginVertical="4dp"
+                android:hint="Tipo de ejercicios*"
+                app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                app:endIconMode="clear_text"
+                app:endIconMode="dropdown_menu"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/etTipoEjerc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_edittext"
-                    android:gravity="start"
-                    android:imeOptions="actionDone"
-                    android:selectAllOnFocus="true"
-                    android:singleLine="true" />
+                    android:gravity="fill_vertical"
+                    android:inputType="textAutoComplete"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -256,7 +263,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/blue_700"
         android:text="Guardar ejercicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
 
     companion object{
-        lateinit var entrenador: EntrenadorDB
+         var entrenador: EntrenadorDB = EntrenadorDB()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

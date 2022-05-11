@@ -17,5 +17,6 @@ class DeportistaDB:Serializable {
     var descripcionPersonal = ""
     var objetivo = ""
     var fechacreacion = ""
+    var urlImagen = ""
 
 }

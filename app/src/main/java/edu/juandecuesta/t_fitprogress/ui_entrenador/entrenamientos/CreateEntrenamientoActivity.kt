@@ -30,6 +30,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
     private var adapterList = addEjercAdapter()
 
     var ejercicios: MutableList<Ejercicio> = arrayListOf()
+    var copy: MutableList<Ejercicio> = arrayListOf()
     val itemsSeleccionados: ArrayList<Int> = ArrayList()
     var ejerciciosSelect: MutableList<Ejercicio> = arrayListOf()
 
@@ -39,7 +40,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val type = arrayOf("Resistencia", "Potencia", "Flexibilidad", "Velocidad", "Hipertrofia")
+        val type = arrayOf("Resistencia", "Fuerza", "Flexibilidad", "Velocidad")
 
         val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
         binding.ettipoEntren.setAdapter(adapter)
@@ -52,7 +53,17 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
 
 
         binding.btnAddEjerc.setOnClickListener {
-            if (ejercicios.size > 0){
+            if (TextUtils.isEmpty(binding.ettipoEntren.text.toString())){
+                binding.tlTipoEntren.error = "Información necesaria para seleccionar ejercicios"
+            } else{
+                binding.tlTipoEntren.error = null
+                copy
+                ejercicios.clear()
+                for (e in copy){
+                    if (e.tipo == binding.ettipoEntren.text.toString()){
+                        ejercicios.add(e)
+                    }
+                }
                 mostrarDialog()
             }
         }
@@ -132,6 +143,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
             valido = false
         } else binding.tlRep.error = null
 
+
         if (ejerciciosSelect.size == 0){
             binding.txtMsgAlerta.isVisible = true
             valido = false
@@ -154,7 +166,9 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
 
                 db.collection("ejercicios").document(id).get().addOnSuccessListener {
                         ejerc ->
-                    ejerc.toObject(Ejercicio::class.java)?.let { it1 -> ejercicios.add(it1) }
+                    ejerc.toObject(Ejercicio::class.java)?.let { it1 ->
+                        ejercicios.add(it1)
+                        copy.add(it1)}
                 }
             }
         }
@@ -165,6 +179,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
         var items = arrayOfNulls<CharSequence>(ejercicios.size)
         for (i in 0 until ejercicios.size){
             items[i] = ejercicios[i].nombre
+
         }
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Ejercicios")

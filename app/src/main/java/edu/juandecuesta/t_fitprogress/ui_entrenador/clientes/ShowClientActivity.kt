@@ -5,8 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import androidx.core.view.isVisible
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
@@ -17,6 +17,7 @@ import edu.juandecuesta.t_fitprogress.databinding.ActivityShowClientBinding
 import edu.juandecuesta.t_fitprogress.dialog.FullDialogActivity
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.mensajes.CreateMessageActivity
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.CondicionFragment
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.HistorialFragment
@@ -115,12 +116,24 @@ class ShowClientActivity : AppCompatActivity() {
                 }
             }
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflate = menuInflater
+        inflate.inflate(R.menu.menu_show_deportista, menu)
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             android.R.id.home -> {
                 onBackPressed()
 
+                true
+            }
+            R.id.sendMessage -> {
+                val messageIntent = Intent (this, CreateMessageActivity::class.java).apply {
+                    putExtra("deportista", deportista)
+                }
+                startActivity(messageIntent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private val db = FirebaseFirestore.getInstance()
     var ejerciciosDefecto:MutableList<Ejercicio> = arrayListOf()
-    var entrenamientosDefecto:MutableList<Entrenamiento> = arrayListOf()
+    val entrenador = EntrenadorDB()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.etExperiencia.setAdapter(adapter)
 
-        //cargarEjercicios()
+        cargarEjercicios()
 
         binding.rbDeportista.setOnClickListener {
             if (binding.rbDeportista.isChecked){
@@ -71,36 +71,26 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (verificarCamposEntrenador() && comprobarPassword()){
 
+
+
                     val email = binding.etemail.text.toString()
                     val password = binding.etpassword1.text.toString()
-                    val entrenador = EntrenadorDB()
+
                     entrenador.nombre = binding.etNombre.text.toString()
                     entrenador.apellido = binding.apellido1.text.toString()
                     entrenador.email = email
+                    ejerciciosDefecto.forEach { e -> entrenador.ejercicios.add(e.id) }
 
                     //Creamos la autentificacion y si se crea correctamente añadimos los siguientes datos
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                         if (it.isSuccessful){
 
-                            //Guardar ejercicios por defecto
-
-                            //Almacenamos el resto de datos, si esta correcto volvemos a la pagina de login
-                            db.collection("users").document(email).set(entrenador).addOnSuccessListener {
-
-                                Toast.makeText(this, "El entrenador ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
-                                FirebaseAuth.getInstance().signOut()
-                                onBackPressed()
-                            }.addOnFailureListener {
-                                //Si ha habido algun error se elimina el usuario creado
-                                FirebaseAuth.getInstance().currentUser?.delete()
-                                    ?.addOnCompleteListener {
-                                        Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
-                                    }
-                            }
+                            guardarEntrenador(entrenador)
 
                         }else{
                             Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
+                            eliminarEjercicios()
                         }
                     }
                 }
@@ -137,6 +127,7 @@ class RegisterActivity : AppCompatActivity() {
                                                     .update("deportistas", deportistas).addOnSuccessListener {
                                                         Toast.makeText(this, "El deportista ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
                                                         FirebaseAuth.getInstance().signOut()
+                                                        eliminarEjercicios()
                                                         onBackPressed()
 
                                                     }.addOnFailureListener { e ->
@@ -172,12 +163,59 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun cargarEjercicios(){
+    private fun eliminarEjercicios() {
+        for (e in ejerciciosDefecto){
+            db.collection("ejercicios").document(e.id).delete()
+        }
+    }
+
+    private fun guardarEjercicios() {
+
+        for (e in ejerciciosDefecto){
+            db.collection("ejercicios").add(e).addOnSuccessListener { doc->
+                doc.get().addOnSuccessListener {
+                    entrenador.ejercicios.add(doc.id)
+                    db.collection("ejercicios").document(doc.id).update("id",doc.id)
+                }
+            }
+        }
+    }
+
+    private fun guardarEntrenador(entrenador: EntrenadorDB) {
+        //Almacenamos el resto de datos, si esta correcto volvemos a la pagina de login
+        db.collection("users").document(entrenador.email).set(entrenador).addOnSuccessListener {
+
+            Toast.makeText(this, "El entrenador ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
+            FirebaseAuth.getInstance().signOut()
+            onBackPressed()
+        }.addOnFailureListener {
+            //Si ha habido algun error se elimina el usuario creado
+            FirebaseAuth.getInstance().currentUser?.delete()
+                ?.addOnCompleteListener {
+                    Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
+                }
+        }
+    }
+
+    private fun cargarEjercicios(){
         db.collection("ejerciciosdefecto").get().addOnSuccessListener {
             docs ->
-            docs.documents.forEach { e -> ejerciciosDefecto.add(e.toObject(Ejercicio::class.java)!!) }
+            docs.documents.forEach {
+                e -> val ejercicio = e.toObject(Ejercicio::class.java)
+                if (ejercicio != null) {
+                    db.collection("ejercicios").add(ejercicio).addOnSuccessListener {
+                        doc -> doc.get().addOnSuccessListener {
+                            db.collection("ejercicios").document(doc.id).update("id", doc.id).addOnSuccessListener {
+                                ejercicio.id = doc.id
+                                ejerciciosDefecto.add(ejercicio)
+                            }
+                        }
+                    }
+                }
+
+            }
         }
-    }*/
+    }
 
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->

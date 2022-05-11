@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityEjercicioBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity.Companion.entrenador
@@ -51,6 +53,10 @@ class EjercicioActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        val type = arrayOf("Resistencia", "Fuerza", "Flexibilidad", "Velocidad")
+
+        val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
+        binding.etTipoEjerc.setAdapter(adapter)
 
         binding.rbVideo.setOnClickListener {
             if (binding.rbVideo.isChecked){

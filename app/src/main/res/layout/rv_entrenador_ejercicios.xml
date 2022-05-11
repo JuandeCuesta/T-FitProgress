@@ -60,7 +60,7 @@
                 android:paddingHorizontal="6dp"
                 android:text="Press de banca"
                 android:textColor="@color/azul_marino"
-                android:textSize="24dp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
@@ -86,7 +86,7 @@
                     android:padding="3dp"
                     android:text="Pectoral"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/tvTipoEj"
@@ -96,7 +96,7 @@
                     android:padding="3dp"
                     android:text="Fuerza"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
             </LinearLayout>
 

@@ -78,6 +78,7 @@
                         android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         android:text="Tomar foto"
+                        android:backgroundTint="#689F38"
                         app:icon="@drawable/ic_menu_camera" />
 
                     <Button
@@ -87,6 +88,7 @@
                         android:layout_marginStart="4dp"
                         android:layout_weight="1"
                         android:text="Abrir galeria"
+                        android:backgroundTint="#689F38"
                         app:icon="@drawable/ic_menu_gallery" />
 
                 </LinearLayout>
@@ -230,7 +232,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/blue_700"
         android:text="Guardar cambios"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
