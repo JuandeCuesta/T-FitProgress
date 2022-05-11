@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.mensajes
+package edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes
 
 import android.app.AlertDialog
 import android.content.ContentValues
@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,12 +20,9 @@ import edu.juandecuesta.t_fitprogress.databinding.FragmentMensajesBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Chat
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.RecyclerAdapterClientesEntrenador
-import android.widget.Toast
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.core.content.ContextCompat
 
 
 class MensajesFragment:Fragment() {

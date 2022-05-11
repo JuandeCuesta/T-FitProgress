@@ -1,9 +1,8 @@
-package edu.juandecuesta.t_fitprogress.dialog
+package edu.juandecuesta.t_fitprogress.ui_entrenador.dialog
 
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 

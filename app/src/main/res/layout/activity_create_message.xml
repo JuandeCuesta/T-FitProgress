@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mensajes.CreateMessageActivity"
+    tools:context=".ui_entrenador.mensajes.CreateMessageActivity"
     android:background="@color/blue_200">
 
 

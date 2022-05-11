@@ -17,15 +17,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.calendario.CalendarioActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.calendario.CalendarioActivity
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity.Companion.entrenador
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
-import edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.CreateEntrenamientoActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 

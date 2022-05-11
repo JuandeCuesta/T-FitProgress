@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.calendario
+package edu.juandecuesta.t_fitprogress.ui_entrenador.calendario
 
 import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity.Companion.entrenador
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeEntrenador
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat

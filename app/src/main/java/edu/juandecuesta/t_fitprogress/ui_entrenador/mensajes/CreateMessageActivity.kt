@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.mensajes
+package edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes
 
 import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity

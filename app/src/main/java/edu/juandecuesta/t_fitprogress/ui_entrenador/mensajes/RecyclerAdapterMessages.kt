@@ -1,23 +1,14 @@
-package edu.juandecuesta.t_fitprogress.mensajes
+package edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes
 
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.RvChatBinding
-import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvMensajesBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.model.Chat
 import edu.juandecuesta.t_fitprogress.model.Mensaje
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class RecyclerAdapterMessages : RecyclerView.Adapter<RecyclerAdapterMessages.ViewHolder>() {
@@ -87,15 +78,6 @@ class RecyclerAdapterMessages : RecyclerView.Adapter<RecyclerAdapterMessages.Vie
                 }
             }
 
-
-            /*itemView.setOnClickListener {
-
-                val deportIntent = Intent (context, ShowClientActivity::class.java).apply {
-                    putExtra("deportista", deportista)
-                }
-                ContextCompat.startActivity(context,deportIntent, Bundle.EMPTY)
-
-            }*/
         }
 
     }

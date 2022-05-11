@@ -14,10 +14,10 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityShowClientBinding
-import edu.juandecuesta.t_fitprogress.dialog.FullDialogActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.dialog.FullDialogActivity
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.mensajes.CreateMessageActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes.CreateMessageActivity
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.CondicionFragment
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.HistorialFragment

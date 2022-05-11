@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.mensajes
+package edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes
 
 import android.content.Context
 import android.content.Intent
@@ -11,12 +11,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.ActivityCreateMessageBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvChatBinding
-import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Chat
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class RecyclerAdapterChat : RecyclerView.Adapter<RecyclerAdapterChat.ViewHolder>() {

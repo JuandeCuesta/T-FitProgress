@@ -1,21 +1,13 @@
-package edu.juandecuesta.t_fitprogress.dialog
+package edu.juandecuesta.t_fitprogress.ui_entrenador.dialog
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
-import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.RvEntrenamientosBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvSelectEntrenBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
-import edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.EditEntrenamientoActivity
 
 class RecyclerAdapterSelectEntrenamiento: RecyclerView.Adapter<RecyclerAdapterSelectEntrenamiento.ViewHolder>() {
     lateinit var context: Context

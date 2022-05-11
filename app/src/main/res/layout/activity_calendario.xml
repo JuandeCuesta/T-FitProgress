@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/blue_200"
     android:transitionGroup="false"
-    tools:context=".calendario.CalendarioActivity">
+    tools:context=".ui_entrenador.calendario.CalendarioActivity">
 
 
 

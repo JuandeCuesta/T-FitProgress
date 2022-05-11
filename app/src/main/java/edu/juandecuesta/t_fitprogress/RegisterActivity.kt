@@ -3,28 +3,20 @@ package edu.juandecuesta.t_fitprogress
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityRegisterBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.model.Entrenador
-import android.widget.DatePicker
 
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.content.Intent
 import android.widget.ArrayAdapter
 
-import edu.juandecuesta.t_fitprogress.dialog.DatePickerFragment
+import edu.juandecuesta.t_fitprogress.ui_entrenador.dialog.DatePickerFragment
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.model.Entrenamiento
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
-import java.util.*
 
 
 class RegisterActivity : AppCompatActivity() {
