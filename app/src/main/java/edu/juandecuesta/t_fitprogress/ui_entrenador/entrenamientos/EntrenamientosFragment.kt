@@ -9,7 +9,6 @@ import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
@@ -18,11 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEntrenamientosBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
-import edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjercicioActivity
-import edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.RecyclerAdapterEjerciciosEntrenador
+import edu.juandecuesta.t_fitprogress.MainActivity
 
 class EntrenamientosFragment:Fragment() {
     private lateinit var entrenamientosViewModel: EntrenamientosViewModel
@@ -95,7 +91,7 @@ class EntrenamientosFragment:Fragment() {
 
         binding.tvSinEntrenam.isVisible = true
 
-        if (MainActivity.entrenador.entrenamientos.size > 0){
+        if (MainActivity.entrenadorMain.entrenamientos.size > 0){
 
             binding.tvSinEntrenam.isVisible = false
 

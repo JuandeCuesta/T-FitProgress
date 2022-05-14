@@ -38,10 +38,9 @@ class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.Vi
         val item = entrenamientos.get(position)
         if (position > 0){
             val itemPrevious = entrenamientos[position - 1]
-            if (item.fechaFormat == itemPrevious.fechaFormat){
-                item.fecha = ""
-            }
-        }
+            if (item.primerodeldia || item.fechaFormat != itemPrevious.fechaFormat) item.primerodeldia = true
+        } else item.primerodeldia = true
+
 
 
         holder.bind(item,context)
@@ -59,10 +58,7 @@ class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.Vi
 
             binding.txtFecha.text = entrenamientoDeportista.fecha
 
-            if (entrenamientoDeportista.fecha == ""){
-                binding.txtFecha.isVisible = false
-            }
-
+            binding.txtFecha.isVisible = entrenamientoDeportista.primerodeldia
 
             binding.tvNombreEnt.text = entrenamientoDeportista.entrenamiento!!.nombre
             binding.tvtipoEnt.text = ("Entrenamiento de ${entrenamientoDeportista.entrenamiento!!.tipo}")

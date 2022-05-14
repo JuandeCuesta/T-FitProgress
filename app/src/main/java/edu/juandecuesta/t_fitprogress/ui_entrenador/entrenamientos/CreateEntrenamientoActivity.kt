@@ -1,21 +1,17 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos
 
 import android.app.AlertDialog
-import android.app.PendingIntent.getActivity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Adapter
 import android.widget.ArrayAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityCreateEntrenamientoBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity.Companion.entrenador
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
 import android.widget.Toast
 
-import android.content.DialogInterface
 import android.content.DialogInterface.OnMultiChoiceClickListener
 import android.text.TextUtils
 import androidx.core.view.isVisible
@@ -94,7 +90,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
                 doc->
                 val id = doc.id
                 db.collection("entrenamientos").document(id).update("id", id).addOnSuccessListener {
-                    db.collection("users").document(entrenador.email).get().addOnSuccessListener {
+                    db.collection("users").document(entrenadorMain.email).get().addOnSuccessListener {
                         document ->
                         var entrenGuardados:MutableList<String> = arrayListOf()
 
@@ -104,7 +100,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
 
                         entrenGuardados.add(id)
 
-                        db.collection("users").document(entrenador.email)
+                        db.collection("users").document(entrenadorMain.email)
                             .update("entrenamientos", entrenGuardados).addOnSuccessListener{
                                 Toast.makeText(this, "Entrenamiento creado con éxito", Toast.LENGTH_LONG).show()
                                 onBackPressed()
@@ -155,7 +151,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
 
 
     private fun cargarEjercicios(){
-        db.collection("users").document(entrenador.email).get().addOnSuccessListener {
+        db.collection("users").document(entrenadorMain.email).get().addOnSuccessListener {
                 doc ->
             var idEjercicios: MutableList<String> = arrayListOf()
             if (doc.get("ejercicios") != null){

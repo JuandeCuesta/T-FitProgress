@@ -17,6 +17,8 @@ class Entrenamiento_Deportista: Serializable {
 
     var fechaFormat:Date?=null
 
+    var primerodeldia:Boolean = false
+
     var entrenamiento:Entrenamiento?=null
         get() = field
         set(value) {

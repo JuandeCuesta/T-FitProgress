@@ -12,8 +12,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -23,15 +23,13 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.android.youtube.player.YouTubeStandalonePlayer
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityEditEjercicioBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
-import edu.juandecuesta.t_fitprogress.utils.GestionPermisos
 import java.io.File
 import java.util.*
 
@@ -63,6 +61,11 @@ class EditEjercicioActivity : AppCompatActivity() {
         this.ejercicio = intent.getSerializableExtra("ejercicio") as Ejercicio
 
         setTitle(ejercicio.nombre)
+
+        val type = arrayOf("Resistencia", "Fuerza", "Flexibilidad", "Velocidad")
+
+        val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
+        binding.etTipoEjerc.setAdapter(adapter)
 
         cargarDatos()
 
@@ -226,7 +229,7 @@ class EditEjercicioActivity : AppCompatActivity() {
     }
 
     fun delete(){
-        db.collection("users").document(MainActivity.entrenador.email).get().addOnSuccessListener{doc->
+        db.collection("users").document(MainActivity.entrenadorMain.email).get().addOnSuccessListener{ doc->
 
             var ejercicios:MutableList<String> = arrayListOf()
 
@@ -235,7 +238,7 @@ class EditEjercicioActivity : AppCompatActivity() {
                 ejercicios.remove(ejercicio.id)
             }
 
-            db.collection("users").document(MainActivity.entrenador.email)
+            db.collection("users").document(MainActivity.entrenadorMain.email)
                 .update("ejercicios", ejercicios).addOnSuccessListener{
                     Toast.makeText(this, "El ejercicio ha sido eliminado con éxito", Toast.LENGTH_LONG).show()
 
@@ -318,7 +321,7 @@ class EditEjercicioActivity : AppCompatActivity() {
         }
         binding.etURLVideo.isFocusableInTouchMode = false
         binding.etGrupoMuscular.isFocusableInTouchMode = false
-        binding.etTipoEjerc.isFocusableInTouchMode = false
+        binding.etTipoEjerc.isClickable = false
 
         binding.etInstrucciones.clearFocus()
         binding.etInstrucciones.isFocusableInTouchMode = false
@@ -333,7 +336,7 @@ class EditEjercicioActivity : AppCompatActivity() {
         binding.linLayVideo.isVisible = true
         binding.etURLVideo.isFocusableInTouchMode = true
         binding.etGrupoMuscular.isFocusableInTouchMode = true
-        binding.etTipoEjerc.isFocusableInTouchMode = true
+        binding.etTipoEjerc.isClickable = true
         binding.tlInstrucciones.isVisible = true
         binding.etInstrucciones.isFocusableInTouchMode = true
         binding.btnGuardar.isVisible = true

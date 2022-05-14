@@ -172,27 +172,29 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tlTipoEjerc"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
                     android:layout_weight="1"
-                    android:hint="@string/tipo_de_ejercicio"
+                    android:layout_marginStart="2dp"
+                    android:hint="Tipo de ejercicio"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
-                    app:endIconMode="clear_text"
+                    app:endIconMode="dropdown_menu"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/etTipoEjerc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_edittext"
-                        android:gravity="start"
-                        android:imeOptions="actionDone"
-                        android:selectAllOnFocus="true"
-                        android:singleLine="true"
-                        android:focusableInTouchMode="false"/>
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:inputType="textAutoComplete"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="8dp"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -101,7 +101,7 @@ class MensajesFragment:Fragment() {
                                 }
 
                                 if (doc != null){
-
+                                    deportistas.clear()
                                     for (dc in doc.documentChanges){
                                         when (dc.type){
                                             DocumentChange.Type.ADDED -> {
@@ -187,6 +187,8 @@ class MensajesFragment:Fragment() {
 
                 if (doc != null){
                     chats.clear()
+                    setUpRecyclerView()
+                    recyclerAdapter.notifyDataSetChanged()
                     for (dc in doc.documentChanges){
                         when (dc.type){
                             DocumentChange.Type.ADDED -> {
@@ -194,11 +196,13 @@ class MensajesFragment:Fragment() {
 
                                 db.collection("users").whereEqualTo(FieldPath.documentId(),dc.document.id).addSnapshotListener { value, error ->
                                     if (value != null){
-                                        val deportistaDB = value.documents[0].toObject(DeportistaDB::class.java)
-                                        chat.deportista = deportistaDB!!
-                                        chats.add(chat)
-                                        setUpRecyclerView()
-                                        recyclerAdapter.notifyDataSetChanged()
+                                        if (value.documents.size > 0){
+                                            val deportistaDB = value.documents[0].toObject(DeportistaDB::class.java)
+                                            chat.deportista = deportistaDB!!
+                                            chats.add(chat)
+                                            setUpRecyclerView()
+                                            recyclerAdapter.notifyDataSetChanged()
+                                        }
                                     }
                                 }
 
@@ -215,7 +219,6 @@ class MensajesFragment:Fragment() {
                                                 chats[i] = chat
                                             }
                                         }
-
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }

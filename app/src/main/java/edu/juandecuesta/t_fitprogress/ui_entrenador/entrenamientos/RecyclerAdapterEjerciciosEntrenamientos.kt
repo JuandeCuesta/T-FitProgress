@@ -8,23 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ListviewEjerciciosBinding
-import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
-import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorEjerciciosBinding
-import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.model.Deportista
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EditEjercicioActivity
-import edu.juandecuesta.t_fitprogress.utils.Functions
-import java.text.SimpleDateFormat
-import java.time.Year
-import java.util.*
 import kotlin.collections.ArrayList
 
 class RecyclerAdapterEjerciciosEntrenamientos: RecyclerView.Adapter<RecyclerAdapterEjerciciosEntrenamientos.ViewHolder>() {

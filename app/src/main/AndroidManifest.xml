@@ -20,13 +20,13 @@
         <activity
             android:name=".ui_entrenador.mensajes.CreateMessageActivity"
             android:exported="false"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".ui_entrenador.calendario.CalendarioActivity"
             android:exported="false"
             android:label="@string/calendario_name"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -38,34 +38,40 @@
         <activity
             android:name=".ui_entrenador.clientes.ShowClientActivity"
             android:exported="false"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui_deportista.entrenamientos.ShowEntrenamientoActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui_entrenador.entrenamientos.EditEntrenamientoActivity"
             android:exported="false"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui_entrenador.entrenamientos.CreateEntrenamientoActivity"
             android:exported="false"
             android:label="@string/entrenamiento_name"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui_entrenador.ejercicios.EditEjercicioActivity"
             android:exported="false"
             android:label="@string/ejercicios_name"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui_entrenador.ejercicios.EjercicioActivity"
             android:exported="false"
             android:label="@string/ejercicios_name"
-            android:parentActivityName=".ui_entrenador.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -89,13 +95,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui_entrenador.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="nosensor"
             android:theme="@style/Theme.TFitProgress.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="edu.juandecuesta.t_fitprogress.provider"

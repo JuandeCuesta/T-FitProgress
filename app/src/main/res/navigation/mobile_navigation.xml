@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
@@ -16,9 +16,6 @@
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ClientesFragment"
         android:label="@string/menu_clientes"
         tools:layout="@layout/ent_fragment_clientes" >
-        <action
-            android:id="@+id/action_nav_clientes_to_showClients"
-            app:destination="@id/showClients" />
     </fragment>
 
     <fragment
@@ -26,12 +23,6 @@
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjerciciosFragment"
         android:label="@string/menu_ejercicios"
         tools:layout="@layout/ent_fragment_ejercicios" >
-        <action
-            android:id="@+id/action_nav_ejercicios_to_addEjercicios"
-            app:destination="@id/addEjercicios" />
-        <action
-            android:id="@+id/action_nav_ejercicios_to_showEditEjercicio"
-            app:destination="@id/showEditEjercicio" />
     </fragment>
     <fragment
         android:id="@+id/nav_entrenamientos"
@@ -43,20 +34,27 @@
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes.MensajesFragment"
         android:label="@string/menu_mensajes"
         tools:layout="@layout/fragment_mensajes" />
-    <activity
-        android:id="@+id/addEjercicios"
-        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjercicioActivity"
-        android:label="@string/ejercicios_name"
-        tools:layout="@layout/activity_ejercicio"/>
-    <activity
-        android:id="@+id/showEditEjercicio"
-        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EditEjercicioActivity"
-        android:label="@string/ejercicios_name"
-        tools:layout="@layout/activity_edit_ejercicio"/>
-    <activity
-        android:id="@+id/showClients"
-        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity"
-        android:label="@string/ejercicios_name"
-        tools:layout="@layout/activity_show_client"/>
+
+    <fragment
+        android:id="@+id/nav_calendario_deportista"
+        android:name="edu.juandecuesta.t_fitprogress.ui_deportista.calendario.CalendarioFragment"
+        android:label="@string/calendario_name"
+        tools:layout="@layout/dep_fragment_calendario" />
+
+    <fragment
+        android:id="@+id/nav_evaluacion_deportista"
+        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjerciciosFragment"
+        android:label="@string/evaluacion_name"
+        tools:layout="@layout/ent_fragment_ejercicios" />
+    <fragment
+        android:id="@+id/nav_mensajes_deportista"
+        android:name="edu.juandecuesta.t_fitprogress.ui_deportista.mensajes.MensajesFragment"
+        android:label="@string/menu_mensajes"
+        tools:layout="@layout/dep_fragment_mensajes" />
+    <fragment
+        android:id="@+id/nav_perfil_deportista"
+        android:name="edu.juandecuesta.t_fitprogress.ui_deportista.perfil.PerfilFragment"
+        android:label="@string/menu_perfil"
+        tools:layout="@layout/dep_fragment_perfil" />
 
 </navigation>

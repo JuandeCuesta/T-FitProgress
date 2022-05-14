@@ -7,12 +7,10 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
 import edu.juandecuesta.t_fitprogress.databinding.ActivityLoginBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.model.Entrenador
-import edu.juandecuesta.t_fitprogress.utils.Functions
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,11 +42,8 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isSuccessful){
                         InicioSesion(email)
                     }else{
-                        Toast.makeText(this,"Error al autentificar el usuario",Toast.LENGTH_LONG).show()
-                        binding.username.text?.clear()
-                        binding.username.clearFocus()
-                        binding.password.text?.clear()
-                        binding.password.clearFocus()
+                        Toast.makeText(this,"Error al iniciar sesión",Toast.LENGTH_LONG).show()
+                        limpiarCampos()
 
                     }
                 }
@@ -61,6 +56,13 @@ class LoginActivity : AppCompatActivity() {
             startActivity(myIntent)
         }
 
+    }
+
+    private fun limpiarCampos (){
+        binding.username.text?.clear()
+        binding.username.clearFocus()
+        binding.password.text?.clear()
+        binding.password.clearFocus()
     }
 
 
@@ -87,11 +89,23 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showHomeEntrenador (entrenador: EntrenadorDB){
         val homeIntent:Intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("esentrenador", true)
             putExtra("entrenador", entrenador)
         }
         startActivity(homeIntent)
         finish()
     }
+
+    private fun showHomeDeportista (deportista: DeportistaDB){
+        val homeIntent:Intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("esentrenador", false)
+            putExtra("deportista", deportista)
+        }
+        startActivity(homeIntent)
+        finish()
+    }
+
+
 
     private fun limpiarErrores(){
         binding.tLusername.error = null
@@ -100,20 +114,40 @@ class LoginActivity : AppCompatActivity() {
 
     private fun InicioSesion (email:String){
         var entrenador = EntrenadorDB()
-        val deportista = DeportistaDB()
-
+        var deportista = DeportistaDB()
         db.collection("users").document(email).get()
             .addOnSuccessListener { doc ->
                 if (doc != null){
 
-                    if (doc.get("soyEntrenador") != null && doc.get("soyEntrenador") as Boolean){
+                    if (doc.get("soyEntrenador") != null){
+                        if (doc.get("soyEntrenador") as Boolean){
 
-                        entrenador = doc.toObject(EntrenadorDB::class.java)!!
-                        showHomeEntrenador(entrenador)
+                            entrenador = doc.toObject(EntrenadorDB::class.java)!!
+                            showHomeEntrenador(entrenador)
+                        }else {
+
+                            deportista = doc.toObject(DeportistaDB::class.java)!!
+
+                            if (!deportista.deshabilitada){
+                                showHomeDeportista(deportista)
+                            }else {
+                                val currentUser = FirebaseAuth.getInstance().currentUser
+                                currentUser?.delete()?.addOnCompleteListener {task ->
+                                    if (task.isSuccessful) {
+                                        db.collection("users").document(deportista.email).delete().addOnSuccessListener {
+                                            db.collection("chats").document(deportista.email).delete()
+                                            limpiarCampos ()
+                                            Toast.makeText(this,"Cuenta eliminada, si quieres volver a acceder debes volver a registrarte.",Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
+
                 }
             }
-
     }
+
 }
 

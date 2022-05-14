@@ -22,6 +22,24 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/t_fit_peque" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewimagendep"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:cardCornerRadius="100dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageViewDeportista"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@color/mostaza_500"
+            app:srcCompat="@drawable/ic_person_white" />
+
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/tvNombreUser"
         android:layout_width="match_parent"

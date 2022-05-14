@@ -11,5 +11,6 @@
     <color name="red">#A81818</color>
     <color name="azul_marino">#163D68</color>
     <color name="mostaza_200">#AFF9B60E</color>
+    <color name="mostaza_100">#F7CD66</color>
     <color name="gris">@android:color/darker_gray</color>
 </resources>

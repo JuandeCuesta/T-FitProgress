@@ -1,12 +1,14 @@
 package edu.juandecuesta.t_fitprogress.utils
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,6 +52,40 @@ class Functions {
         return currentDateEnMillis.compareTo(dateEnMillis)
     }
 
+    fun diaSemana (f:String, context:Context):String{
+        val fecha: Calendar = Calendar.getInstance()
+        val dia = f.split("/")[0].toInt()
+        val mes = f.split("/")[1].toInt()
+        val anyo = f.split("/")[2].toInt()
+        fecha.set(anyo,(mes-1), dia)
+        val diasemana = fecha.get(Calendar.DAY_OF_WEEK)
+        val array = context.resources.getStringArray(R.array.diasSemana)
+        val fSemana = "${array[diasemana-1]} - $f"
+        return fSemana
+    }
+
+    fun  ultimoDiaSemana():String{
+        val fecha: Calendar = Calendar.getInstance()
+        val f = mostrarFecha()
+        val dia = f.split("/")[0].toInt()
+        val mes = f.split("/")[1].toInt()
+        val anyo = f.split("/")[2].toInt()
+        fecha.set(anyo,(mes-1), dia)
+
+        val dayWeek = fecha.get(Calendar.DAY_OF_WEEK)
+
+        if (dayWeek == 1){
+            fecha.add(Calendar.DAY_OF_MONTH,-1)
+        }
+        val day = fecha.get(Calendar.DAY_OF_WEEK)
+        fecha.firstDayOfWeek = Calendar.MONDAY
+        fecha.add(Calendar.DATE, fecha.firstDayOfWeek - day)
+        fecha.add(Calendar.DATE, 6)
+
+
+        return "${fecha.get(Calendar.DAY_OF_MONTH)}" + "/${fecha.get(Calendar.MONTH) + 1}" +"/${fecha.get(Calendar.YEAR)}"
+
+    }
 
     fun calcularEntreFechas (f1:String,f2:String):Int{
         val fecha: Calendar = Calendar.getInstance()

@@ -18,5 +18,6 @@ class DeportistaDB:Serializable {
     var objetivo = ""
     var fechacreacion = ""
     var urlImagen = ""
+    var deshabilitada = false
 
 }

@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
@@ -82,6 +84,12 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
             {
                 binding.tvFecha.text = ""
             }
+
+            Glide.with(context)
+                .load(deportista.urlImagen)
+                .error(R.drawable.ic_person_white)
+                .into(binding.imageCliente)
+
 
             itemView.setOnClickListener {
 

@@ -25,7 +25,7 @@ import com.google.firebase.storage.FirebaseStorage
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityEjercicioBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity.Companion.entrenador
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import edu.juandecuesta.t_fitprogress.utils.GestionPermisos
 import java.io.File
@@ -164,7 +164,7 @@ class EjercicioActivity : AppCompatActivity() {
                 doc ->
                 val id = doc.id
                 db.collection("ejercicios").document(id).update("id",id).addOnSuccessListener {
-                    db.collection("users").document(entrenador.email).get().addOnSuccessListener {document->
+                    db.collection("users").document(entrenadorMain.email).get().addOnSuccessListener { document->
                         var ejercicios:MutableList<String> = arrayListOf()
 
                         if (document.get("ejercicios") != null){
@@ -173,7 +173,7 @@ class EjercicioActivity : AppCompatActivity() {
 
                         ejercicios.add(id)
 
-                        db.collection("users").document(entrenador.email)
+                        db.collection("users").document(entrenadorMain.email)
                             .update("ejercicios", ejercicios).addOnSuccessListener{
                                 Toast.makeText(this, "Ejercicio creado con éxito", Toast.LENGTH_LONG).show()
                                 onBackPressed()

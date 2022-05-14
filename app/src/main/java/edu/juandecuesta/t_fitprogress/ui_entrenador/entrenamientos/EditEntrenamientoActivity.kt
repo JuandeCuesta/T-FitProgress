@@ -22,7 +22,7 @@ import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityEditEntrenamientoBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class EditEntrenamientoActivity : AppCompatActivity() {
@@ -46,7 +46,7 @@ class EditEntrenamientoActivity : AppCompatActivity() {
         this.entrenamiento = intent.getSerializableExtra("entrenamiento") as Entrenamiento
         setTitle(entrenamiento.nombre)
         cargarDatos()
-        val type = arrayOf("Resistencia", "Potencia", "Flexibilidad", "Velocidad", "Hipertrofia")
+        val type = arrayOf("Resistencia", "Fuerza", "Flexibilidad", "Velocidad")
         val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
         binding.ettipoEntren.setAdapter(adapter)
 
@@ -132,7 +132,7 @@ class EditEntrenamientoActivity : AppCompatActivity() {
     }
 
     private fun cargarEjercicios(){
-        db.collection("users").document(MainActivity.entrenador.email).get().addOnSuccessListener {
+        db.collection("users").document(MainActivity.entrenadorMain.email).get().addOnSuccessListener {
                 doc ->
             var idEjercicios: MutableList<String> = arrayListOf()
             if (doc.get("ejercicios") != null){
@@ -340,7 +340,7 @@ class EditEntrenamientoActivity : AppCompatActivity() {
     }
 
     fun delete(){
-        db.collection("users").document(MainActivity.entrenador.email).get().addOnSuccessListener{doc->
+        db.collection("users").document(MainActivity.entrenadorMain.email).get().addOnSuccessListener{ doc->
 
             var entrenamientos:MutableList<String> = arrayListOf()
 
@@ -349,7 +349,7 @@ class EditEntrenamientoActivity : AppCompatActivity() {
                 entrenamientos.remove(entrenamiento.id)
             }
 
-            db.collection("users").document(MainActivity.entrenador.email)
+            db.collection("users").document(MainActivity.entrenadorMain.email)
                 .update("entrenamientos", entrenamientos).addOnSuccessListener{
                     Toast.makeText(this, "El entrenamiento ha sido eliminado con éxito", Toast.LENGTH_LONG).show()
 

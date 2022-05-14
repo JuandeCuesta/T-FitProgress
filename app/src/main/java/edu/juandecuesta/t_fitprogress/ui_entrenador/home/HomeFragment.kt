@@ -17,11 +17,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.esentrenador
 import edu.juandecuesta.t_fitprogress.ui_entrenador.calendario.CalendarioActivity
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.RecyclerAdapterHistorial
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 
@@ -31,8 +37,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: EntFragmentHomeBinding
 
-
-    private val recyclerAdapter = RecyclerAdapterHomeEntrenador()
+    private val recyclerAdapterDeportista = RecyclerAdapterHomeDeportista()
+    private val recyclerAdapterEntrenador = RecyclerAdapterHomeEntrenador()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
@@ -46,8 +52,15 @@ class HomeFragment : Fragment() {
         binding = EntFragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.textHome.text = context!!.getString(R.string.tvFechaActual, Functions().mostrarFecha())
-        loadRecyclerViewAdapter()
+        if (esentrenador){
+            binding.textHome.text = context!!.getString(R.string.tvFechaActual, Functions().mostrarFecha())
+            loadRecyclerViewAdapterEntrenador()
+            binding.btnCompletCalendar.isVisible = true
+        } else {
+            binding.textHome.isVisible = false
+            loadRecyclerViewAdapterDeportista()
+            binding.btnCompletCalendar.isVisible = false
+        }
 
         setHasOptionsMenu(true)
 
@@ -76,7 +89,13 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                recyclerAdapter.filter(text!!)
+
+                if (esentrenador){
+                    recyclerAdapterEntrenador.filter(text!!)
+                } else {
+                    recyclerAdapterDeportista.filter(text!!)
+                }
+
                 return true
             }
 
@@ -85,12 +104,25 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    private fun setUpRecyclerView() {
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+        binding.tvInfoRV.isVisible = true
+
+        if (homeViewModel.entrenamientos.size > 0){
+
+            binding.tvInfoRV.isVisible = false
+
+            binding.rvhome.setHasFixedSize(true)
+            binding.rvhome.layoutManager = LinearLayoutManager(requireContext())
+
+
+            recyclerAdapterDeportista.RecyclerAdapter(homeViewModel.entrenamientos, requireContext())
+            binding.rvhome.adapter = recyclerAdapterDeportista
+        }
+
     }
 
-    private fun setUpRecyclerView() {
+    private fun setUpRecyclerViewEntrenador() {
 
         binding.tvInfoRV.isVisible = true
 
@@ -102,12 +134,80 @@ class HomeFragment : Fragment() {
             binding.rvhome.setHasFixedSize(true)
             binding.rvhome.layoutManager = LinearLayoutManager(requireContext())
 
-            recyclerAdapter.RecyclerAdapter(homeViewModel.entrenamientos, requireContext())
-            binding.rvhome.adapter = recyclerAdapter
+            recyclerAdapterEntrenador.RecyclerAdapter(homeViewModel.entrenamientos, requireContext())
+            binding.rvhome.adapter = recyclerAdapterEntrenador
         }
     }
 
-    private fun loadRecyclerViewAdapter() {
+    private fun loadRecyclerViewAdapterDeportista(){
+
+        db.collection("users").document(deportistaMain.email)
+            .addSnapshotListener{ doc, exc ->
+                if (exc != null){
+                    Log.w(ContentValues.TAG, "Listen failed.", exc)
+                    return@addSnapshotListener
+                }
+
+                if (doc != null){
+                    val deportistaDB = doc.toObject(DeportistaDB::class.java)
+
+                    homeViewModel.entrenamientos.clear()
+                    setUpRecyclerView()
+                    recyclerAdapterDeportista.notifyDataSetChanged()
+
+                    if (deportistaDB!!.entrenamientos != null) {
+                        val ultimoDiaSemana = Functions().ultimoDiaSemana()
+                        for (entre: Entrenamiento_DeportistaDB in deportistaDB.entrenamientos!!){
+
+                            val entreno = Entrenamiento_Deportista()
+                            entreno.deportista = deportistaDB
+                            val sdf = SimpleDateFormat("dd/MM/yyyy")
+                            entreno.fechaFormat = sdf.parse(entre.fecha)
+
+
+                            if (Functions().calcularFecha(entre.fecha) == 0){
+                                entreno.fecha = "Hoy${Functions().diaSemana(entre.fecha, requireContext())}"
+                            } else if (Functions().calcularFecha(entre.fecha) < 0 && Functions().calcularEntreFechas(ultimoDiaSemana, entre.fecha) >= 0){
+                                entreno.fecha = Functions().diaSemana(entre.fecha, requireContext())
+                            }else{
+                                continue
+                            }
+                            entreno.realizado = entre.realizado
+
+                            binding.tvInfoRV.isVisible = false
+                            db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),entre.entrenamiento)
+                                .addSnapshotListener{doc, exc ->
+                                    if (exc != null){
+                                        Log.w(ContentValues.TAG, "Listen failed.", exc)
+                                        return@addSnapshotListener
+                                    }
+
+                                    if (doc != null){
+                                        for (dc in doc.documentChanges){
+                                            when (dc.type){
+                                                DocumentChange.Type.ADDED -> {
+                                                    entreno.entrenamiento = doc.documents[0].toObject(
+                                                        Entrenamiento::class.java)
+                                                    homeViewModel.entrenamientos.add(entreno)
+                                                    homeViewModel.entrenamientos.sortBy { e -> e.fechaFormat }
+                                                    setUpRecyclerView()
+                                                    recyclerAdapterDeportista.notifyDataSetChanged()
+                                                }
+                                                else -> {}
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                        }
+                    }
+
+                }
+            }
+    }
+
+     fun loadRecyclerViewAdapterEntrenador() {
 
         val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
         db.collection("users").document(current)
@@ -135,33 +235,31 @@ class HomeFragment : Fragment() {
                                             document.toObject(DeportistaDB::class.java)
                                         binding.tvInfoRV.isVisible = true
                                         homeViewModel.entrenamientos.clear()
-                                        recyclerAdapter.RecyclerAdapter(
-                                            homeViewModel.entrenamientos,
-                                            requireContext()
-                                        )
-                                        recyclerAdapter.notifyDataSetChanged()
+                                        setUpRecyclerViewEntrenador()
+                                        recyclerAdapterEntrenador.notifyDataSetChanged()
 
-                                        if (deportistaDB!!.entrenamientos != null) {
-                                            for (entre in deportistaDB.entrenamientos!!) {
+                                        if (deportistaDB != null) {
+                                            if (deportistaDB.entrenamientos != null) {
+                                                for (entre in deportistaDB.entrenamientos!!) {
 
-                                                val entreno = Entrenamiento_Deportista()
-                                                entreno.deportista = deportistaDB
-                                                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                                                entreno.fechaFormat = sdf.parse(entre.fecha)
+                                                    val entreno = Entrenamiento_Deportista()
+                                                    entreno.deportista = deportistaDB
+                                                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                                                    entreno.fechaFormat = sdf.parse(entre.fecha)
 
-                                                //Cogemos solo la fecha de hoy
-                                                if (Functions().calcularFecha(entre.fecha) == 0) {
-                                                    entreno.fecha = "Hoy - ${entre.fecha}"
-                                                } else {
-                                                    continue
-                                                }
+                                                    //Cogemos solo la fecha de hoy
+                                                    if (Functions().calcularFecha(entre.fecha) == 0) {
+                                                        entreno.fecha = "Hoy - ${entre.fecha}"
+                                                    } else {
+                                                        continue
+                                                    }
 
-                                                entreno.realizado = entre.realizado
+                                                    entreno.realizado = entre.realizado
 
-                                                db.collection("entrenamientos").whereEqualTo(
-                                                    FieldPath.documentId(),
-                                                    entre.entrenamiento
-                                                ).addSnapshotListener { documento, excepcion ->
+                                                    db.collection("entrenamientos").whereEqualTo(
+                                                        FieldPath.documentId(),
+                                                        entre.entrenamiento
+                                                    ).addSnapshotListener { documento, excepcion ->
                                                         if (excepcion != null) {
                                                             Log.w(
                                                                 ContentValues.TAG,
@@ -177,8 +275,8 @@ class HomeFragment : Fragment() {
                                                                     DocumentChange.Type.ADDED -> {
                                                                         entreno.entrenamiento = documento.documents[0].toObject(Entrenamiento::class.java)
                                                                         homeViewModel.entrenamientos.add(entreno)
-                                                                        setUpRecyclerView()
-                                                                        recyclerAdapter.notifyDataSetChanged()
+                                                                        setUpRecyclerViewEntrenador()
+                                                                        recyclerAdapterEntrenador.notifyDataSetChanged()
 
                                                                         binding.tvInfoRV.isVisible = false
                                                                     }
@@ -188,6 +286,7 @@ class HomeFragment : Fragment() {
                                                         }
 
                                                     }
+                                                }
                                             }
                                         }
 

@@ -15,11 +15,10 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.RegisterActivity
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEjerciciosBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity
 
 class EjerciciosFragment : Fragment() {
 
@@ -92,7 +91,7 @@ class EjerciciosFragment : Fragment() {
 
         binding.tvSinEjercicios.isVisible = true
 
-        if (MainActivity.entrenador.ejercicios.size > 0){
+        if (MainActivity.entrenadorMain.ejercicios.size > 0){
 
             binding.tvSinEjercicios.isVisible = false
 

@@ -5,11 +5,9 @@
     android:id="@+id/cv_itemhome"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="5dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:padding="5dp">
+    android:foreground="?android:attr/selectableItemBackground">
 
 
     <LinearLayout
@@ -17,7 +15,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_margin="5dp">
+        android:layout_marginHorizontal="5dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="65dp"
@@ -27,9 +25,11 @@
 
             <ImageView
                 android:id="@+id/imageCliente"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_vertical|center_horizontal"
                 android:background="@color/mostaza_500"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
                 app:srcCompat="@drawable/ic_person_white" />
 
         </androidx.cardview.widget.CardView>
@@ -41,7 +41,7 @@
             android:padding="6dp"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp">
+            android:layout_marginStart="8dp">
 
 
             <TextView
@@ -75,7 +75,8 @@
                 android:text="Hola"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="@+id/tvNombreUsuario"
-                app:layout_constraintTop_toBottomOf="@+id/tvNombreUsuario" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNombreUsuario"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/tvMensajesSinLeer"

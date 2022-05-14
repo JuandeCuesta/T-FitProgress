@@ -9,20 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.FragmentHistorialBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.RecyclerAdapterEntrenamientos
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,7 +49,7 @@ class HistorialFragment : Fragment() {
 
         binding.tvInfoRvHistorial.isVisible = true
 
-        if (MainActivity.entrenador.entrenamientos.size > 0){
+        if (MainActivity.entrenadorMain.entrenamientos.size > 0){
 
             binding.tvInfoRvHistorial.isVisible = false
 

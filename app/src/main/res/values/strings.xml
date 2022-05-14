@@ -4,9 +4,11 @@
     <string name="ejercicios_name">Crear ejercicio</string>
     <string name="entrenamiento_name">Crear entrenamiento</string>
     <string name="fragmentPerfil">Perfil</string>
+    <string name="fragmentDescripcion">Descripción</string>
     <string name="fragmenteCondicion">Evolución</string>
     <string name="fragmentHistorial">Historial</string>
     <string name="calendario_name">Calendario</string>
+    <string name="evaluacion_name">Evaluación</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -26,6 +28,7 @@
     <string name="menu_ejercicios">Ejercicios</string>
     <string name="menu_entrenamientos">Entrenamientos</string>
     <string name="menu_mensajes">Mensajes</string>
+    <string name="menu_perfil">Perfil</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -106,6 +109,24 @@
         <item>Nov.</item>
         <item>Dic.</item>
     </array>
+
+    <array name="diasSemana">
+        <item>Domingo</item>
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miércoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sábado</item>
+    </array>
+
+    <string name="title_activity_deportista_main">DeportistaMainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="descripcion_basica">Cuéntame más sobre tí, por ejemplo: </string>
+    <string name="descripcion_basica_extendida">Soy personal administrativo, me considero activo, dispongo de 30min al dia para realizar ejercicio …</string>
+
 
 
 </resources>
