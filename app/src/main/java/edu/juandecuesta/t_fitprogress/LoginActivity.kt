@@ -27,7 +27,9 @@ class LoginActivity : AppCompatActivity() {
 
         if (currentUser?.email != null){
             InicioSesion(currentUser?.email!!)
+            Thread.sleep(2000)
         }
+        setTheme(R.style.Theme_TFitProgress_NoActionBar)
 
         binding.login.setOnClickListener {
 

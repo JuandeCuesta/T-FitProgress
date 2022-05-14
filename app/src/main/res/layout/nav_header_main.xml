@@ -16,18 +16,19 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="175dp"
-        android:layout_height="75dp"
+        android:layout_width="210dp"
+        android:layout_height="100dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/t_fit_peque" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardviewimagendep"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
         app:cardCornerRadius="100dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_gravity="center_vertical">
 
         <ImageView
             android:id="@+id/imageViewDeportista"
@@ -52,7 +53,7 @@
 
     <TextView
         android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/blue_700"
         android:text="@string/nav_header_subtitle" />
