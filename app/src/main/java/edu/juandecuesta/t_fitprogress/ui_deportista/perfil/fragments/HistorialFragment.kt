@@ -77,9 +77,12 @@ class HistorialFragment : Fragment() {
                     recyclerAdapter.notifyDataSetChanged()
 
                     if (deportistaDB!!.entrenamientos != null) {
+                        var posicion = 0;
                         for (entre:Entrenamiento_DeportistaDB in deportistaDB.entrenamientos!!){
-
                             val entreno = Entrenamiento_Deportista()
+                            entreno.posicion = posicion
+                            posicion++
+
                             entreno.deportista = deportistaDB
                             val sdf = SimpleDateFormat("dd/MM/yyyy")
                             entreno.fechaFormat = sdf.parse(entre.fecha)
@@ -109,7 +112,7 @@ class HistorialFragment : Fragment() {
                                             when (dc.type){
                                                 DocumentChange.Type.ADDED -> {
                                                     entreno.entrenamiento = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)
+                                                        Entrenamiento::class.java)!!
                                                     entrenamientosDep.add(entreno)
                                                     entrenamientosDep.sortByDescending { e -> e.fechaFormat}
 
@@ -118,7 +121,7 @@ class HistorialFragment : Fragment() {
                                                 }
                                                 DocumentChange.Type.MODIFIED -> {
                                                     entreno.entrenamiento = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)
+                                                        Entrenamiento::class.java)!!
                                                     entrenamientosDep.add(entreno)
                                                     entrenamientosDep.sortByDescending { e -> e.fechaFormat}
 

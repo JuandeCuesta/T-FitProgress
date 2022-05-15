@@ -149,7 +149,7 @@ class RecyclerAdapterHomeDeportista: RecyclerView.Adapter<RecyclerAdapterHomeDep
 
             itemView.setOnClickListener {
                 val entrenIntent = Intent (context, ShowEntrenamientoActivity::class.java).apply {
-                    putExtra("entrenamiento", entrenamientoDeportista.entrenamiento)
+                    putExtra("entrenamiento", entrenamientoDeportista)
                 }
                 ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
             }

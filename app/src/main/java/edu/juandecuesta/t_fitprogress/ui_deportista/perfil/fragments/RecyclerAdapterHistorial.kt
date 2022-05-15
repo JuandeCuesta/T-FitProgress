@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvHistorialEntrenamientosBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.EditEntrenamientoActivity
+import edu.juandecuesta.t_fitprogress.ui_deportista.entrenamientos.ShowEntrenamientoActivity
 
 class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.ViewHolder>() {
 
@@ -118,8 +118,8 @@ class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.Vi
             }
 
             itemView.setOnClickListener {
-                val entrenIntent = Intent (context, EditEntrenamientoActivity::class.java).apply {
-                    putExtra("entrenamiento", entrenamientoDeportista.entrenamiento)
+                val entrenIntent = Intent (context, ShowEntrenamientoActivity::class.java).apply {
+                    putExtra("entrenamiento", entrenamientoDeportista)
                 }
                 ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
             }

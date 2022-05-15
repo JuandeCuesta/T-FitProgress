@@ -13,7 +13,7 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import android.app.DatePickerDialog
 import android.widget.ArrayAdapter
 
-import edu.juandecuesta.t_fitprogress.ui_entrenador.dialog.DatePickerFragment
+import edu.juandecuesta.t_fitprogress.ui_entrenador.dialogAddEntrenamiento.DatePickerFragment
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.utils.Functions

@@ -112,7 +112,7 @@ class HistorialFragment : Fragment() {
                                             when (dc.type){
                                                 DocumentChange.Type.ADDED -> {
                                                     entreno.entrenamiento = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)
+                                                        Entrenamiento::class.java)!!
                                                     entrenamientosDep.add(entreno)
                                                     entrenamientosDep.sortByDescending { e -> e.fechaFormat}
 

@@ -7,6 +7,8 @@ import java.util.*
 
 class Entrenamiento_Deportista: Serializable {
 
+    var posicion:Int = 0
+
     var deportista:DeportistaDB = DeportistaDB()
 
     var fecha: String = ""
@@ -19,7 +21,7 @@ class Entrenamiento_Deportista: Serializable {
 
     var primerodeldia:Boolean = false
 
-    var entrenamiento:Entrenamiento?=null
+    var entrenamiento:Entrenamiento=Entrenamiento()
         get() = field
         set(value) {
             field = value

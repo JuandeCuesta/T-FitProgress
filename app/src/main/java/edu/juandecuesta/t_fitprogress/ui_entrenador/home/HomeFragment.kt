@@ -157,9 +157,12 @@ class HomeFragment : Fragment() {
 
                     if (deportistaDB!!.entrenamientos != null) {
                         val ultimoDiaSemana = Functions().ultimoDiaSemana()
+                        var posicion = 0
                         for (entre: Entrenamiento_DeportistaDB in deportistaDB.entrenamientos!!){
 
                             val entreno = Entrenamiento_Deportista()
+                            entreno.posicion = posicion
+                            posicion++
                             entreno.deportista = deportistaDB
                             val sdf = SimpleDateFormat("dd/MM/yyyy")
                             entreno.fechaFormat = sdf.parse(entre.fecha)
@@ -187,7 +190,7 @@ class HomeFragment : Fragment() {
                                             when (dc.type){
                                                 DocumentChange.Type.ADDED -> {
                                                     entreno.entrenamiento = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)
+                                                        Entrenamiento::class.java)!!
                                                     homeViewModel.entrenamientos.add(entreno)
                                                     homeViewModel.entrenamientos.sortBy { e -> e.fechaFormat }
                                                     setUpRecyclerView()
@@ -273,7 +276,8 @@ class HomeFragment : Fragment() {
                                                             for (dc in documento.documentChanges) {
                                                                 when (dc.type) {
                                                                     DocumentChange.Type.ADDED -> {
-                                                                        entreno.entrenamiento = documento.documents[0].toObject(Entrenamiento::class.java)
+                                                                        entreno.entrenamiento =
+                                                                            documento.documents[0].toObject(Entrenamiento::class.java)!!
                                                                         homeViewModel.entrenamientos.add(entreno)
                                                                         setUpRecyclerViewEntrenador()
                                                                         recyclerAdapterEntrenador.notifyDataSetChanged()

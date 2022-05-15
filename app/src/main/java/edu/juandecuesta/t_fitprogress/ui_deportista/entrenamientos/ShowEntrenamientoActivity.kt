@@ -1,35 +1,27 @@
 package edu.juandecuesta.t_fitprogress.ui_deportista.entrenamientos
 
 import android.content.ContentValues
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.ActivityEditEntrenamientoBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
-import edu.juandecuesta.t_fitprogress.model.Entrenamiento
-import edu.juandecuesta.t_fitprogress.MainActivity
-import edu.juandecuesta.t_fitprogress.databinding.ActivityShowEntrenamientoBinding
-import edu.juandecuesta.t_fitprogress.utils.Functions
+import edu.juandecuesta.t_fitprogress.databinding.DepActivityShowEntrenamientoBinding
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 
 class ShowEntrenamientoActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityShowEntrenamientoBinding
+    private lateinit var binding: DepActivityShowEntrenamientoBinding
     private val db = FirebaseFirestore.getInstance()
-    private var entrenamiento = Entrenamiento()
+    private var entrenamiento = Entrenamiento_Deportista()
     var ejercicios: MutableList<Ejercicio> = arrayListOf()
     var ejerciciosEntrenamiento: MutableList<Ejercicio> = arrayListOf()
 
@@ -37,22 +29,41 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityShowEntrenamientoBinding.inflate(layoutInflater)
+        binding = DepActivityShowEntrenamientoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        this.entrenamiento = intent.getSerializableExtra("entrenamiento") as Entrenamiento
-        setTitle(entrenamiento.nombre)
+        this.entrenamiento = intent.getSerializableExtra("entrenamiento") as Entrenamiento_Deportista
+        title = entrenamiento.entrenamiento.nombre
+
+        if (entrenamiento.realizado){
+            binding.selectionButton.check(R.id.btnSiRealizado)
+        } else binding.selectionButton.check(R.id.btnNoRealizado)
+
         cargarDatos()
 
         setUpRecyclerView()
         loadRecyclerViewAdapter()
-
+        
+        binding.selectionButton.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked){
+                when (checkedId){
+                    R.id.btnNoRealizado -> {
+                        deportistaMain.entrenamientos?.get(entrenamiento.posicion)?.realizado  = false
+                        db.collection("users").document(deportistaMain.email).update("entrenamientos", deportistaMain.entrenamientos)
+                    }
+                    R.id.btnSiRealizado -> {
+                        deportistaMain.entrenamientos?.get(entrenamiento.posicion)?.realizado = true
+                        db.collection("users").document(deportistaMain.email).update("entrenamientos", deportistaMain.entrenamientos)
+                    }
+                }
+            }
+        }
     }
 
 
     private fun setUpRecyclerView() {
 
-        if (entrenamiento.ejercicios.size > 0){
+        if (entrenamiento.entrenamiento.ejercicios.size > 0){
 
             binding.rvExercise.setHasFixedSize(true)
             binding.rvExercise.layoutManager = LinearLayoutManager(this)
@@ -60,7 +71,7 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
 
             recyclerAdapter.RecyclerAdapter(ejerciciosEntrenamiento, this)
             binding.rvExercise.adapter = recyclerAdapter
-            var dividerItemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
+            val dividerItemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
             binding.rvExercise.addItemDecoration(dividerItemDecoration)
         }
 
@@ -69,7 +80,7 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
 
     fun loadRecyclerViewAdapter(){
 
-        for (idEjerc:String in entrenamiento.ejercicios){
+        for (idEjerc:String in entrenamiento.entrenamiento.ejercicios){
 
             db.collection("ejercicios").whereEqualTo(FieldPath.documentId(),idEjerc)
                 .addSnapshotListener{doc, exc ->
@@ -101,6 +112,7 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
                                     }
 
                                 }
+                                else -> {}
                             }
                         }
                     }
@@ -110,19 +122,19 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
     }
 
     fun cargarDatos(){
-        val tipo = "Entrenamiento de ${entrenamiento.tipo}"
+        val tipo = "Entrenamiento de ${entrenamiento.entrenamiento.tipo}"
         binding.etTipoVista.setText(tipo)
 
-        if (entrenamiento.descripcion != ""){
+        if (entrenamiento.entrenamiento.descripcion != ""){
             binding.tlDescripc.isVisible = true
-            binding.etDescrip.setText(entrenamiento.descripcion)
+            binding.etDescrip.setText(entrenamiento.entrenamiento.descripcion)
         }
 
-        binding.etSeries.setText(entrenamiento.series.toString())
-        binding.etRep.setText(entrenamiento.repeticiones.toString())
-        if (entrenamiento.descanso != 0){
+        binding.etSeries.setText(entrenamiento.entrenamiento.series.toString())
+        binding.etRep.setText(entrenamiento.entrenamiento.repeticiones.toString())
+        if (entrenamiento.entrenamiento.descanso != 0){
             binding.tlDesc.isVisible = true
-            binding.etDesc.setText(entrenamiento.descanso.toString())
+            binding.etDesc.setText(entrenamiento.entrenamiento.descanso.toString())
         }
     }
 

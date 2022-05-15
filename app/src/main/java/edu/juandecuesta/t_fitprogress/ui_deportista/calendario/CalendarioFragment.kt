@@ -201,7 +201,7 @@ class CalendarioFragment : Fragment() {
                                         when (dc.type) {
                                             DocumentChange.Type.ADDED -> {
                                                 entreno.entrenamiento = documento.documents[0].toObject(
-                                                    Entrenamiento::class.java)
+                                                    Entrenamiento::class.java)!!
                                                 entrenamientos.add(entreno)
                                                 setUpRecyclerView()
                                                 recyclerAdapter.notifyDataSetChanged()
@@ -211,7 +211,7 @@ class CalendarioFragment : Fragment() {
                                             }
                                             DocumentChange.Type.MODIFIED -> {
                                                 entreno.entrenamiento = documento.documents[0].toObject(
-                                                    Entrenamiento::class.java)
+                                                    Entrenamiento::class.java)!!
                                                 entrenamientos.add(entreno)
                                                 setUpRecyclerView()
                                                 recyclerAdapter.notifyDataSetChanged()

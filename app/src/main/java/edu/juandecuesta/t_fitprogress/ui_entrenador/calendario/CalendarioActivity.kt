@@ -191,7 +191,8 @@ class CalendarioActivity : AppCompatActivity() {
                                                         for (dc in documento.documentChanges) {
                                                             when (dc.type) {
                                                                 DocumentChange.Type.ADDED -> {
-                                                                    entreno.entrenamiento = documento.documents[0].toObject(Entrenamiento::class.java)
+                                                                    entreno.entrenamiento =
+                                                                        documento.documents[0].toObject(Entrenamiento::class.java)!!
                                                                     entrenamientos.add(entreno)
                                                                     setUpRecyclerView()
                                                                     recyclerAdapter.notifyDataSetChanged()
