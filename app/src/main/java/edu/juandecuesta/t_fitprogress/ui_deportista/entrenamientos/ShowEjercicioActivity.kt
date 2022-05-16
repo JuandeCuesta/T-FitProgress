@@ -25,7 +25,6 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.ActivityEditEjercicioBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.databinding.ActivityShowEjercicioBinding
@@ -60,8 +59,6 @@ class ShowEjercicioActivity : AppCompatActivity() {
 
         this.ejercicio = intent.getSerializableExtra("ejercicio") as Ejercicio
 
-        setTitle(ejercicio.nombre)
-
         cargarDatos()
 
         binding.btnVerVideo.setOnClickListener {
@@ -70,7 +67,7 @@ class ShowEjercicioActivity : AppCompatActivity() {
     }
 
     fun cargarDatos(){
-
+        binding.nombreShow.text = ejercicio.nombre
         binding.etGrupoMuscular.setText(ejercicio.grupoMuscular)
         binding.etTipoEjerc.setText(ejercicio.tipo)
 

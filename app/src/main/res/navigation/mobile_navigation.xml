@@ -17,18 +17,24 @@
         android:label="@string/menu_clientes"
         tools:layout="@layout/ent_fragment_clientes" >
     </fragment>
-
     <fragment
         android:id="@+id/nav_ejercicios"
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjerciciosFragment"
         android:label="@string/menu_ejercicios"
-        tools:layout="@layout/ent_fragment_ejercicios" >
+        tools:layout="@layout/ent_fragment_ejercicios">
     </fragment>
     <fragment
         android:id="@+id/nav_entrenamientos"
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.EntrenamientosFragment"
         android:label="@string/menu_entrenamientos"
         tools:layout="@layout/ent_fragment_entrenamientos" />
+
+    <fragment
+        android:id="@+id/nav_evaluacion"
+        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.pruebas_fisicas.PruebasFragment"
+        android:label="@string/pruebas_name"
+        tools:layout="@layout/ent_fragment_pruebas" />
+
     <fragment
         android:id="@+id/nav_mensajes"
         android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes.MensajesFragment"
@@ -43,9 +49,9 @@
 
     <fragment
         android:id="@+id/nav_evaluacion_deportista"
-        android:name="edu.juandecuesta.t_fitprogress.ui_entrenador.ejercicios.EjerciciosFragment"
+        android:name="edu.juandecuesta.t_fitprogress.ui_deportista.evaluacion.EvaluacionFragment"
         android:label="@string/evaluacion_name"
-        tools:layout="@layout/ent_fragment_ejercicios" />
+        tools:layout="@layout/fragment_evaluacion" />
     <fragment
         android:id="@+id/nav_mensajes_deportista"
         android:name="edu.juandecuesta.t_fitprogress.ui_deportista.mensajes.MensajesFragment"

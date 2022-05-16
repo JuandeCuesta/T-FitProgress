@@ -18,6 +18,15 @@ import edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.EditEntrenami
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import edu.juandecuesta.t_fitprogress.ui_entrenador.pruebas_fisicas.PruebasFragment
+import edu.juandecuesta.t_fitprogress.ui_entrenador.pruebas_fisicas.ShowPruebasActivity
+
+
 class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.ViewHolder>() {
 
     lateinit var context: Context
@@ -55,57 +64,76 @@ class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.Vi
 
         fun bind(entrenamientoDeportista: Entrenamiento_Deportista, context: Context) {
 
-
             binding.txtFecha.text = entrenamientoDeportista.fecha
 
             binding.txtFecha.isVisible = entrenamientoDeportista.primerodeldia
 
             binding.tvNombreEnt.text = entrenamientoDeportista.entrenamiento!!.nombre
-            binding.tvtipoEnt.text = ("Entrenamiento de ${entrenamientoDeportista.entrenamiento!!.tipo}")
 
-            if (entrenamientoDeportista.entrenamiento!!.ejercicios.size > 1){
-                binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicios - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
-            } else binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicio - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
+            if (entrenamientoDeportista.entrenamiento!!.tipo != "Prueba"){
+
+                binding.tvtipoEnt.text = ("Entrenamiento de ${entrenamientoDeportista.entrenamiento!!.tipo}")
+
+                if (entrenamientoDeportista.entrenamiento!!.ejercicios.size > 1){
+                    binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicios - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
+                } else binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicio - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
 
 
-            when (entrenamientoDeportista.entrenamiento!!.tipo) {
-                "Resistencia" -> {
-                    Glide.with(context)
-                        .load(R.drawable.resistencia)
-                        .centerInside()
-                        .into(binding.imageEntren)
+                when (entrenamientoDeportista.entrenamiento!!.tipo) {
+                    "Resistencia" -> {
+                        Glide.with(context)
+                            .load(R.drawable.resistencia)
+                            .centerInside()
+                            .into(binding.imageEntren)
+                    }
+                    "Fuerza" -> {
+                        Glide.with(context)
+                            .load(R.drawable.potencia)
+                            .centerInside()
+                            .into(binding.imageEntren)
+                    }
+                    "Flexibilidad" -> {
+                        Glide.with(context)
+                            .load(R.drawable.flexibilidad)
+                            .centerInside()
+                            .into(binding.imageEntren)
+                    }
+                    "Velocidad" -> {
+                        Glide.with(context)
+                            .load(R.drawable.velocidad)
+                            .centerInside()
+                            .into(binding.imageEntren)
+                    }
+                    else -> {
+                        Glide.with(context)
+                            .load(R.drawable.hipertrofia)
+                            .centerInside()
+                            .into(binding.imageEntren)
+                    }
                 }
-                "Potencia" -> {
-                    Glide.with(context)
-                        .load(R.drawable.potencia)
-                        .centerInside()
-                        .into(binding.imageEntren)
+
+
+                itemView.setOnClickListener {
+                    val entrenIntent = Intent (context, ShowEntrenoDeportistaActivity::class.java).apply {
+                        putExtra("entrenamiento", entrenamientoDeportista)
+                    }
+                    ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
                 }
-                "Flexibilidad" -> {
-                    Glide.with(context)
-                        .load(R.drawable.flexibilidad)
-                        .centerInside()
-                        .into(binding.imageEntren)
-                }
-                "Velocidad" -> {
-                    Glide.with(context)
-                        .load(R.drawable.velocidad)
-                        .centerInside()
-                        .into(binding.imageEntren)
-                }
-                "Hipertrofia" -> {
-                    Glide.with(context)
-                        .load(R.drawable.hipertrofia)
-                        .centerInside()
-                        .into(binding.imageEntren)
-                }
-                else -> {
-                    Glide.with(context)
-                        .load(R.drawable.prueba)
-                        .centerInside()
-                        .into(binding.imageEntren)
+
+            }else {
+                binding.tvtipoEnt.text = ("Pruebas físicas")
+                Glide.with(context)
+                    .load(R.drawable.prueba)
+                    .centerInside()
+                    .into(binding.imageEntren)
+                binding.tvseriesrep.text = "3 tests"
+                itemView.setOnClickListener {
+                    val entrenIntent = Intent (context, ShowPruebasActivity::class.java)
+                    ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
                 }
             }
+
+
             when (entrenamientoDeportista.realizado) {
                 true -> {
                     Glide.with(context)
@@ -121,12 +149,6 @@ class RecyclerAdapterHistorial: RecyclerView.Adapter<RecyclerAdapterHistorial.Vi
                 }
             }
 
-            itemView.setOnClickListener {
-                val entrenIntent = Intent (context, EditEntrenamientoActivity::class.java).apply {
-                    putExtra("entrenamiento", entrenamientoDeportista.entrenamiento)
-                }
-                ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
-            }
         }
 
     }

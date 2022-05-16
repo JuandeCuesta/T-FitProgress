@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorHomeBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.ShowEntrenoDeportistaActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.pruebas_fisicas.ShowPruebasActivity
 import kotlin.collections.ArrayList
 
 class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEntrenador.ViewHolder>() {
@@ -66,11 +69,31 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
         fun bind(entrenamientoDeportista: Entrenamiento_Deportista, context: Context) {
 
             binding.tvNombreDep.text = ("${entrenamientoDeportista.deportista!!.nombre} ${entrenamientoDeportista.deportista!!.apellido}")
-            binding.tvNombreEntre.text = ("${entrenamientoDeportista.entrenamiento!!.nombre} - ${entrenamientoDeportista.entrenamiento!!.tipo}")
 
-            if (entrenamientoDeportista.entrenamiento!!.ejercicios.size > 1){
-                binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicios - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
-            } else binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicio - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
+            if (entrenamientoDeportista.entrenamiento!!.tipo != "Prueba"){
+                binding.tvNombreEntre.text = ("${entrenamientoDeportista.entrenamiento!!.nombre} - ${entrenamientoDeportista.entrenamiento!!.tipo}")
+
+                if (entrenamientoDeportista.entrenamiento!!.ejercicios.size > 1){
+                    binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicios - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
+                } else binding.tvseriesrep.text = ("${entrenamientoDeportista.entrenamiento!!.ejercicios.size} ejercicio - ${entrenamientoDeportista.entrenamiento!!.series}x${entrenamientoDeportista.entrenamiento!!.repeticiones}RM")
+
+                itemView.setOnClickListener {
+
+                    val deportIntent = Intent (context, ShowEntrenoDeportistaActivity::class.java).apply {
+                        putExtra("entrenamiento", entrenamientoDeportista)
+                    }
+                    ContextCompat.startActivity(context,deportIntent, Bundle.EMPTY)
+
+                }
+
+            } else {
+                binding.tvNombreEntre.text = (entrenamientoDeportista.entrenamiento!!.nombre)
+                binding.tvseriesrep.text = "3 tests"
+                itemView.setOnClickListener {
+                    val entrenIntent = Intent (context, ShowPruebasActivity::class.java)
+                    ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
+                }
+            }
 
 
             when (entrenamientoDeportista.entrenamiento!!.tipo) {
@@ -98,7 +121,6 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
                         .centerInside()
                         .into(binding.imageEntren)
                 }
-
                 else -> {
                     Glide.with(context)
                         .load(R.drawable.prueba)
@@ -119,15 +141,6 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
                         .centerInside()
                         .into(binding.imagenRealizado)
                 }
-            }
-
-            itemView.setOnClickListener {
-
-                val deportIntent = Intent (context, ShowClientActivity::class.java).apply {
-                    putExtra("deportista", entrenamientoDeportista.deportista)
-                }
-                ContextCompat.startActivity(context,deportIntent, Bundle.EMPTY)
-
             }
         }
 

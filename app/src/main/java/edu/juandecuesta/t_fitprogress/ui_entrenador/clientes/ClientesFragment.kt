@@ -18,12 +18,15 @@ import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEjerciciosBinding
 
 
 class ClientesFragment : Fragment() {
 
     private lateinit var clientesViewModel: ClientesViewModel
-    private lateinit var binding: EntFragmentClientesBinding
+    private var _binding: EntFragmentClientesBinding? = null
+
+    private val binding get() = _binding!!
 
 
     private val recyclerAdapter = RecyclerAdapterClientesEntrenador()
@@ -37,7 +40,7 @@ class ClientesFragment : Fragment() {
         clientesViewModel =
             ViewModelProvider(this).get(ClientesViewModel::class.java)
 
-        binding = EntFragmentClientesBinding.inflate(inflater, container, false)
+        _binding = EntFragmentClientesBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
@@ -47,6 +50,13 @@ class ClientesFragment : Fragment() {
         setHasOptionsMenu(true)
         return root
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -76,6 +86,12 @@ class ClientesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onResume() {
+        super.onResume()
+        clientesViewModel.deportistas.clear()
+        setUpRecyclerView()
+        loadRecyclerViewAdapter()
+    }
 
     private fun setUpRecyclerView() {
 
@@ -136,12 +152,16 @@ class ClientesFragment : Fragment() {
                                                     if (clientesViewModel.deportistas[i].email == deportistaDB!!.email){
                                                         if (!deportistaDB.deshabilitada){
                                                             clientesViewModel.deportistas.set(i,deportistaDB)
-                                                            recyclerAdapter.RecyclerAdapter(clientesViewModel.deportistas, requireContext())
-                                                            recyclerAdapter.notifyDataSetChanged()
+                                                            if (_binding!=null){
+                                                                setUpRecyclerView()
+                                                                recyclerAdapter.notifyDataSetChanged()
+                                                            }
                                                         } else {
                                                             clientesViewModel.deportistas.removeAt(i)
-                                                            recyclerAdapter.RecyclerAdapter(clientesViewModel.deportistas, requireContext())
-                                                            recyclerAdapter.notifyDataSetChanged()
+                                                            if (_binding!=null){
+                                                                setUpRecyclerView()
+                                                                recyclerAdapter.notifyDataSetChanged()
+                                                            }
                                                         }
                                                     }
                                                 }

@@ -17,9 +17,8 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:text="Opciones"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:visibility="visible"/>
-
 
     </LinearLayout>
 

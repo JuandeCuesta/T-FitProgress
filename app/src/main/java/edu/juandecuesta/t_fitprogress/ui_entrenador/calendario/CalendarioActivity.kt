@@ -61,6 +61,16 @@ class CalendarioActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mEventDays.clear()
+        cargarDatos()
+        entrenamientos.clear()
+        if (binding.txtFechaSelect.text.toString() != ""){
+            setUpRecyclerView()
+            loadRecyclerViewAdapter(binding.txtFechaSelect.text.toString())
+        }
+    }
 
     private fun cargarDatos() {
         val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
@@ -158,9 +168,12 @@ class CalendarioActivity : AppCompatActivity() {
                                         val deportistaDB = document.toObject(DeportistaDB::class.java)
 
                                         if (deportistaDB!!.entrenamientos != null) {
+                                            var posicion = 0
                                             for (entre in deportistaDB.entrenamientos!!) {
 
                                                 val entreno = Entrenamiento_Deportista()
+                                                entreno.posicion = posicion
+                                                posicion++
                                                 entreno.deportista = deportistaDB
                                                 val sdf = SimpleDateFormat("dd/MM/yyyy")
                                                 entreno.fechaFormat = sdf.parse(entre.fecha)

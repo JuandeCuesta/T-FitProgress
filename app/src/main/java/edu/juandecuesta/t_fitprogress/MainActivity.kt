@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.nav_clientes,
                     R.id.nav_ejercicios,
                     R.id.nav_entrenamientos,
+                    R.id.nav_evaluacion,
                     R.id.nav_mensajes
                 ), drawerLayout
             )

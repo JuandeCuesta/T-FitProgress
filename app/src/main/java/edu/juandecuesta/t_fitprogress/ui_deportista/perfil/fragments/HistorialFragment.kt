@@ -62,6 +62,12 @@ class HistorialFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        entrenamientosDep.clear()
+        loadRecyclerViewAdapter()
+    }
+
     private fun loadRecyclerViewAdapter(){
 
         db.collection("users").document(deportistaMain.email)

@@ -23,16 +23,17 @@ import edu.juandecuesta.t_fitprogress.model.Chat
 
 import android.content.DialogInterface
 import android.content.Intent
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 
 
 class MensajesFragment:Fragment() {
     private lateinit var mensajesViewModel: MensajesViewModel
-    private lateinit var binding: FragmentMensajesBinding
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val recyclerAdapter = RecyclerAdapterChat()
     private var chats: MutableList<Chat> = arrayListOf()
     private var deportistas: MutableList<DeportistaDB> = arrayListOf()
-
+    private var _binding: FragmentMensajesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +43,7 @@ class MensajesFragment:Fragment() {
         mensajesViewModel =
             ViewModelProvider(this).get(MensajesViewModel::class.java)
 
-        binding = FragmentMensajesBinding.inflate(inflater, container, false)
+        _binding = FragmentMensajesBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
@@ -56,6 +57,13 @@ class MensajesFragment:Fragment() {
 
         return root
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     private fun dialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -200,8 +208,10 @@ class MensajesFragment:Fragment() {
                                             val deportistaDB = value.documents[0].toObject(DeportistaDB::class.java)
                                             chat.deportista = deportistaDB!!
                                             chats.add(chat)
-                                            setUpRecyclerView()
-                                            recyclerAdapter.notifyDataSetChanged()
+                                            if (_binding!=null){
+                                                setUpRecyclerView()
+                                                recyclerAdapter.notifyDataSetChanged()
+                                            }
                                         }
                                     }
                                 }
@@ -219,8 +229,11 @@ class MensajesFragment:Fragment() {
                                                 chats[i] = chat
                                             }
                                         }
-                                        setUpRecyclerView()
-                                        recyclerAdapter.notifyDataSetChanged()
+                                        if (_binding!=null){
+                                            setUpRecyclerView()
+                                            recyclerAdapter.notifyDataSetChanged()
+                                        }
+
                                     }
                                 }
                             }

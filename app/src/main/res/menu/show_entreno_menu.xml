@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/delete_entreno"
+        android:orderInCategory="100"
+        android:title="Eliminar"
+        android:icon="@drawable/icon_delete_white"
+        app:showAsAction="always" />
+</menu>

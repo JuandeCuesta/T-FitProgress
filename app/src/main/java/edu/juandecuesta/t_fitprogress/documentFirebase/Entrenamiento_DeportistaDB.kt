@@ -11,6 +11,8 @@ class Entrenamiento_DeportistaDB: Serializable {
             field = value
         }
 
+    var posicion = -1
+
     var entrenamiento:String=""
         get() = field
         set(value) {

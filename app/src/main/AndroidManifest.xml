@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.juandecuesta.t_fitprogress" >
+    package="edu.juandecuesta.t_fitprogress">
     <!-- Permissions for internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +16,14 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/t_fithmoscuro"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TFitProgress" >
+        android:theme="@style/Theme.TFitProgress">
+        <activity
+            android:name=".ui_entrenador.pruebas_fisicas.ShowPruebasActivity"
+            android:exported="false"
+            android:screenOrientation="nosensor"
+            android:label="@string/pruebas_name"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui_entrenador.mensajes.CreateMessageActivity"
             android:exported="false"
@@ -48,6 +55,13 @@
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".ui_deportista.entrenamientos.ShowEjercicioActivity"
+            android:exported="false"
+            android:label="@string/show_ejercicios_name"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui_entrenador.entrenamientos.EditEntrenamientoActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
@@ -63,7 +77,14 @@
         <activity
             android:name=".ui_entrenador.ejercicios.EditEjercicioActivity"
             android:exported="false"
-            android:label="@string/ejercicios_name"
+            android:label="@string/show_ejercicios_name"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui_entrenador.clientes.fragments.ShowEntrenoDeportistaActivity"
+            android:exported="false"
+            android:label="@string/show_ejercicios_name"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan" />
@@ -101,11 +122,12 @@
             android:screenOrientation="nosensor"
             android:theme="@style/Theme.TFitProgress.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="edu.juandecuesta.t_fitprogress.provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />

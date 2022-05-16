@@ -19,13 +19,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/nombreShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Juande Cuesta Martinez"
+            android:textAlignment="center"
+            android:textColor="@color/azul_marino"
+            android:layout_marginBottom="4dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlTipoVista"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_marginVertical="4dp"
             android:hint="Tipo de entrenamiento"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"

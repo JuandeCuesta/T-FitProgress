@@ -22,6 +22,10 @@
             android:icon="@drawable/icon_entrenamiento_black"
             android:title="@string/menu_entrenamientos" />
         <item
+            android:id="@+id/nav_evaluacion"
+            android:icon="@drawable/prueba"
+            android:title="@string/pruebas_name" />
+        <item
             android:id="@+id/nav_mensajes"
             android:icon="@drawable/icons_chat"
             android:title="@string/menu_mensajes" />

@@ -1,6 +1,9 @@
 package edu.juandecuesta.t_fitprogress.documentFirebase
 
-import edu.juandecuesta.t_fitprogress.model.CondicionFisica
+import edu.juandecuesta.t_fitprogress.model.Evaluacion_Cooper
+import edu.juandecuesta.t_fitprogress.model.Evaluacion_Deportista
+import edu.juandecuesta.t_fitprogress.model.Evaluacion_Fondos
+import edu.juandecuesta.t_fitprogress.model.Evaluacion_Imc
 import java.io.Serializable
 
 class DeportistaDB:Serializable {
@@ -11,7 +14,7 @@ class DeportistaDB:Serializable {
     var entrenador: String= ""
     var fechanacimiento:String = ""
     var experiencia:String = ""
-    var evoluacionFisica: MutableList<CondicionFisica>?=null
+    var evaluacionfisica: MutableList<Evaluacion_Deportista>?=null
     var entrenamientos: MutableList<Entrenamiento_DeportistaDB>?=null
     var sexo:String = ""
     var descripcionPersonal = ""

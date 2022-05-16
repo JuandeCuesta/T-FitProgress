@@ -15,18 +15,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlFechaPrueba"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="Selecciona día de evaluación"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddPrueba"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFechaPrueba"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_edittext"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:inputType="date"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/btnAddPrueba"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/verde"
+                android:text="Añadir fecha"
+                app:layout_constraintBottom_toBottomOf="@+id/tlFechaPrueba"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tlFechaPrueba"
+                app:layout_constraintVertical_bias="0.0" />
+
             <TextView
                 android:id="@+id/textIMC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/test_imc"
+                android:layout_marginTop="8dp"
                 android:paddingVertical="5dp"
+                android:text="@string/test_imc"
                 android:textAlignment="center"
                 android:textColor="@color/azul_marino"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tlFechaPrueba" />
 
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/chartImc"

@@ -107,63 +107,67 @@ class EntrenamientosFragment:Fragment() {
 
     private fun loadRecyclerViewAdapter(){
 
-        val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
-        db.collection("users").document(current)
-            .addSnapshotListener{ doc, exc ->
-                if (exc != null){
-                    Log.w(ContentValues.TAG, "Listen failed.", exc)
-                    return@addSnapshotListener
-                }
+        try {
+            val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
+            db.collection("users").document(current)
+                .addSnapshotListener{ doc, exc ->
+                    if (exc != null){
+                        Log.w(ContentValues.TAG, "Listen failed.", exc)
+                        return@addSnapshotListener
+                    }
 
-                if (doc != null){
-                    val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
-                    binding.tvSinEntrenam.isVisible = true
-                    entrenamientosViewModel.entrenamientos.clear()
-                    recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                    recyclerAdapter.notifyDataSetChanged()
+                    if (doc != null){
+                        val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
+                        binding.tvSinEntrenam.isVisible = true
+                        entrenamientosViewModel.entrenamientos.clear()
+                        recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                        recyclerAdapter.notifyDataSetChanged()
 
-                    for (idEntren:String in entrenadorDb?.entrenamientos!!){
-                        binding.tvSinEntrenam.isVisible = false
+                        for (idEntren:String in entrenadorDb?.entrenamientos!!){
+                            binding.tvSinEntrenam.isVisible = false
 
-                        db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),idEntren)
-                            .addSnapshotListener{doc, exc ->
-                                if (exc != null){
-                                    Log.w(ContentValues.TAG, "Listen failed.", exc)
-                                    return@addSnapshotListener
-                                }
+                            db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),idEntren)
+                                .addSnapshotListener{doc, exc ->
+                                    if (exc != null){
+                                        Log.w(ContentValues.TAG, "Listen failed.", exc)
+                                        return@addSnapshotListener
+                                    }
 
-                                if (doc != null){
+                                    if (doc != null){
 
-                                    for (dc in doc.documentChanges){
-                                        when (dc.type){
-                                            DocumentChange.Type.ADDED -> {
-                                                val entren = doc.documents[0].toObject(
-                                                    Entrenamiento::class.java)
-                                                entrenamientosViewModel.entrenamientos.add(entren!!)
-                                                recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                                                recyclerAdapter.notifyDataSetChanged()
-                                            }
-                                            DocumentChange.Type.MODIFIED -> {
-                                                val entren = doc.documents[0].toObject(
-                                                    Entrenamiento::class.java)
-                                                for (i in 0 until entrenamientosViewModel.entrenamientos.size){
-                                                    if (entrenamientosViewModel.entrenamientos[i].id == entren!!.id){
-                                                        entrenamientosViewModel.entrenamientos.set(i,entren)
-                                                        recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                                                        recyclerAdapter.notifyDataSetChanged()
-                                                    }
+                                        for (dc in doc.documentChanges){
+                                            when (dc.type){
+                                                DocumentChange.Type.ADDED -> {
+                                                    val entren = doc.documents[0].toObject(
+                                                        Entrenamiento::class.java)
+                                                    entrenamientosViewModel.entrenamientos.add(entren!!)
+                                                    recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                                                    recyclerAdapter.notifyDataSetChanged()
                                                 }
+                                                DocumentChange.Type.MODIFIED -> {
+                                                    val entren = doc.documents[0].toObject(
+                                                        Entrenamiento::class.java)
+                                                    for (i in 0 until entrenamientosViewModel.entrenamientos.size){
+                                                        if (entrenamientosViewModel.entrenamientos[i].id == entren!!.id){
+                                                            entrenamientosViewModel.entrenamientos.set(i,entren)
+                                                            recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                                                            recyclerAdapter.notifyDataSetChanged()
+                                                        }
+                                                    }
 
+                                                }
                                             }
                                         }
                                     }
+
                                 }
+                        }
 
-                            }
                     }
-
                 }
-            }
+        }catch (e:Exception){
+            e.message?.let { Log.d("ENTRENAMIENTOS", it) }
+        }
     }
 
 
