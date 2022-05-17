@@ -143,7 +143,9 @@ class RecyclerAdapterHomeDeportista: RecyclerView.Adapter<RecyclerAdapterHomeDep
                     .into(binding.imageEntren)
                 binding.tvseriesrep.text = "3 tests"
                 itemView.setOnClickListener {
-                    val entrenIntent = Intent (context, ShowPruebasActivity::class.java)
+                    val entrenIntent = Intent (context, ShowPruebasActivity::class.java).apply {
+                        putExtra("entrenamiento", entrenamientoDeportista)
+                    }
                     ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
                 }
             }

@@ -18,7 +18,6 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaD
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.MainActivity
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
@@ -107,6 +106,7 @@ class HistorialFragment : Fragment() {
                                 val entreno = Entrenamiento_Deportista()
                                 entreno.posicion = posicion
                                 posicion++
+                                entreno.prueba = entre.prueba
                                 entreno.deportista = deportistaDB
                                 val sdf = SimpleDateFormat("dd/MM/yyyy")
                                 entreno.fechaFormat = sdf.parse(entre.fecha)

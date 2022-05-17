@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:datePicker="true"
         app:eventsEnabled="true"
-        app:headerColor="@color/tabSelected"
+        app:headerColor="@color/mostaza_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

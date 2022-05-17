@@ -11,7 +11,7 @@ class Entrenamiento_DeportistaDB: Serializable {
             field = value
         }
 
-    var posicion = -1
+    var prueba:String = ""
 
     var entrenamiento:String=""
         get() = field

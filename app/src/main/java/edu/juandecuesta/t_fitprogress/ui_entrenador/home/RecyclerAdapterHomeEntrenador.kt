@@ -90,7 +90,9 @@ class RecyclerAdapterHomeEntrenador: RecyclerView.Adapter<RecyclerAdapterHomeEnt
                 binding.tvNombreEntre.text = (entrenamientoDeportista.entrenamiento!!.nombre)
                 binding.tvseriesrep.text = "3 tests"
                 itemView.setOnClickListener {
-                    val entrenIntent = Intent (context, ShowPruebasActivity::class.java)
+                    val entrenIntent = Intent (context, ShowPruebasActivity::class.java).apply {
+                        putExtra("entrenamiento", entrenamientoDeportista)
+                    }
                     ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
                 }
             }

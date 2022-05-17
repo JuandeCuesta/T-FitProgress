@@ -13,12 +13,10 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentCondicionBinding
-import edu.juandecuesta.t_fitprogress.databinding.FragmentCondicionBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.dialogAddEntrenamiento.DatePickerFragment
-import edu.juandecuesta.t_fitprogress.utils.Functions
 import lecho.lib.hellocharts.model.*
 import lecho.lib.hellocharts.view.LineChartView
 
@@ -56,36 +54,37 @@ class CondicionFragment : Fragment() {
         var entrenamiento = Entrenamiento_DeportistaDB()
         entrenamiento.fecha = binding.etFechaPrueba.text.toString()
         entrenamiento.entrenamiento = "prueba_fisica"
-        db.collection("users").document(ShowClientActivity.deportista.email).get().addOnSuccessListener {
-                doc ->
+        val eval_dep = Evaluacion_Deportista()
+        eval_dep.fecha = entrenamiento.fecha
 
-            var entrenamientoDBS:MutableList<Entrenamiento_DeportistaDB> = arrayListOf()
-            var evaluaciones:MutableList<Evaluacion_Deportista> = arrayListOf()
-
-            if (doc.get("entrenamientos") != null){
-                entrenamientoDBS = doc.get("entrenamientos") as MutableList<Entrenamiento_DeportistaDB>
-            }
-
-            if (doc.get("evaluacionfisica") != null){
-                evaluaciones = doc.get("evaluacionfisica") as MutableList<Evaluacion_Deportista>
-            }
-            val eval_dep = Evaluacion_Deportista()
-            eval_dep.fecha = entrenamiento.fecha
-            entrenamiento.posicion = evaluaciones.size
-            evaluaciones.add(eval_dep)
-            entrenamientoDBS.add(entrenamiento)
-            db.collection("users").document(ShowClientActivity.deportista.email)
-                .update("entrenamientos", entrenamientoDBS).addOnSuccessListener{
-
-                    db.collection("users").document(ShowClientActivity.deportista.email)
-                        .update("evaluacionfisica", evaluaciones).addOnSuccessListener{
-                            Toast.makeText(requireContext(), "Pruebas físicas añadida con exito", Toast.LENGTH_LONG).show()
-                            binding.etFechaPrueba.text?.clear()
-                        }
-
-                }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Ha habido un error al añadir las pruebas físicas", Toast.LENGTH_LONG).show()
+        db.collection("users").document(ShowClientActivity.deportista.email).collection("evaluaciones").add(eval_dep).addOnSuccessListener {
+            it -> db.collection("users").document(ShowClientActivity.deportista.email).get().addOnSuccessListener { doc ->
+                var entrenamientoDBS:MutableList<Entrenamiento_DeportistaDB> = arrayListOf()
+                var evaluaciones:MutableList<String> = arrayListOf()
+                if (doc.get("entrenamientos") != null){
+                    entrenamientoDBS = doc.get("entrenamientos") as MutableList<Entrenamiento_DeportistaDB>
                 }
+
+                if (doc.get("evaluacionfisica") != null){
+                    evaluaciones = doc.get("evaluacionfisica") as MutableList<String>
+                }
+                evaluaciones.add(it.id)
+                entrenamiento.prueba = it.id
+                entrenamientoDBS.add(entrenamiento)
+                db.collection("users").document(ShowClientActivity.deportista.email)
+                    .update("entrenamientos", entrenamientoDBS).addOnSuccessListener{dc->
+
+                        db.collection("users").document(ShowClientActivity.deportista.email)
+                            .update("evaluacionfisica", evaluaciones).addOnSuccessListener{
+                                Toast.makeText(requireContext(), "Pruebas físicas añadida con exito", Toast.LENGTH_LONG).show()
+                                binding.etFechaPrueba.text?.clear()
+                            }
+
+                    }.addOnFailureListener {
+                        Toast.makeText(requireContext(), "Ha habido un error al añadir las pruebas físicas", Toast.LENGTH_LONG).show()
+                    }
+
+            }
         }
     }
 

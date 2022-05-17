@@ -23,6 +23,8 @@ class Evaluacion_Imc:Serializable {
             field = value
         }
 
+    var resultado:String = ""
+
     var imc:Float = 0.0f
 
 }

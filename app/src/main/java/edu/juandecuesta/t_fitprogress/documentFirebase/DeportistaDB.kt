@@ -14,7 +14,7 @@ class DeportistaDB:Serializable {
     var entrenador: String= ""
     var fechanacimiento:String = ""
     var experiencia:String = ""
-    var evaluacionfisica: MutableList<Evaluacion_Deportista>?=null
+    var evaluacionfisica: MutableList<String>?=null
     var entrenamientos: MutableList<Entrenamiento_DeportistaDB>?=null
     var sexo:String = ""
     var descripcionPersonal = ""

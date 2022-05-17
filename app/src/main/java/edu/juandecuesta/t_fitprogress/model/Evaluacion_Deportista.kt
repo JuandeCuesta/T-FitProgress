@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Evaluacion_Deportista: Serializable {
-
+    var id = ""
     var fecha = ""
     var evaluacionFondos = Evaluacion_Fondos()
     var evaluacionImc = Evaluacion_Imc()

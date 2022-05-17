@@ -8,6 +8,7 @@ import java.util.*
 class Entrenamiento_Deportista: Serializable {
 
     var posicion:Int = 0
+    var prueba:String = ""
 
     var deportista:DeportistaDB = DeportistaDB()
 

@@ -14,6 +14,8 @@ class Evaluacion_Fondos:Serializable {
             field = value
         }
 
+    var resultado:String = ""
+
     var fondos:Int = 0
         get() = field
         set(value) {

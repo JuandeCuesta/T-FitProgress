@@ -17,18 +17,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.esentrenador
 import edu.juandecuesta.t_fitprogress.ui_entrenador.calendario.CalendarioActivity
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
-import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.RecyclerAdapterHistorial
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -54,15 +50,15 @@ class HomeFragment : Fragment() {
         binding = EntFragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        if (esentrenador){
+        /*if (esentrenador){
             binding.textHome.text = context!!.getString(R.string.tvFechaActual, Functions().mostrarFecha())
-            //loadRecyclerViewAdapterEntrenador()
-            //binding.btnCompletCalendar.isVisible = true
+            loadRecyclerViewAdapterEntrenador()
+            binding.btnCompletCalendar.isVisible = true
         } else {
             binding.textHome.isVisible = false
             loadRecyclerViewAdapterDeportista()
             binding.btnCompletCalendar.isVisible = false
-        }
+        }*/
 
         setHasOptionsMenu(true)
 
@@ -191,6 +187,7 @@ class HomeFragment : Fragment() {
 
                                 val entreno = Entrenamiento_Deportista()
                                 entreno.posicion = posicion
+                                entreno.prueba = entre.prueba
                                 posicion++
                                 entreno.deportista = deportistaDB
                                 val sdf = SimpleDateFormat("dd/MM/yyyy")
@@ -281,6 +278,7 @@ class HomeFragment : Fragment() {
 
                                                     val entreno = Entrenamiento_Deportista()
                                                     entreno.posicion = posicion
+                                                    entreno.prueba = entre.prueba
                                                     posicion++
                                                     entreno.deportista = deportistaDB
                                                     val sdf = SimpleDateFormat("dd/MM/yyyy")

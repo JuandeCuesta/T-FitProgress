@@ -1,14 +1,11 @@
 package edu.juandecuesta.t_fitprogress.ui_deportista.calendario
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.applandeo.materialcalendarview.EventDay
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +18,6 @@ import edu.juandecuesta.t_fitprogress.databinding.DepFragmentCalendarioBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
-import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeEntrenador
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 import java.util.*
@@ -183,6 +179,7 @@ class CalendarioFragment : Fragment() {
 
                             val entreno = Entrenamiento_Deportista()
                             entreno.posicion = posicion
+                            entreno.prueba = entre.prueba
                             posicion++
                             entreno.deportista = deportistaDB
                             val sdf = SimpleDateFormat("dd/MM/yyyy")

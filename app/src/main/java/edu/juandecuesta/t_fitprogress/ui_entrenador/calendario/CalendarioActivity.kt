@@ -173,6 +173,7 @@ class CalendarioActivity : AppCompatActivity() {
 
                                                 val entreno = Entrenamiento_Deportista()
                                                 entreno.posicion = posicion
+                                                entreno.prueba = entre.prueba
                                                 posicion++
                                                 entreno.deportista = deportistaDB
                                                 val sdf = SimpleDateFormat("dd/MM/yyyy")
