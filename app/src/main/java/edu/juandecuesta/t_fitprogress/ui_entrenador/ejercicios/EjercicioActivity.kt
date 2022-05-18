@@ -22,22 +22,18 @@ import com.google.android.gms.tasks.Task
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityEjercicioBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
 import edu.juandecuesta.t_fitprogress.utils.Functions
-import edu.juandecuesta.t_fitprogress.utils.GestionPermisos
 import java.io.File
 import java.util.*
 
 class EjercicioActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEjercicioBinding
-    private val db = FirebaseFirestore.getInstance()
-    private lateinit var gestPermisos: GestionPermisos
-
-    private val MY_PERMISSIONS_REQUEST_CAMERA = 234
 
     val key = "AIzaSyA4z9gUsYmXJ36ovpfzghbyboexc3ksPCo"
     var idVideo = ""

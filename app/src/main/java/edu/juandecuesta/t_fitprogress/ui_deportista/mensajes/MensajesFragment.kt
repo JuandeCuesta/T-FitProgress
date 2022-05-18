@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
 import edu.juandecuesta.t_fitprogress.R
@@ -24,7 +25,6 @@ import java.util.*
 
 class MensajesFragment:Fragment() {
     private lateinit var binding: DepFragmentMensajesBinding
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val recyclerAdapter = RecyclerAdapterMessages()
     private var mychat: Chat = Chat()
     private var yourchat: Chat = Chat()

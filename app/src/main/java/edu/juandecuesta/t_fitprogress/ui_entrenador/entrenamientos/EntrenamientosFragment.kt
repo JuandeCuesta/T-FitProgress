@@ -19,6 +19,7 @@ import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEntrenamientosBindi
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 
 class EntrenamientosFragment:Fragment() {
     private lateinit var entrenamientosViewModel: EntrenamientosViewModel
@@ -28,7 +29,6 @@ class EntrenamientosFragment:Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val recyclerAdapter = RecyclerAdapterEntrenamientos()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,

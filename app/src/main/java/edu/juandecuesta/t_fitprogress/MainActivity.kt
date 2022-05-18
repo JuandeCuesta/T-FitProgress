@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val db = FirebaseFirestore.getInstance()
 
     companion object{
-         var entrenadorMain: EntrenadorDB = EntrenadorDB()
+        lateinit var db:FirebaseFirestore
+        var entrenadorMain: EntrenadorDB = EntrenadorDB()
         var deportistaMain = DeportistaDB()
         var esentrenador:Boolean = false
     }
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
+        db = FirebaseFirestore.getInstance()
         esentrenador = intent.getBooleanExtra("esentrenador", false)
         if (esentrenador){
             entrenadorMain = intent.getSerializableExtra("entrenador") as EntrenadorDB
@@ -155,7 +155,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.logout.setOnClickListener {
-
             cerrarSesion()
         }
     }
@@ -165,6 +164,7 @@ class MainActivity : AppCompatActivity() {
 
         val myIntent = Intent (this, LoginActivity::class.java)
         startActivity(myIntent)
+        db.terminate()
         finish()
     }
 

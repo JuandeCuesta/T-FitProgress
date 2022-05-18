@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.databinding.DepActivityShowEntrenamientoBinding
@@ -24,7 +25,6 @@ import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class ShowEntrenoDeportistaActivity : AppCompatActivity() {
     private lateinit var binding: DepActivityShowEntrenamientoBinding
-    private val db = FirebaseFirestore.getInstance()
     private var entrenamiento = Entrenamiento_Deportista()
     var ejerciciosEntrenamiento: MutableList<Ejercicio> = arrayListOf()
 

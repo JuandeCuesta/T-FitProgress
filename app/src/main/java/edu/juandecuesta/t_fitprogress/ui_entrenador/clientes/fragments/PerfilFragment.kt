@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.FragmentPerfilBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
@@ -24,7 +25,6 @@ import edu.juandecuesta.t_fitprogress.utils.Functions
 class PerfilFragment : Fragment() {
 
     private lateinit var binding:FragmentPerfilBinding
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
 
     override fun onCreateView(

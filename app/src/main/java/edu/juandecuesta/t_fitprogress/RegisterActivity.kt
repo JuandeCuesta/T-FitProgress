@@ -22,14 +22,14 @@ import edu.juandecuesta.t_fitprogress.utils.Functions
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private val db = FirebaseFirestore.getInstance()
+    private lateinit var db:FirebaseFirestore
     var ejerciciosDefecto:MutableList<Ejercicio> = arrayListOf()
     val entrenador = EntrenadorDB()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-
+        db = FirebaseFirestore.getInstance()
         setContentView(binding.root)
 
         val type = arrayOf("Ninguno", "Bajo", "Medio", "Alto")
@@ -121,6 +121,7 @@ class RegisterActivity : AppCompatActivity() {
                                                         FirebaseAuth.getInstance().signOut()
                                                         eliminarEjercicios()
                                                         onBackPressed()
+                                                        db.terminate()
 
                                                     }.addOnFailureListener { e ->
                                                         db.collection("users").document(email).delete().addOnSuccessListener {
@@ -180,6 +181,7 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "El entrenador ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
+            db.terminate()
         }.addOnFailureListener {
             //Si ha habido algun error se elimina el usuario creado
             FirebaseAuth.getInstance().currentUser?.delete()

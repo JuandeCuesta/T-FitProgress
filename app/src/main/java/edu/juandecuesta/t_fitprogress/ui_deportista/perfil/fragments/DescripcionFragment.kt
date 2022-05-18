@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.FragmentPerfilDeportistaBinding
@@ -34,7 +35,6 @@ import java.util.*
 class DescripcionFragment : Fragment() {
 
     private lateinit var binding:FragmentPerfilDeportistaBinding
-    private val db = FirebaseFirestore.getInstance()
     var uri_img: Uri?=null
     var imgCorrecta = false
     var imagenActualizada = false

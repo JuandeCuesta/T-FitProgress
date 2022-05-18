@@ -16,6 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
+        android:visibility="gone"
         android:text="Juan de Dios Cuesta"
         android:textColor="@color/azul_marino"
         android:textSize="24sp"
@@ -277,27 +278,24 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tipo de flexión realizada"
+                        android:hint="Tipo de flexiones"
                         android:paddingHorizontal="4dp"
+                        android:focusableInTouchMode="false"
+                        android:clickable="false"
                         app:boxStrokeWidth="0dp"
                         android:layout_marginVertical="4dp"
                         app:boxStrokeWidthFocused="0dp"
-                        app:endIconMode="dropdown_menu"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/etTIpoFlexion"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etTipoFlexion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="16dp"
-                            android:paddingTop="22dp"
-                            android:paddingBottom="10dp"
-                            android:textSize="16sp"
-                            android:gravity="fill_vertical"
+                            android:clickable="false"
+                            android:focusableInTouchMode="false"
                             android:background="@drawable/custom_edittext"
-                            android:inputType="textAutoComplete"
-                            android:clickable="true"
-                            android:focusable="false"/>
+                            android:inputType="text"
+                            android:singleLine="true" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -321,7 +319,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_edittext"
-                            android:inputType="numberDecimal"
+                            android:inputType="number"
                             android:singleLine="true" />
                     </com.google.android.material.textfield.TextInputLayout>
 

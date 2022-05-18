@@ -17,8 +17,11 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaD
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
+import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
 import edu.juandecuesta.t_fitprogress.databinding.FragmentHistorialDeportistaBinding
+import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,17 +29,17 @@ import java.util.*
 
 class HistorialFragment : Fragment() {
 
-    private lateinit var binding: FragmentHistorialDeportistaBinding
+    private var _binding: FragmentHistorialDeportistaBinding? = null
+    private val binding get() = _binding!!
     private val entrenamientosDep: MutableList<Entrenamiento_Deportista> = arrayListOf()
-    private val recyclerAdapter = RecyclerAdapterHistorial()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val recyclerAdapter = RecyclerAdapterHomeDeportista()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentHistorialDeportistaBinding.inflate(inflater)
+        _binding = FragmentHistorialDeportistaBinding.inflate(inflater)
 
         entrenamientosDep.clear()
         loadRecyclerViewAdapter()
@@ -62,6 +65,11 @@ class HistorialFragment : Fragment() {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onResume() {
         super.onResume()
         entrenamientosDep.clear()
@@ -79,8 +87,11 @@ class HistorialFragment : Fragment() {
 
                 if (doc != null){
                     val deportistaDB = doc.toObject(DeportistaDB::class.java)
-                    setUpRecyclerView()
-                    recyclerAdapter.notifyDataSetChanged()
+                    if (_binding != null){
+                        setUpRecyclerView()
+                        recyclerAdapter.notifyDataSetChanged()
+                    }
+
 
                     if (deportistaDB!!.entrenamientos != null) {
                         var posicion = 0;
@@ -105,7 +116,6 @@ class HistorialFragment : Fragment() {
 
                             entreno.realizado = entre.realizado
 
-                            binding.tvInfoRvHistorial.isVisible = false
                             db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),entre.entrenamiento)
                                 .addSnapshotListener{doc, exc ->
                                     if (exc != null){
@@ -122,8 +132,11 @@ class HistorialFragment : Fragment() {
                                                     entrenamientosDep.add(entreno)
                                                     entrenamientosDep.sortByDescending { e -> e.fechaFormat}
 
-                                                    setUpRecyclerView()
-                                                    recyclerAdapter.notifyDataSetChanged()
+                                                    if (_binding != null){
+                                                        setUpRecyclerView()
+                                                        recyclerAdapter.notifyDataSetChanged()
+                                                        binding.tvInfoRvHistorial.isVisible = false
+                                                    }
                                                 }
                                                 DocumentChange.Type.MODIFIED -> {
                                                     entreno.entrenamiento = doc.documents[0].toObject(
@@ -131,8 +144,11 @@ class HistorialFragment : Fragment() {
                                                     entrenamientosDep.add(entreno)
                                                     entrenamientosDep.sortByDescending { e -> e.fechaFormat}
 
-                                                    setUpRecyclerView()
-                                                    recyclerAdapter.notifyDataSetChanged()
+                                                    if (_binding != null){
+                                                        setUpRecyclerView()
+                                                        recyclerAdapter.notifyDataSetChanged()
+                                                        binding.tvInfoRvHistorial.isVisible = false
+                                                    }
                                                 }
                                                 else -> {}
                                             }

@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
@@ -30,7 +31,6 @@ class ClientesFragment : Fragment() {
 
 
     private val recyclerAdapter = RecyclerAdapterClientesEntrenador()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -17,8 +17,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.esentrenador
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import edu.juandecuesta.t_fitprogress.ui_entrenador.calendario.CalendarioActivity
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
@@ -33,11 +35,12 @@ import java.text.SimpleDateFormat
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var binding: EntFragmentHomeBinding
+    private var _binding: EntFragmentHomeBinding? = null
+
+    private val binding get() = _binding!!
 
     private val recyclerAdapterDeportista = RecyclerAdapterHomeDeportista()
     private val recyclerAdapterEntrenador = RecyclerAdapterHomeEntrenador()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +50,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        binding = EntFragmentHomeBinding.inflate(inflater, container, false)
+        _binding = EntFragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         /*if (esentrenador){
@@ -137,13 +140,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onStart() {
         super.onStart()
         if (esentrenador){
+            binding.textHome.text = context!!.getString(R.string.tvFechaActual, Functions().mostrarFecha())
             homeViewModel.entrenamientos.clear()
             loadRecyclerViewAdapterEntrenador()
             binding.btnCompletCalendar.isVisible = true
         } else {
+            binding.textHome.isVisible = false
             homeViewModel.entrenamientos.clear()
             loadRecyclerViewAdapterDeportista()
             binding.btnCompletCalendar.isVisible = false
@@ -177,8 +187,11 @@ class HomeFragment : Fragment() {
                         val deportistaDB = doc.toObject(DeportistaDB::class.java)
 
                         homeViewModel.entrenamientos.clear()
-                        setUpRecyclerView()
-                        recyclerAdapterDeportista.notifyDataSetChanged()
+                        if (_binding != null){
+                            setUpRecyclerView()
+                            recyclerAdapterDeportista.notifyDataSetChanged()
+                        }
+
 
                         if (deportistaDB!!.entrenamientos != null) {
                             val ultimoDiaSemana = Functions().ultimoDiaSemana()
@@ -193,12 +206,16 @@ class HomeFragment : Fragment() {
                                 val sdf = SimpleDateFormat("dd/MM/yyyy")
                                 entreno.fechaFormat = sdf.parse(entre.fecha)
 
-
-                                if (Functions().calcularFecha(entre.fecha) == 0){
-                                    entreno.fecha = "Hoy - ${Functions().diaSemana(entre.fecha, requireContext())}"
-                                } else if (Functions().calcularFecha(entre.fecha) < 0 && Functions().calcularEntreFechas(ultimoDiaSemana, entre.fecha) >= 0){
-                                    entreno.fecha = Functions().diaSemana(entre.fecha, requireContext())
-                                }else{
+                                if (_binding != null) {
+                                    if (Functions().calcularFecha(entre.fecha) == 0) {
+                                        entreno.fecha = "Hoy - ${entre.fecha}"
+                                    } else if (Functions().calcularFecha(entre.fecha) < 0 && Functions().calcularEntreFechas(ultimoDiaSemana,entre.fecha) >= 0) {
+                                        entreno.fecha =
+                                            Functions().diaSemana(entre.fecha, requireContext())
+                                    } else {
+                                        continue
+                                    }
+                                } else {
                                     continue
                                 }
                                 entreno.realizado = entre.realizado
@@ -219,8 +236,10 @@ class HomeFragment : Fragment() {
                                                             Entrenamiento::class.java)!!
                                                         homeViewModel.entrenamientos.add(entreno)
                                                         homeViewModel.entrenamientos.sortBy { e -> e.fechaFormat }
-                                                        setUpRecyclerView()
-                                                        recyclerAdapterDeportista.notifyDataSetChanged()
+                                                        if (_binding != null){
+                                                            setUpRecyclerView()
+                                                            recyclerAdapterDeportista.notifyDataSetChanged()
+                                                        }
                                                     }
                                                     else -> {}
                                                 }
@@ -253,8 +272,11 @@ class HomeFragment : Fragment() {
                 if (doc != null) {
                     val entrenadorDB = doc.toObject(EntrenadorDB::class.java)
                     homeViewModel.entrenamientos.clear()
-                    setUpRecyclerViewEntrenador()
-                    recyclerAdapterEntrenador.notifyDataSetChanged()
+                    if (_binding != null){
+                        binding.tvInfoRV.isVisible = true
+                        setUpRecyclerViewEntrenador()
+                        recyclerAdapterEntrenador.notifyDataSetChanged()
+                    }
 
                     if (entrenadorDB!!.deportistas != null) {
                         for (deportista in entrenadorDB.deportistas) {
@@ -269,7 +291,7 @@ class HomeFragment : Fragment() {
                                     if (document != null) {
                                         val deportistaDB =
                                             document.toObject(DeportistaDB::class.java)
-                                        binding.tvInfoRV.isVisible = true
+
 
                                         if (deportistaDB != null) {
                                             if (deportistaDB.entrenamientos != null) {
@@ -313,10 +335,12 @@ class HomeFragment : Fragment() {
                                                                         entreno.entrenamiento =
                                                                             documento.documents[0].toObject(Entrenamiento::class.java)!!
                                                                         homeViewModel.entrenamientos.add(entreno)
-                                                                        setUpRecyclerViewEntrenador()
-                                                                        recyclerAdapterEntrenador.notifyDataSetChanged()
 
-                                                                        binding.tvInfoRV.isVisible = false
+                                                                        if (_binding != null){
+                                                                            setUpRecyclerViewEntrenador()
+                                                                            recyclerAdapterEntrenador.notifyDataSetChanged()
+                                                                            binding.tvInfoRV.isVisible = false
+                                                                        }
                                                                     }
                                                                     else -> {}
                                                                 }

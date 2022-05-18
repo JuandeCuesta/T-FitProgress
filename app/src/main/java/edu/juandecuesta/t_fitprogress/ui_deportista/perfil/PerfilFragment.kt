@@ -16,7 +16,6 @@ import edu.juandecuesta.t_fitprogress.utils.ViewPager2Adapter
 class PerfilFragment : Fragment() {
 
     private lateinit var binding: DepFragmentPerfilBinding
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,

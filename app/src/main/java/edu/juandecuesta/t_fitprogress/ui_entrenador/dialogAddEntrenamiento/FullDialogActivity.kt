@@ -18,6 +18,7 @@ import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import android.text.Editable
 import android.text.TextUtils
 import android.widget.Toast
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
@@ -27,7 +28,6 @@ class FullDialogActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityFullDialogBinding
     private val recyclerAdapter = RecyclerAdapterSelectEntrenamiento()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     val entrenamientoSeleccionado = Entrenamiento()
 
     override fun onCreate(savedInstanceState: Bundle?) {

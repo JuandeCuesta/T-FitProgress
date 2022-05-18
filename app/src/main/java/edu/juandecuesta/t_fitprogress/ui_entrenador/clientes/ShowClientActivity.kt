@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityShowClientBinding
 import edu.juandecuesta.t_fitprogress.ui_entrenador.dialogAddEntrenamiento.FullDialogActivity
@@ -28,7 +29,6 @@ import edu.juandecuesta.t_fitprogress.utils.ViewPager2Adapter
 class ShowClientActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityShowClientBinding
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
 
     companion object{

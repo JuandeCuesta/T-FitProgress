@@ -29,6 +29,7 @@ import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.ActivityEditEjercicioBinding
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.io.File
 import java.util.*
@@ -36,7 +37,6 @@ import java.util.*
 class EditEjercicioActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditEjercicioBinding
-    private val db = FirebaseFirestore.getInstance()
     private var ejercicio = Ejercicio()
 
     val key = "AIzaSyA4z9gUsYmXJ36ovpfzghbyboexc3ksPCo"

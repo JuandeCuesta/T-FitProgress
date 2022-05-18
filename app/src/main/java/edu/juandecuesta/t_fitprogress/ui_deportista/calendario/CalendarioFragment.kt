@@ -12,9 +12,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.databinding.DepFragmentCalendarioBinding
+import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
@@ -25,10 +27,11 @@ import java.util.*
 
 class CalendarioFragment : Fragment() {
 
-    private lateinit var binding: DepFragmentCalendarioBinding
+    private var _binding: DepFragmentCalendarioBinding? = null
+
+    private val binding get() = _binding!!
 
     private val mEventDays: MutableList<EventDay> = ArrayList()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
     private val recyclerAdapter = RecyclerAdapterHomeDeportista()
 
@@ -38,7 +41,7 @@ class CalendarioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DepFragmentCalendarioBinding.inflate(inflater, container, false)
+        _binding = DepFragmentCalendarioBinding.inflate(inflater, container, false)
 
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -72,6 +75,10 @@ class CalendarioFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     private fun cargarDatos() {
         val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
@@ -97,7 +104,9 @@ class CalendarioFragment : Fragment() {
                                         calendar.set(year,month,day)
                                         val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
                                         mEventDays.add(eventDay)
-                                        binding.calendarView.setEvents(mEventDays)
+                                        if (_binding != null){
+                                            binding.calendarView.setEvents(mEventDays)
+                                        }
                                     }
                                 }
 
@@ -113,7 +122,10 @@ class CalendarioFragment : Fragment() {
                                         calendar.set(year,month,day)
                                         val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
                                         mEventDays.add(eventDay)
-                                        binding.calendarView.setEvents(mEventDays)
+                                        if (_binding != null){
+                                            binding.calendarView.setEvents(mEventDays)
+                                        }
+
                                     }
                                 }
 
@@ -170,8 +182,11 @@ class CalendarioFragment : Fragment() {
                     val deportistaDB = document.toObject(DeportistaDB::class.java)
 
                     entrenamientos.clear()
-                    setUpRecyclerView()
-                    recyclerAdapter.notifyDataSetChanged()
+                    if (_binding != null){
+                        setUpRecyclerView()
+                        recyclerAdapter.notifyDataSetChanged()
+                    }
+
 
                     if (deportistaDB!!.entrenamientos != null) {
                         var posicion = 0
@@ -214,21 +229,26 @@ class CalendarioFragment : Fragment() {
                                                 entreno.entrenamiento = documento.documents[0].toObject(
                                                     Entrenamiento::class.java)!!
                                                 entrenamientos.add(entreno)
-                                                setUpRecyclerView()
-                                                recyclerAdapter.notifyDataSetChanged()
+                                                if (_binding != null){
+                                                    setUpRecyclerView()
+                                                    recyclerAdapter.notifyDataSetChanged()
+                                                    binding.tvInfoRV.isVisible = false
+                                                    binding.txtFechaSelect.isVisible = false
+                                                }
 
-                                                binding.tvInfoRV.isVisible = false
-                                                binding.txtFechaSelect.isVisible = false
                                             }
                                             DocumentChange.Type.MODIFIED -> {
                                                 entreno.entrenamiento = documento.documents[0].toObject(
                                                     Entrenamiento::class.java)!!
                                                 entrenamientos.add(entreno)
-                                                setUpRecyclerView()
-                                                recyclerAdapter.notifyDataSetChanged()
+                                                if (_binding != null){
+                                                    setUpRecyclerView()
+                                                    recyclerAdapter.notifyDataSetChanged()
+                                                    binding.tvInfoRV.isVisible = false
+                                                    binding.txtFechaSelect.isVisible = false
+                                                }
 
-                                                binding.tvInfoRV.isVisible = false
-                                                binding.txtFechaSelect.isVisible = false
+
                                             }
                                             else -> {}
                                         }

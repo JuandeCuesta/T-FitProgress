@@ -18,7 +18,9 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaD
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
+import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,8 +29,7 @@ import java.util.*
 class HistorialFragment : Fragment() {
 
     private val entrenamientosDep: MutableList<Entrenamiento_Deportista> = arrayListOf()
-    private val recyclerAdapter = RecyclerAdapterHistorial()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val recyclerAdapter = RecyclerAdapterHomeDeportista()
     private var _binding: FragmentHistorialBinding? = null
 
     private val binding get() = _binding!!

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.databinding.ActivityCreateMessageBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Chat
@@ -18,7 +19,6 @@ import java.util.*
 
 class CreateMessageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateMessageBinding
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val recyclerAdapter = RecyclerAdapterMessages()
     private var mychat: Chat = Chat()
     private var yourchat: Chat = Chat()

@@ -47,9 +47,9 @@ class RecyclerAdapterHomeDeportista: RecyclerView.Adapter<RecyclerAdapterHomeDep
             entrenamientos.addAll(this.copy)
         } else {
             for (item in this.copy) {
-                val tipo = "Entrenamiento de ${item.entrenamiento!!.tipo}"
-                if (item.deportista.nombre.lowercase().contains(text.lowercase()) || item.deportista.apellido.lowercase().contains(text.lowercase())
-                    || item.entrenamiento?.nombre?.lowercase()!!.contains(text.lowercase())
+
+                val tipo = if (item.entrenamiento!!.tipo != "Prueba") "Entrenamiento de ${item.entrenamiento!!.tipo}" else "Pruebas físicas"
+                if (item.entrenamiento?.nombre?.lowercase()!!.contains(text.lowercase())
                     || tipo.lowercase().contains(text.lowercase()) || item.fecha.lowercase().contains(text.lowercase())
                 ) {
                     entrenamientos.add(item)

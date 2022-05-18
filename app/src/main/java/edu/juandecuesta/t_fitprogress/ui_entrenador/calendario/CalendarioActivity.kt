@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
@@ -28,7 +29,6 @@ class CalendarioActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCalendarioBinding
 
     private val mEventDays: MutableList<EventDay> = ArrayList()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
     private val recyclerAdapter = RecyclerAdapterHomeEntrenador()
 

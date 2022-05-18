@@ -35,7 +35,6 @@ import java.util.*
 class ShowEjercicioActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityShowEjercicioBinding
-    private val db = FirebaseFirestore.getInstance()
     private var ejercicio = Ejercicio()
 
     val key = "AIzaSyA4z9gUsYmXJ36ovpfzghbyboexc3ksPCo"

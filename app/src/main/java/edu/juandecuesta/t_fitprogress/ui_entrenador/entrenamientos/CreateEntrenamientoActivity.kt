@@ -15,6 +15,7 @@ import android.widget.Toast
 import android.content.DialogInterface.OnMultiChoiceClickListener
 import android.text.TextUtils
 import androidx.core.view.isVisible
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
@@ -22,7 +23,6 @@ import edu.juandecuesta.t_fitprogress.utils.Functions
 class CreateEntrenamientoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateEntrenamientoBinding
-    private val db = FirebaseFirestore.getInstance()
     private var adapterList = addEjercAdapter()
 
     var ejercicios: MutableList<Ejercicio> = arrayListOf()

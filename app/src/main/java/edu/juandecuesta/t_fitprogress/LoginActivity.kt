@@ -2,6 +2,7 @@ package edu.juandecuesta.t_fitprogress
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
@@ -15,13 +16,14 @@ import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val db = FirebaseFirestore.getInstance()
+    private lateinit var db:FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = FirebaseFirestore.getInstance()
 
         val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -67,10 +69,15 @@ class LoginActivity : AppCompatActivity() {
         binding.password.clearFocus()
     }
 
+    override fun onStart() {
+        super.onStart()
+        db = FirebaseFirestore.getInstance()
+    }
 
     override fun onResume() {
         super.onResume()
         limpiarErrores()
+        db = FirebaseFirestore.getInstance()
     }
 
     private fun verificarCampos():Boolean{
@@ -96,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
         }
         startActivity(homeIntent)
         finish()
+        db.terminate()
     }
 
     private fun showHomeDeportista (deportista: DeportistaDB){
@@ -105,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
         }
         startActivity(homeIntent)
         finish()
+        db.terminate()
     }
 
 

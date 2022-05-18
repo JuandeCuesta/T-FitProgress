@@ -17,7 +17,7 @@ class Evaluacion_Cooper:Serializable {
 
     var resultado: String = ""
 
-    var distancia:Int = 0
+    var distancia:Float = 0f
     var vo2_max: Float = 0.0f  //VO2 Max = 22,351 x Distancia recorrida (en kilómetros) – 11,288
 
 }

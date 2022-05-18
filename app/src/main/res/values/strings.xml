@@ -129,9 +129,9 @@
     <string name="descripcion_basica">Cuéntame más sobre tí, por ejemplo: </string>
     <string name="descripcion_basica_extendida">Soy personal administrativo, me considero activo, dispongo de 30min al dia para realizar ejercicio …</string>
 
-    <string name="test_cooper">Último TEST DE COOPER: %1$s VO2 max</string>
-    <string name="test_fuerza">Último TEST DE FUERZA: %1$s flexiones</string>
-    <string name="test_imc">Último TEST DE IMC: %1$s kg/m2</string>
+    <string name="test_cooper">Resistencia actual: %1$s VO2max (%2$s)</string>
+    <string name="test_fuerza">Fuerza actual: %1$s flexiones (%2$s)</string>
+    <string name="test_imc">IMC actual: %1$s kg/m2 (%2$s)</string>
     <string name="test_descripcion_imc">Para determinar si una persona está por encima de su peso ideal y le conviene adelgazar, o es demasiado delgada se utiliza el IMC o Índice de Masa Corporal, también conocido como BMI (Body Mass Index) o IQ (Índice de Quetelet). Se trata de una fórmula que nos permite calcular la masa corporal de una persona.</string>
     <string name="mostrar_formula">Los resultados se obtienen mediante la siguiente fórmula:</string>
     <string name="mostrar_tabla">Los resultados se interpretan según la siguiente tabla:</string>

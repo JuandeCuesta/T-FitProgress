@@ -23,12 +23,11 @@ import edu.juandecuesta.t_fitprogress.model.Chat
 
 import android.content.DialogInterface
 import android.content.Intent
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 
 
 class MensajesFragment:Fragment() {
-    private lateinit var mensajesViewModel: MensajesViewModel
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val recyclerAdapter = RecyclerAdapterChat()
     private var chats: MutableList<Chat> = arrayListOf()
     private var deportistas: MutableList<DeportistaDB> = arrayListOf()
@@ -40,8 +39,6 @@ class MensajesFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mensajesViewModel =
-            ViewModelProvider(this).get(MensajesViewModel::class.java)
 
         _binding = FragmentMensajesBinding.inflate(inflater, container, false)
 

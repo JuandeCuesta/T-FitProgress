@@ -23,11 +23,11 @@ import edu.juandecuesta.t_fitprogress.databinding.ActivityEditEntrenamientoBindi
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.MainActivity
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class EditEntrenamientoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditEntrenamientoBinding
-    private val db = FirebaseFirestore.getInstance()
     private var entrenamiento = Entrenamiento()
     var ejercicios: MutableList<Ejercicio> = arrayListOf()
     var ejerciciosEntrenamiento: MutableList<Ejercicio> = arrayListOf()
