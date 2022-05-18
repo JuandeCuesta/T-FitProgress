@@ -24,8 +24,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
 
         if (currentUser?.email != null){
             InicioSesion(currentUser?.email!!)
@@ -60,6 +60,23 @@ class LoginActivity : AppCompatActivity() {
             startActivity(myIntent)
         }
 
+        binding.restablecerpass.setOnClickListener {
+            if (TextUtils.isEmpty(binding.username.text.toString())){
+                binding.tLusername.error = "Información necesaria"
+            } else {
+                binding.tLusername.error = null
+                auth.setLanguageCode("es")
+                auth.sendPasswordResetEmail(binding.username.text.toString()).addOnCompleteListener {
+                    if (it.isSuccessful){
+                        Toast.makeText(this,"Se ha enviado un correo para restablecer su contraseña",Toast.LENGTH_LONG).show()
+                        limpiarCampos()
+                    }else {
+                        Toast.makeText(this,"No se pudo enviar el correo para restablecer contraseña",Toast.LENGTH_LONG).show()
+                        limpiarCampos()
+                    }
+                }
+            }
+        }
     }
 
     private fun limpiarCampos (){

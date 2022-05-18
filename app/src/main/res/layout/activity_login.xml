@@ -77,6 +77,35 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/passolvidada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/olvidarpassword"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/restablecerpass"
+        app:layout_constraintStart_toStartOf="@+id/lyLogin"
+        app:layout_constraintTop_toBottomOf="@+id/lyLogin" />
+
+    <TextView
+        android:id="@+id/restablecerpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:gravity="center_horizontal"
+        android:paddingStart="15dp"
+        android:text="@string/restablecer"
+        android:textColor="@color/blue_700"
+
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/passolvidada"
+        app:layout_constraintEnd_toEndOf="@+id/lyLogin"
+        app:layout_constraintTop_toTopOf="@+id/passolvidada" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="0dp"

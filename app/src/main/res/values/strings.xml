@@ -20,7 +20,9 @@
     <string name="logout">Cerrar Sesión</string>
     <string name="sign_in">Iniciar Sesión</string>
     <string name="sinCuenta">¿Aún no estás registrado?</string>
+    <string name="olvidarpassword">¿Has olvidado la contraseña?</string>
     <string name="registrate"><u>Regístrate</u></string>
+    <string name="restablecer"><u>Restablecer password</u></string>
     <string name="crearCuenta">Crear usuario</string>
     <string name="btnCrearEjerc">Crear ejercicio</string>
     <string name="btnCrearEntren">Crear entrenamiento</string>
