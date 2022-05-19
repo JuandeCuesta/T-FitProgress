@@ -141,8 +141,13 @@ class HistorialFragment : Fragment() {
                                                 DocumentChange.Type.MODIFIED -> {
                                                     entreno.entrenamiento = doc.documents[0].toObject(
                                                         Entrenamiento::class.java)!!
-                                                    entrenamientosDep.add(entreno)
-                                                    entrenamientosDep.sortByDescending { e -> e.fechaFormat}
+
+                                                    for (i in 0 until entrenamientosDep.size){
+                                                        if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
+                                                            entrenamientosDep.set(i,entreno)
+                                                            entrenamientosDep.sortByDescending { e -> e.fechaFormat}
+                                                        }
+                                                    }
 
                                                     if (_binding != null){
                                                         setUpRecyclerView()

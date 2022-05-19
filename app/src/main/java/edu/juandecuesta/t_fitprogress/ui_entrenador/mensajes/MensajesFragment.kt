@@ -25,6 +25,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
+import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
 class MensajesFragment:Fragment() {
@@ -45,7 +46,7 @@ class MensajesFragment:Fragment() {
         val root: View = binding.root
 
         cargarClientes()
-        loadRecyclerViewAdapter()
+        loadDeportistaChat()
         setHasOptionsMenu(true)
 
         binding.floatingActionButton.setOnClickListener {
@@ -133,11 +134,6 @@ class MensajesFragment:Fragment() {
             }
     }
 
-    override fun onResume() {
-        super.onResume()
-        cargarClientes()
-        loadRecyclerViewAdapter()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // First clear current all the menu items
@@ -178,6 +174,84 @@ class MensajesFragment:Fragment() {
             binding.rvChats.addItemDecoration(dividerItemDecoration)
         }
 
+    }
+
+    private fun loadDeportistaChat (){
+        val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
+        db.collection("chats").document(current).collection("mensajes").get().addOnSuccessListener {docs ->
+
+            chats.clear()
+            setUpRecyclerView()
+            recyclerAdapter.notifyDataSetChanged()
+
+            for (doc in docs){
+                db.collection("chats").document(current).collection("mensajes").whereEqualTo(FieldPath.documentId(), doc.id).addSnapshotListener { it, error ->
+                    if (error != null){
+                        Log.w(ContentValues.TAG, "Listen failed.", error)
+                        return@addSnapshotListener
+                    }
+                    if (it != null){
+                        for (c in it.documentChanges){
+                            when(c.type){
+                                DocumentChange.Type.ADDED -> {
+                                    val chat = c.document.toObject(Chat::class.java)
+                                    val email = c.document.id
+                                    db.collection("users").whereEqualTo(FieldPath.documentId(),email).addSnapshotListener { doc, exc ->
+                                        if (exc != null){
+                                            Log.w(ContentValues.TAG, "Listen failed.", exc)
+                                            return@addSnapshotListener
+                                        }
+                                        if (doc != null){
+                                            for (dc in doc.documentChanges){
+                                                when (dc.type){
+                                                    DocumentChange.Type.ADDED -> {
+                                                        val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                                                        chat.deportista = deportistaDB
+                                                        chats.add(chat)
+                                                        chats.sortByDescending { c -> Functions().formatearFechayHora(c.mensajes.first().fecha) }
+                                                        if (_binding!=null){
+                                                            setUpRecyclerView()
+                                                            recyclerAdapter.notifyDataSetChanged()
+                                                        }
+                                                    }
+                                                    DocumentChange.Type.MODIFIED -> {
+                                                        val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                                                        chats.forEach { c ->
+                                                            if (c.deportista.email == deportistaDB.email){
+                                                                c.deportista = deportistaDB
+                                                            }
+                                                        }
+                                                        if (_binding!=null){
+                                                            setUpRecyclerView()
+                                                            recyclerAdapter.notifyDataSetChanged()
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                DocumentChange.Type.MODIFIED -> {
+                                    val chat = c.document.toObject(Chat::class.java)
+                                    val email = c.document.id
+                                    for (i in 0 until chats.size){
+                                        if (chats[i].deportista.email == email){
+                                            chats[i].mensajes = chat.mensajes
+                                            chats.sortByDescending { c -> Functions().formatearFechayHora(c.mensajes.first().fecha) }
+                                        }
+                                    }
+                                    if (_binding!=null){
+                                        setUpRecyclerView()
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun loadRecyclerViewAdapter(){

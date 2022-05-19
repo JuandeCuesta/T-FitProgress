@@ -51,9 +51,9 @@ class HistorialFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        entrenamientosDep.clear()
-        setUpRecyclerView()
-        loadRecyclerViewAdapter()
+        //entrenamientosDep.clear()
+        //setUpRecyclerView()
+        //loadRecyclerViewAdapter()
     }
 
     override fun onDestroyView() {
@@ -83,79 +83,34 @@ class HistorialFragment : Fragment() {
     private fun loadRecyclerViewAdapter(){
 
         try {
-
-            db.collection("users").document(deportista.email)
-                .addSnapshotListener{ doc, exc ->
-                    if (exc != null){
-                        Log.w(ContentValues.TAG, "Listen failed.", exc)
+            db.collection("users").whereEqualTo(FieldPath.documentId(),deportista.email)
+                .addSnapshotListener { document, except ->
+                    if (except != null) {
+                        Log.w(ContentValues.TAG, "Listen failed.", except)
                         return@addSnapshotListener
                     }
 
-                    if (doc != null){
-                        val deportistaDB = doc.toObject(DeportistaDB::class.java)
-                        entrenamientosDep.clear()
+                    if (document != null) {
+                        val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
 
-                        if (_binding!=null){
-                            setUpRecyclerView()
-                            recyclerAdapter.notifyDataSetChanged()
-                        }
-
-                        if (deportistaDB!!.entrenamientos != null) {
-                            var posicion = 0
-                            for (entre:Entrenamiento_DeportistaDB in deportistaDB.entrenamientos!!){
-
-                                val entreno = Entrenamiento_Deportista()
-                                entreno.posicion = posicion
-                                posicion++
-                                entreno.prueba = entre.prueba
-                                entreno.deportista = deportistaDB
-                                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                                entreno.fechaFormat = sdf.parse(entre.fecha)
-
-
-                                if (Functions().calcularFecha(entre.fecha) == 0){
-                                    entreno.fecha = "Hoy - ${entre.fecha}"
-                                } else if (Functions().calcularFecha(entre.fecha) > 0){
-                                    entreno.fecha = entre.fecha
-                                }else{
-                                    continue
-                                }
-
-                                entreno.realizado = entre.realizado
-
-
-                                db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),entre.entrenamiento)
-                                    .addSnapshotListener{doc, exc ->
-                                        if (exc != null){
-                                            Log.w(ContentValues.TAG, "Listen failed.", exc)
-                                            return@addSnapshotListener
-                                        }
-
-                                        if (doc != null){
-                                            for (dc in doc.documentChanges){
-                                                when (dc.type){
-                                                    DocumentChange.Type.ADDED -> {
-                                                        entreno.entrenamiento = doc.documents[0].toObject(
-                                                            Entrenamiento::class.java)!!
-                                                        entrenamientosDep.add(entreno)
-                                                        entrenamientosDep.sortByDescending { e -> e.fechaFormat}
-
-                                                        if (_binding!=null){
-                                                            binding.tvInfoRvHistorial.isVisible = false
-                                                            recyclerAdapter.RecyclerAdapter(entrenamientosDep, requireContext())
-                                                            recyclerAdapter.notifyDataSetChanged()
-                                                        }
-
-
-                                                    }
-                                                    else -> {}
-                                                }
-                                            }
-                                        }
-
+                        for (dc in document.documentChanges) {
+                            when (dc.type) {
+                                DocumentChange.Type.ADDED -> {
+                                    if (deportistaDB != null) {
+                                        mostrarentrenos(deportistaDB)
                                     }
+                                }
+                                DocumentChange.Type.MODIFIED -> {
+
+                                    entrenamientosDep.clear()
+                                    if (deportistaDB != null) {
+                                        mostrarentrenos(deportistaDB)
+                                    }
+                                }
+                                else -> {}
                             }
                         }
+
 
                     }
                 }
@@ -165,5 +120,88 @@ class HistorialFragment : Fragment() {
         }
 
     }
+
+    private fun mostrarentrenos(deportistaDB: DeportistaDB){
+        if (deportistaDB.entrenamientos != null) {
+
+            var posicion = 0
+            for (entre in deportistaDB.entrenamientos!!) {
+                val entreno = Entrenamiento_Deportista()
+                entreno.posicion = posicion
+                entreno.prueba = entre.prueba
+                posicion++
+                entreno.deportista = deportistaDB
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                entreno.fechaFormat = sdf.parse(entre.fecha)
+
+                if (Functions().calcularFecha(entre.fecha) == 0){
+                    entreno.fecha = "Hoy - ${entre.fecha}"
+                } else if (Functions().calcularFecha(entre.fecha) > 0){
+                    entreno.fecha = entre.fecha
+                }else{
+                    continue
+                }
+
+                entreno.realizado = entre.realizado
+
+                db.collection("entrenamientos").whereEqualTo(
+                    FieldPath.documentId(),
+                    entre.entrenamiento
+                ).addSnapshotListener { documento, excepcion ->
+                    if (excepcion != null) {
+                        Log.w(
+                            ContentValues.TAG,
+                            "Listen failed.",
+                            excepcion
+                        )
+                        return@addSnapshotListener
+                    }
+
+                    if (documento != null) {
+                        for (dc in documento.documentChanges) {
+                            when (dc.type) {
+                                DocumentChange.Type.ADDED -> {
+                                    entreno.entrenamiento =
+                                        documento.documents[0].toObject(
+                                            Entrenamiento::class.java
+                                        )!!
+                                    entrenamientosDep.add(entreno)
+                                    entrenamientosDep.sortByDescending { e -> e.fechaFormat }
+
+                                    if (_binding != null) {
+                                        binding.tvInfoRvHistorial.isVisible =
+                                            false
+                                        recyclerAdapter.RecyclerAdapter(
+                                            entrenamientosDep,
+                                            requireContext()
+                                        )
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                                DocumentChange.Type.MODIFIED -> {
+                                    entreno.entrenamiento = documento.documents[0].toObject(
+                                        Entrenamiento::class.java)!!
+                                    for (i in 0 until entrenamientosDep.size){
+                                        if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
+                                            entrenamientosDep.set(i,entreno)
+                                            entrenamientosDep.sortByDescending { e -> e.fechaFormat}
+                                        }
+                                    }
+                                    if (_binding != null){
+                                        recyclerAdapter.RecyclerAdapter(entrenamientosDep, requireContext())
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                                else -> {}
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
 
 }

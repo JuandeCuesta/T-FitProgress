@@ -11,11 +11,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.esentrenador
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenamientosBinding
 import edu.juandecuesta.t_fitprogress.databinding.RvHistorialEntrenamientosBinding
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_deportista.entrenamientos.ShowEntrenamientoActivity
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments.ShowEntrenoDeportistaActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.entrenamientos.EditEntrenamientoActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.pruebas_fisicas.ShowPruebasActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
@@ -129,10 +131,18 @@ class RecyclerAdapterHomeDeportista: RecyclerView.Adapter<RecyclerAdapterHomeDep
 
 
                 itemView.setOnClickListener {
-                    val entrenIntent = Intent (context, ShowEntrenamientoActivity::class.java).apply {
-                        putExtra("entrenamiento", entrenamientoDeportista)
+
+                    if (esentrenador){
+                        val entrenIntent = Intent (context, ShowEntrenoDeportistaActivity::class.java).apply {
+                            putExtra("entrenamiento", entrenamientoDeportista)
+                        }
+                        ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
+                    } else {
+                        val entrenIntent = Intent (context, ShowEntrenamientoActivity::class.java).apply {
+                            putExtra("entrenamiento", entrenamientoDeportista)
+                        }
+                        ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
                     }
-                    ContextCompat.startActivity(context,entrenIntent, Bundle.EMPTY)
                 }
 
             }else {

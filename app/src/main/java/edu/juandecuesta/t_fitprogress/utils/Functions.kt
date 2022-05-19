@@ -256,6 +256,11 @@ class Functions {
         return sdf.parse(fecha)
     }
 
+    fun formatearFechayHora (fecha: String):Date{
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        return sdf.parse(fecha)
+    }
+
     fun resultadoFuerza(flexiones:Int, prueba:String, edad:Int):String{
         var mensaje: String = ""
 

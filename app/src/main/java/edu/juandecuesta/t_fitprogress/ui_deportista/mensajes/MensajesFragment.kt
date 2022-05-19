@@ -17,6 +17,7 @@ import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.DepFragmentMensajesBinding
+import edu.juandecuesta.t_fitprogress.databinding.FragmentMensajesBinding
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Chat
 import edu.juandecuesta.t_fitprogress.model.Mensaje
@@ -24,7 +25,8 @@ import java.util.*
 
 
 class MensajesFragment:Fragment() {
-    private lateinit var binding: DepFragmentMensajesBinding
+    private var _binding: DepFragmentMensajesBinding? = null
+    private val binding get() = _binding!!
     private val recyclerAdapter = RecyclerAdapterMessages()
     private var mychat: Chat = Chat()
     private var yourchat: Chat = Chat()
@@ -36,7 +38,7 @@ class MensajesFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DepFragmentMensajesBinding.inflate(inflater, container, false)
+        _binding = DepFragmentMensajesBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
@@ -92,6 +94,11 @@ class MensajesFragment:Fragment() {
         return root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     private fun setUpRecyclerView() {
 
@@ -129,9 +136,11 @@ class MensajesFragment:Fragment() {
                                     mychat.mensajes.forEach { m -> m.leido = true }
 
                                     db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
+                                    if (_binding!= null){
+                                        setUpRecyclerView()
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
 
-                                    setUpRecyclerView()
-                                    recyclerAdapter.notifyDataSetChanged()
                                 }
                                 DocumentChange.Type.MODIFIED -> {
                                     mychat = dc.document.toObject(Chat::class.java)
@@ -140,8 +149,10 @@ class MensajesFragment:Fragment() {
 
                                     db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
 
-                                    setUpRecyclerView()
-                                    recyclerAdapter.notifyDataSetChanged()
+                                    if (_binding!= null){
+                                        setUpRecyclerView()
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
                                 }
                             }
                         }else continue

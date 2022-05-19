@@ -1,6 +1,8 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -11,12 +13,17 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
+import edu.juandecuesta.t_fitprogress.databinding.EntFragmentHomeBinding
 import edu.juandecuesta.t_fitprogress.databinding.FragmentPerfilBinding
+import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
@@ -24,7 +31,8 @@ import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class PerfilFragment : Fragment() {
 
-    private lateinit var binding:FragmentPerfilBinding
+    private var _binding: FragmentPerfilBinding? = null
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
@@ -32,7 +40,7 @@ class PerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentPerfilBinding.inflate(inflater)
+        _binding = FragmentPerfilBinding.inflate(inflater)
         val root: View = binding.root
 
         binding.btnEliminarPerfil.setOnClickListener {
@@ -78,6 +86,12 @@ class PerfilFragment : Fragment() {
         }
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun backpressed() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
 
@@ -92,6 +106,38 @@ class PerfilFragment : Fragment() {
 
     fun cargardatos() {
 
+        db.collection("users").whereEqualTo(FieldPath.documentId(), deportista.email).addSnapshotListener { value, error ->
+
+            if (error != null) {
+                Log.w(ContentValues.TAG, "Listen failed.", error)
+                return@addSnapshotListener
+            }
+            if (value != null) {
+                for (dc in value.documentChanges){
+                    when(dc.type){
+                        DocumentChange.Type.ADDED -> {
+                            val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                            if (_binding != null){
+                                mostrardatos(deportistaDB)
+                            }
+                        }
+                        DocumentChange.Type.MODIFIED -> {
+                            val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                            if (_binding != null){
+                                mostrardatos(deportistaDB)
+                            }
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
+    private fun mostrardatos(deportista: DeportistaDB) {
         val array = requireContext().resources.getStringArray(R.array.material_calendar_months_array)
 
         val nombreCompleto = "${deportista.nombre} ${deportista.apellido}"
@@ -118,7 +164,6 @@ class PerfilFragment : Fragment() {
             .load(deportista.urlImagen)
             .error(R.drawable.ic_person_white)
             .into(binding.imageShow)
-
     }
 
 }

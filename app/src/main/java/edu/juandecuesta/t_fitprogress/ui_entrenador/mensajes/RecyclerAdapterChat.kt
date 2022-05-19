@@ -89,9 +89,16 @@ class RecyclerAdapterChat : RecyclerView.Adapter<RecyclerAdapterChat.ViewHolder>
                     else "${dia} ${array[mes-1]}"
 
                 binding.tvFechaMensaje.text = fechaFormat
-                binding.tvUltimoMensaje.text = chat.mensajes.first().texto
-            } else {binding.tvUltimoMensaje.text = ""
-                    binding.tvFechaMensaje.text = ""}
+                if (chat.mensajes.first().enviado){
+                    val ultimo = "Usted: ${chat.mensajes.first().texto}"
+                    binding.tvUltimoMensaje.text = ultimo
+                }else{
+                    binding.tvUltimoMensaje.text = chat.mensajes.first().texto
+                }
+
+            } else {
+                binding.tvUltimoMensaje.text = ""
+                binding.tvFechaMensaje.text = ""}
 
             var mensajesSinLeer:Int = 0
             chat.mensajes.forEach { m -> if (!m.leido) mensajesSinLeer++ }

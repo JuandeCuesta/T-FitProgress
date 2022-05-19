@@ -2,6 +2,7 @@ package edu.juandecuesta.t_fitprogress.ui_entrenador.home
 
 import android.content.ContentValues
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,6 +14,7 @@ import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentHomeBinding
 import android.view.MenuInflater
 import android.widget.SearchView
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
@@ -52,16 +54,6 @@ class HomeFragment : Fragment() {
 
         _binding = EntFragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        /*if (esentrenador){
-            binding.textHome.text = context!!.getString(R.string.tvFechaActual, Functions().mostrarFecha())
-            loadRecyclerViewAdapterEntrenador()
-            binding.btnCompletCalendar.isVisible = true
-        } else {
-            binding.textHome.isVisible = false
-            loadRecyclerViewAdapterDeportista()
-            binding.btnCompletCalendar.isVisible = false
-        }*/
 
         setHasOptionsMenu(true)
 
@@ -145,6 +137,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onStart() {
         super.onStart()
         if (esentrenador){
@@ -160,18 +153,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        /*if (esentrenador){
-            homeViewModel.entrenamientos.clear()
-            loadRecyclerViewAdapterEntrenador()
-            binding.btnCompletCalendar.isVisible = true
-        } else {
-            homeViewModel.entrenamientos.clear()
-            loadRecyclerViewAdapterDeportista()
-            binding.btnCompletCalendar.isVisible = false
-        }*/
-    }
 
     private fun loadRecyclerViewAdapterDeportista(){
 
@@ -241,6 +222,20 @@ class HomeFragment : Fragment() {
                                                             recyclerAdapterDeportista.notifyDataSetChanged()
                                                         }
                                                     }
+                                                    DocumentChange.Type.MODIFIED -> {
+                                                        entreno.entrenamiento = doc.documents[0].toObject(
+                                                            Entrenamiento::class.java)!!
+                                                        for (i in 0 until homeViewModel.entrenamientos.size){
+                                                            if (homeViewModel.entrenamientos[i].entrenamiento.id == entreno.entrenamiento.id){
+                                                                homeViewModel.entrenamientos.set(i,entreno)
+                                                                homeViewModel.entrenamientos.sortBy { e -> e.fechaFormat }
+                                                            }
+                                                        }
+                                                        if (_binding != null){
+                                                            setUpRecyclerView()
+                                                            recyclerAdapterDeportista.notifyDataSetChanged()
+                                                        }
+                                                    }
                                                     else -> {}
                                                 }
                                             }
@@ -259,6 +254,7 @@ class HomeFragment : Fragment() {
 
     }
 
+     @RequiresApi(Build.VERSION_CODES.N)
      fun loadRecyclerViewAdapterEntrenador() {
 
         val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
@@ -278,10 +274,10 @@ class HomeFragment : Fragment() {
                         recyclerAdapterEntrenador.notifyDataSetChanged()
                     }
 
-                    if (entrenadorDB!!.deportistas != null) {
+                    if (entrenadorDB != null) {
                         for (deportista in entrenadorDB.deportistas) {
 
-                            db.collection("users").document(deportista)
+                            db.collection("users").whereEqualTo(FieldPath.documentId(),deportista)
                                 .addSnapshotListener { document, except ->
                                     if (except != null) {
                                         Log.w(ContentValues.TAG, "Listen failed.", except)
@@ -289,77 +285,93 @@ class HomeFragment : Fragment() {
                                     }
 
                                     if (document != null) {
-                                        val deportistaDB =
-                                            document.toObject(DeportistaDB::class.java)
+                                        val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
 
-
-                                        if (deportistaDB != null) {
-                                            if (deportistaDB.entrenamientos != null) {
-                                                var posicion = 0
-                                                for (entre in deportistaDB.entrenamientos!!) {
-
-                                                    val entreno = Entrenamiento_Deportista()
-                                                    entreno.posicion = posicion
-                                                    entreno.prueba = entre.prueba
-                                                    posicion++
-                                                    entreno.deportista = deportistaDB
-                                                    val sdf = SimpleDateFormat("dd/MM/yyyy")
-                                                    entreno.fechaFormat = sdf.parse(entre.fecha)
-
-                                                    //Cogemos solo la fecha de hoy
-                                                    if (Functions().calcularFecha(entre.fecha) == 0) {
-                                                        entreno.fecha = "Hoy - ${entre.fecha}"
-                                                    } else {
-                                                        continue
-                                                    }
-
-                                                    entreno.realizado = entre.realizado
-
-                                                    db.collection("entrenamientos").whereEqualTo(
-                                                        FieldPath.documentId(),
-                                                        entre.entrenamiento
-                                                    ).addSnapshotListener { documento, excepcion ->
-                                                        if (excepcion != null) {
-                                                            Log.w(
-                                                                ContentValues.TAG,
-                                                                "Listen failed.",
-                                                                excepcion
-                                                            )
-                                                            return@addSnapshotListener
-                                                        }
-
-                                                        if (documento != null) {
-                                                            for (dc in documento.documentChanges) {
-                                                                when (dc.type) {
-                                                                    DocumentChange.Type.ADDED -> {
-                                                                        entreno.entrenamiento =
-                                                                            documento.documents[0].toObject(Entrenamiento::class.java)!!
-                                                                        homeViewModel.entrenamientos.add(entreno)
-
-                                                                        if (_binding != null){
-                                                                            setUpRecyclerViewEntrenador()
-                                                                            recyclerAdapterEntrenador.notifyDataSetChanged()
-                                                                            binding.tvInfoRV.isVisible = false
-                                                                        }
-                                                                    }
-                                                                    else -> {}
-                                                                }
-                                                            }
-                                                        }
-
+                                        for (dc in document.documentChanges) {
+                                            when (dc.type) {
+                                                DocumentChange.Type.ADDED -> {
+                                                    if (deportistaDB != null) {
+                                                        mostrarentrenos(deportistaDB)
                                                     }
                                                 }
+                                                DocumentChange.Type.MODIFIED -> {
+
+                                                    homeViewModel.entrenamientos.removeIf { e -> (e.deportista.email ==  deportistaDB?.email)}
+                                                    if (deportistaDB != null) {
+                                                        mostrarentrenos(deportistaDB)
+                                                    }
+                                                }
+                                                else -> {}
                                             }
                                         }
+
 
                                     }
                                 }
                         }
-
                     }
                 }
             }
 
+    }
+
+    private fun mostrarentrenos(deportistaDB: DeportistaDB){
+        if (deportistaDB.entrenamientos != null) {
+
+            var posicion = 0
+            for (entre in deportistaDB.entrenamientos!!) {
+                val entreno = Entrenamiento_Deportista()
+                entreno.posicion = posicion
+                entreno.prueba = entre.prueba
+                posicion++
+                entreno.deportista = deportistaDB
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                entreno.fechaFormat = sdf.parse(entre.fecha)
+
+                //Cogemos solo la fecha de hoy
+                if (Functions().calcularFecha(entre.fecha) == 0) {
+                    entreno.fecha = "Hoy - ${entre.fecha}"
+                } else {
+                    continue
+                }
+
+                entreno.realizado = entre.realizado
+
+                db.collection("entrenamientos").whereEqualTo(
+                    FieldPath.documentId(),
+                    entre.entrenamiento
+                ).addSnapshotListener { documento, excepcion ->
+                    if (excepcion != null) {
+                        Log.w(
+                            ContentValues.TAG,
+                            "Listen failed.",
+                            excepcion
+                        )
+                        return@addSnapshotListener
+                    }
+
+                    if (documento != null) {
+                        for (dc in documento.documentChanges) {
+                            when (dc.type) {
+                                DocumentChange.Type.ADDED -> {
+                                    entreno.entrenamiento =
+                                        documento.documents[0].toObject(Entrenamiento::class.java)!!
+                                    homeViewModel.entrenamientos.add(entreno)
+
+                                    if (_binding != null){
+                                        setUpRecyclerViewEntrenador()
+                                        recyclerAdapterEntrenador.notifyDataSetChanged()
+                                        binding.tvInfoRV.isVisible = false
+                                    }
+                                }
+                                else -> {}
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
 

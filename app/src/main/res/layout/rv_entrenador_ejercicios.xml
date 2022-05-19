@@ -60,6 +60,8 @@
                 android:paddingHorizontal="6dp"
                 android:text="Press de banca"
                 android:textColor="@color/azul_marino"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 

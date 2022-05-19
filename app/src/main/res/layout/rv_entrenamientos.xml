@@ -46,6 +46,8 @@
                 android:id="@+id/tvNombreEnt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="Full body"
                 android:textColor="@color/azul_marino"
                 android:textSize="26dp"

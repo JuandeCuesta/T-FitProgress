@@ -314,6 +314,7 @@ class EditEjercicioActivity : AppCompatActivity() {
     private fun noMostrar(){
         modoEdit = false
         binding.tLnombreEjerc.isVisible = false
+
         binding.linLayImagen.isVisible = false
 
         if (ejercicio.urlVideo == ""){
@@ -322,7 +323,10 @@ class EditEjercicioActivity : AppCompatActivity() {
         binding.etURLVideo.isFocusableInTouchMode = false
         binding.etGrupoMuscular.isFocusableInTouchMode = false
         binding.etTipoEjerc.isClickable = false
-
+        binding.etNombreEjerc.clearFocus()
+        binding.etURLVideo.clearFocus()
+        binding.etGrupoMuscular.clearFocus()
+        binding.etTipoEjerc.clearFocus()
         binding.etInstrucciones.clearFocus()
         binding.etInstrucciones.isFocusableInTouchMode = false
         binding.btnGuardar.isVisible = false

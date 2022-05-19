@@ -49,6 +49,8 @@
                 android:id="@+id/tvNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="22dp"
                 android:textColor="@color/azul_marino"
                 android:text="Juan de Dios Cuesta" />
