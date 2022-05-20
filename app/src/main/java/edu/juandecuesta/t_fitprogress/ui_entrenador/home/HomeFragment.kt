@@ -285,21 +285,24 @@ class HomeFragment : Fragment() {
                                     }
 
                                     if (document != null) {
-                                        val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
-
                                         for (dc in document.documentChanges) {
                                             when (dc.type) {
                                                 DocumentChange.Type.ADDED -> {
+                                                    val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
                                                     if (deportistaDB != null) {
                                                         mostrarentrenos(deportistaDB)
                                                     }
                                                 }
                                                 DocumentChange.Type.MODIFIED -> {
-
+                                                    val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
                                                     homeViewModel.entrenamientos.removeIf { e -> (e.deportista.email ==  deportistaDB?.email)}
                                                     if (deportistaDB != null) {
                                                         mostrarentrenos(deportistaDB)
                                                     }
+                                                }
+                                                DocumentChange.Type.REMOVED -> {
+                                                    val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                                                    homeViewModel.entrenamientos.removeIf { e -> (e.deportista.email ==  deportistaDB?.email)}
                                                 }
                                                 else -> {}
                                             }

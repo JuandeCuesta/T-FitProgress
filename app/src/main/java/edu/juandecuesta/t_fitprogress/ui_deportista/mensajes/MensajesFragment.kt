@@ -131,25 +131,26 @@ class MensajesFragment:Fragment() {
                         if (dc.document.id == deportistaMain.entrenador){
                             when (dc.type){
                                 DocumentChange.Type.ADDED -> {
-                                    mychat = dc.document.toObject(Chat::class.java)
-
-                                    mychat.mensajes.forEach { m -> m.leido = true }
-
-                                    db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
                                     if (_binding!= null){
+                                        mychat = dc.document.toObject(Chat::class.java)
+
+                                        mychat.mensajes.forEach { m -> m.leido = true }
+
+                                        db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
+
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }
 
                                 }
                                 DocumentChange.Type.MODIFIED -> {
-                                    mychat = dc.document.toObject(Chat::class.java)
-
-                                    mychat.mensajes.forEach { m -> m.leido = true }
-
-                                    db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
-
                                     if (_binding!= null){
+                                        mychat = dc.document.toObject(Chat::class.java)
+
+                                        mychat.mensajes.forEach { m -> m.leido = true }
+
+                                        db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
+
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }
@@ -179,10 +180,15 @@ class MensajesFragment:Fragment() {
                         if (dc.document.id == current) {
                             when (dc.type){
                                 DocumentChange.Type.ADDED -> {
-                                    yourchat = dc.document.toObject(Chat::class.java)
+                                    if (_binding != null){
+                                        yourchat = dc.document.toObject(Chat::class.java)
+                                    }
+
                                 }
                                 DocumentChange.Type.MODIFIED -> {
-                                    yourchat = dc.document.toObject(Chat::class.java)
+                                    if (_binding != null){
+                                        yourchat = dc.document.toObject(Chat::class.java)
+                                    }
                                 }
                             }
                         }else continue

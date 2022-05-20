@@ -127,7 +127,7 @@ class CondicionFragment : Fragment() {
             if ((month + 1) < 10){
                 mes = "0${month + 1}"
             }else {
-                mes = "$month + 1}"
+                mes = "${month + 1}"
             }
 
 

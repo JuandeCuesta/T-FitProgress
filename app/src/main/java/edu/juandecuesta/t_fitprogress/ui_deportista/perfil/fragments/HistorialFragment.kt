@@ -72,12 +72,6 @@ class HistorialFragment : Fragment() {
         _binding = null
     }
 
-    /*override fun onResume() {
-        super.onResume()
-        entrenamientosDep.clear()
-        loadRecyclerViewAdapter()
-    }*/
-
     private fun loadRecyclerViewAdapter(){
 
         try {
@@ -104,7 +98,6 @@ class HistorialFragment : Fragment() {
                                     }
                                 }
                                 DocumentChange.Type.MODIFIED -> {
-
                                     entrenamientosDep.clear()
                                     if (deportistaDB != null) {
                                         mostrarentrenos(deportistaDB)
@@ -169,29 +162,28 @@ class HistorialFragment : Fragment() {
                         for (dc in documento.documentChanges) {
                             when (dc.type) {
                                 DocumentChange.Type.ADDED -> {
-                                    entreno.entrenamiento =
-                                        documento.documents[0].toObject(
-                                            Entrenamiento::class.java
-                                        )!!
-                                    entrenamientosDep.add(entreno)
-                                    entrenamientosDep.sortByDescending { e -> e.fechaFormat }
-
                                     if (_binding != null) {
+                                        entreno.entrenamiento =
+                                            documento.documents[0].toObject(
+                                                Entrenamiento::class.java
+                                            )!!
+                                        entrenamientosDep.add(entreno)
+                                        entrenamientosDep.sortByDescending { e -> e.fechaFormat }
                                         binding.tvInfoRvHistorial.isVisible = false
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }
                                 }
                                 DocumentChange.Type.MODIFIED -> {
-                                    entreno.entrenamiento = documento.documents[0].toObject(
-                                        Entrenamiento::class.java)!!
-                                    for (i in 0 until entrenamientosDep.size){
-                                        if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
-                                            entrenamientosDep.set(i,entreno)
-                                            entrenamientosDep.sortByDescending { e -> e.fechaFormat}
-                                        }
-                                    }
                                     if (_binding != null){
+                                        entreno.entrenamiento = documento.documents[0].toObject(
+                                            Entrenamiento::class.java)!!
+                                        for (i in 0 until entrenamientosDep.size){
+                                            if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
+                                                entrenamientosDep.set(i,entreno)
+                                                entrenamientosDep.sortByDescending { e -> e.fechaFormat}
+                                            }
+                                        }
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }

@@ -117,13 +117,18 @@ class EjerciciosFragment : Fragment() {
 
                 if (doc != null){
                     val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
-                    binding.tvSinEjercicios.isVisible = true
-                    ejerciciosViewModel.ejercicios.clear()
-                    recyclerAdapter.RecyclerAdapter(ejerciciosViewModel.ejercicios, requireContext())
-                    recyclerAdapter.notifyDataSetChanged()
+                    if (_binding != null){
+                        binding.tvSinEjercicios.isVisible = true
+                        ejerciciosViewModel.ejercicios.clear()
+                        recyclerAdapter.RecyclerAdapter(ejerciciosViewModel.ejercicios, requireContext())
+                        recyclerAdapter.notifyDataSetChanged()
+                    }
 
                     for (idEjerc:String in entrenadorDb?.ejercicios!!){
-                        binding.tvSinEjercicios.isVisible = false
+
+                        if (_binding != null){
+                            binding.tvSinEjercicios.isVisible = false
+                        }
 
                         db.collection("ejercicios").whereEqualTo(FieldPath.documentId(),idEjerc)
                             .addSnapshotListener{doc, exc ->
@@ -137,23 +142,26 @@ class EjerciciosFragment : Fragment() {
                                     for (dc in doc.documentChanges){
                                         when (dc.type){
                                             DocumentChange.Type.ADDED -> {
-                                                val ejerc = doc.documents[0].toObject(
-                                                    Ejercicio::class.java)
-                                                ejerciciosViewModel.ejercicios.add(ejerc!!)
-                                                recyclerAdapter.RecyclerAdapter(ejerciciosViewModel.ejercicios, requireContext())
-                                                recyclerAdapter.notifyDataSetChanged()
+                                                if (_binding != null){
+                                                    val ejerc = doc.documents[0].toObject(
+                                                        Ejercicio::class.java)
+                                                    ejerciciosViewModel.ejercicios.add(ejerc!!)
+                                                    recyclerAdapter.RecyclerAdapter(ejerciciosViewModel.ejercicios, requireContext())
+                                                    recyclerAdapter.notifyDataSetChanged()
+                                                }
                                             }
                                             DocumentChange.Type.MODIFIED -> {
-                                                val ejerc = doc.documents[0].toObject(
-                                                    Ejercicio::class.java)
-                                                for (i in 0 until ejerciciosViewModel.ejercicios.size){
-                                                    if (ejerciciosViewModel.ejercicios[i].id == ejerc!!.id){
-                                                        ejerciciosViewModel.ejercicios.set(i,ejerc)
-                                                        recyclerAdapter.RecyclerAdapter(ejerciciosViewModel.ejercicios, requireContext())
-                                                        recyclerAdapter.notifyDataSetChanged()
+                                                if (_binding != null){
+                                                    val ejerc = doc.documents[0].toObject(
+                                                        Ejercicio::class.java)
+                                                    for (i in 0 until ejerciciosViewModel.ejercicios.size){
+                                                        if (ejerciciosViewModel.ejercicios[i].id == ejerc!!.id){
+                                                            ejerciciosViewModel.ejercicios.set(i,ejerc)
+                                                            recyclerAdapter.RecyclerAdapter(ejerciciosViewModel.ejercicios, requireContext())
+                                                            recyclerAdapter.notifyDataSetChanged()
+                                                        }
                                                     }
                                                 }
-
                                             }
                                         }
                                     }

@@ -18,6 +18,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvSinChats"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/custom_edittext"
+        android:padding="4dp"
+        android:text="@string/msgRecyclerChats"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/rvChats"
+        app:layout_constraintStart_toStartOf="@+id/rvChats"
+        app:layout_constraintTop_toTopOf="@+id/rvChats" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

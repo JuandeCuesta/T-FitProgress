@@ -48,6 +48,7 @@
     <string name="msgRecyclerClientes">Aún no tienes deportistas asignados</string>
     <string name="msgRecyclerEjercicios">No tienes ejercicios almacenados</string>
     <string name="msgRecyclerEntrenamientos">No tienes entrenamientos almacenados</string>
+    <string name="msgRecyclerChats">No tienes chats almacenados</string>
     <string name="tvFechaActual">Hoy - %1$s</string>
     <string name="edad">%1$d años</string>
 

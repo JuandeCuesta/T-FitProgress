@@ -44,9 +44,9 @@ class ClientesFragment : Fragment() {
 
         val root: View = binding.root
 
-        clientesViewModel.deportistas.clear()
+        /*clientesViewModel.deportistas.clear()
         setUpRecyclerView()
-        loadRecyclerViewAdapter()
+        loadRecyclerViewAdapter()*/
         setHasOptionsMenu(true)
         return root
     }
@@ -57,7 +57,12 @@ class ClientesFragment : Fragment() {
         _binding = null
     }
 
-
+    override fun onStart() {
+        super.onStart()
+        clientesViewModel.deportistas.clear()
+        setUpRecyclerView()
+        loadRecyclerViewAdapter()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // First clear current all the menu items
@@ -86,12 +91,12 @@ class ClientesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         clientesViewModel.deportistas.clear()
         setUpRecyclerView()
         loadRecyclerViewAdapter()
-    }
+    }*/
 
     private fun setUpRecyclerView() {
 
@@ -110,72 +115,100 @@ class ClientesFragment : Fragment() {
 
     }
 
-    private fun loadRecyclerViewAdapter(){
-
-        val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
-        db.collection("users").document(current)
-            .addSnapshotListener{ doc, exc ->
+    private fun cargarcliente (emailDep:String){
+        db.collection("users").whereEqualTo(FieldPath.documentId(),emailDep)
+            .addSnapshotListener{doc, exc ->
                 if (exc != null){
                     Log.w(TAG, "Listen failed.", exc)
                     return@addSnapshotListener
                 }
 
                 if (doc != null){
-                    val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
-                    binding.tvSinClientes.isVisible = true
-                    clientesViewModel.deportistas.clear()
-                    setUpRecyclerView()
-                    recyclerAdapter.notifyDataSetChanged()
-
-                    for (emailDep:String in entrenadorDb?.deportistas!!){
-                        binding.tvSinClientes.isVisible = false
-
-                        db.collection("users").whereEqualTo(FieldPath.documentId(),emailDep)
-                            .addSnapshotListener{doc, exc ->
-                                if (exc != null){
-                                    Log.w(TAG, "Listen failed.", exc)
-                                    return@addSnapshotListener
+                    for (dc in doc.documentChanges){
+                        when (dc.type){
+                            DocumentChange.Type.ADDED -> {
+                                if (_binding != null){
+                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                    clientesViewModel.deportistas.add(deportistaDB!!)
+                                    recyclerAdapter.RecyclerAdapter(clientesViewModel.deportistas, requireContext())
+                                    recyclerAdapter.notifyDataSetChanged()
                                 }
-
-                                if (doc != null){
-                                    for (dc in doc.documentChanges){
-                                        when (dc.type){
-                                            DocumentChange.Type.ADDED -> {
-                                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                                clientesViewModel.deportistas.add(deportistaDB!!)
-                                                recyclerAdapter.RecyclerAdapter(clientesViewModel.deportistas, requireContext())
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                if (_binding != null){
+                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                    for (i in 0 until clientesViewModel.deportistas.size){
+                                        if (clientesViewModel.deportistas[i].email == deportistaDB!!.email){
+                                            if (!deportistaDB.deshabilitada){
+                                                clientesViewModel.deportistas.set(i,deportistaDB)
+                                                setUpRecyclerView()
                                                 recyclerAdapter.notifyDataSetChanged()
-                                            }
-                                            DocumentChange.Type.MODIFIED -> {
-                                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                                for (i in 0 until clientesViewModel.deportistas.size){
-                                                    if (clientesViewModel.deportistas[i].email == deportistaDB!!.email){
-                                                        if (!deportistaDB.deshabilitada){
-                                                            clientesViewModel.deportistas.set(i,deportistaDB)
-                                                            if (_binding!=null){
-                                                                setUpRecyclerView()
-                                                                recyclerAdapter.notifyDataSetChanged()
-                                                            }
-                                                        } else {
-                                                            clientesViewModel.deportistas.removeAt(i)
-                                                            if (_binding!=null){
-                                                                setUpRecyclerView()
-                                                                recyclerAdapter.notifyDataSetChanged()
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
+                                            } else {
+                                                clientesViewModel.deportistas.removeAt(i)
+                                                setUpRecyclerView()
+                                                recyclerAdapter.notifyDataSetChanged()
                                             }
                                         }
                                     }
                                 }
 
                             }
+                        }
                     }
-
                 }
+
             }
+    }
+
+    private fun loadRecyclerViewAdapter(){
+
+        val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
+
+        db.collection("users").whereEqualTo(FieldPath.documentId(), current).addSnapshotListener { doc, exc ->
+            if (exc != null){
+                Log.w(TAG, "Listen failed.", exc)
+                return@addSnapshotListener
+            }
+
+            if (doc != null){
+                if (_binding != null){
+                    binding.tvSinClientes.isVisible = true
+                    clientesViewModel.deportistas.clear()
+                    setUpRecyclerView()
+                    recyclerAdapter.notifyDataSetChanged()
+                }
+
+
+                for (dc in doc.documentChanges){
+                    when (dc.type){
+                        DocumentChange.Type.ADDED -> {
+                            if (_binding != null){
+                                clientesViewModel.deportistas.clear()
+                                recyclerAdapter.notifyDataSetChanged()
+                                val entrenadorDb = dc.document.toObject(EntrenadorDB::class.java)
+                                for (emailDep:String in entrenadorDb?.deportistas!!){
+                                    cargarcliente(emailDep)
+                                }
+                            }
+                        }
+                        DocumentChange.Type.MODIFIED -> {
+                            if (_binding != null){
+                                clientesViewModel.deportistas.clear()
+                                recyclerAdapter.notifyDataSetChanged()
+                                val entrenadorDb = dc.document.toObject(EntrenadorDB::class.java)
+                                for (emailDep:String in entrenadorDb?.deportistas!!){
+                                    cargarcliente(emailDep)
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+            }
+
+        }
     }
 
 }

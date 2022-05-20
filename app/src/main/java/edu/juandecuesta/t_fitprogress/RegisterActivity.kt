@@ -28,17 +28,14 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
         db = FirebaseFirestore.getInstance()
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val type = arrayOf("Ninguno", "Bajo", "Medio", "Alto")
 
         val adapter = ArrayAdapter<String>(this, R.layout.dropdown_menu_popup_item, type)
-
         binding.etExperiencia.setAdapter(adapter)
-
-        cargarEjercicios()
 
         binding.rbDeportista.setOnClickListener {
             if (binding.rbDeportista.isChecked){
@@ -56,40 +53,36 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnRegistrar.setOnClickListener {
-
             vaciarErrores()
-
             if (binding.rbEntrenador.isChecked){
-
                 if (verificarCamposEntrenador() && comprobarPassword()){
-
-
-
+                    binding.lyProgress.isVisible = true
+                    binding.btnRegistrar.isVisible = false
                     val email = binding.etemail.text.toString()
                     val password = binding.etpassword1.text.toString()
-
                     entrenador.nombre = binding.etNombre.text.toString()
                     entrenador.apellido = binding.apellido1.text.toString()
                     entrenador.email = email
-                    ejerciciosDefecto.forEach { e -> entrenador.ejercicios.add(e.id) }
-
                     //Creamos la autentificacion y si se crea correctamente añadimos los siguientes datos
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
-                        if (it.isSuccessful){
+                            if (it.isSuccessful){
+                                cargarEjercicios()
 
-                            guardarEntrenador(entrenador)
-
-                        }else{
-                            Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
-                            eliminarEjercicios()
+                            }else{
+                                Functions().showSnackSimple(binding.root, "El entrenador no ha podido ser registrado, ya existe una cuenta con ese email.")
+                                eliminarEjercicios()
+                                binding.lyProgress.isVisible = false
+                                binding.btnRegistrar.isVisible = true
+                            }
                         }
-                    }
+
                 }
             }
             else {
-
                 if (verficarCamposDeportista() && comprobarPassword()){
+                    binding.lyProgress.isVisible = true
+                    binding.btnRegistrar.isVisible = false
                     val email = binding.etemail.text.toString()
                     val password = binding.etpassword1.text.toString()
                     val emailEntrenador = binding.etCodeEntrenador.text.toString()
@@ -109,17 +102,14 @@ class RegisterActivity : AppCompatActivity() {
                                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                                     .addOnCompleteListener {
                                         if (it.isSuccessful){
-
                                             db.collection("users").document(email).set(deportistaDB).addOnSuccessListener {
 
                                                 //Si se crea lo añadimos al entrenador
                                                 deportistas.add(email)
-
                                                 db.collection("users").document(emailEntrenador)
                                                     .update("deportistas", deportistas).addOnSuccessListener {
                                                         Toast.makeText(this, "El deportista ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
                                                         FirebaseAuth.getInstance().signOut()
-                                                        eliminarEjercicios()
                                                         onBackPressed()
                                                         db.terminate()
 
@@ -128,30 +118,40 @@ class RegisterActivity : AppCompatActivity() {
                                                             FirebaseAuth.getInstance().currentUser?.delete()
                                                                 ?.addOnCompleteListener {
                                                                     Functions().showSnackSimple(binding.root, "No existe entrenador con ese email registrado en la base de datos.")
+                                                                    binding.lyProgress.isVisible = false
+                                                                    binding.btnRegistrar.isVisible = true
                                                                 }
                                                         }
-
                                                     }
                                             }.addOnFailureListener {
                                                 FirebaseAuth.getInstance().currentUser?.delete()
                                                     ?.addOnCompleteListener {
                                                         Functions().showSnackSimple(binding.root, "Ha habido un error a la hora de registrar al deportista.")
+                                                        binding.lyProgress.isVisible = false
+                                                        binding.btnRegistrar.isVisible = true
                                                     }
                                             }
                                         }else{
                                             Functions().showSnackSimple(binding.root, "El deportista no ha podido ser registrado, ya existe una cuenta con ese email.")
+                                            binding.lyProgress.isVisible = false
+                                            binding.btnRegistrar.isVisible = true
                                         }
                                     }
 
                             }else{
                                 Functions().showSnackSimple(binding.root, "Entrenador con email $emailEntrenador no encontrado en la base de datos")
+                                binding.lyProgress.isVisible = false
+                                binding.btnRegistrar.isVisible = true
                             }
                         }else{
                             Functions().showSnackSimple(binding.root, "Entrenador con email $emailEntrenador no encontrado en la base de datos")
+                            binding.lyProgress.isVisible = false
+                            binding.btnRegistrar.isVisible = true
                         }
                     }
                 }
             }
+
 
         }
     }
@@ -162,22 +162,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun guardarEjercicios() {
-
-        for (e in ejerciciosDefecto){
-            db.collection("ejercicios").add(e).addOnSuccessListener { doc->
-                doc.get().addOnSuccessListener {
-                    entrenador.ejercicios.add(doc.id)
-                    db.collection("ejercicios").document(doc.id).update("id",doc.id)
-                }
-            }
-        }
-    }
-
     private fun guardarEntrenador(entrenador: EntrenadorDB) {
         //Almacenamos el resto de datos, si esta correcto volvemos a la pagina de login
         db.collection("users").document(entrenador.email).set(entrenador).addOnSuccessListener {
-
             Toast.makeText(this, "El entrenador ha sido registrado con éxito.", Toast.LENGTH_LONG).show()
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
@@ -194,19 +181,18 @@ class RegisterActivity : AppCompatActivity() {
     private fun cargarEjercicios(){
         db.collection("ejerciciosdefecto").get().addOnSuccessListener {
             docs ->
-            docs.documents.forEach {
-                e -> val ejercicio = e.toObject(Ejercicio::class.java)
-                if (ejercicio != null) {
-                    db.collection("ejercicios").add(ejercicio).addOnSuccessListener {
-                        doc -> doc.get().addOnSuccessListener {
-                            db.collection("ejercicios").document(doc.id).update("id", doc.id).addOnSuccessListener {
-                                ejercicio.id = doc.id
-                                ejerciciosDefecto.add(ejercicio)
-                            }
+            val ejercicios = docs.toObjects(Ejercicio::class.java) as MutableList<Ejercicio>
+
+            for (e in ejercicios){
+                db.collection("ejercicios").add(e).addOnSuccessListener {doc ->
+                    db.collection("ejercicios").document(doc.id).update("id", doc.id).addOnSuccessListener {
+                        ejerciciosDefecto.add(e)
+                        entrenador.ejercicios.add(doc.id)
+                        if (entrenador.ejercicios.size == docs.documents.size){
+                            guardarEntrenador(entrenador)
                         }
                     }
                 }
-
             }
         }
     }
@@ -226,7 +212,7 @@ class RegisterActivity : AppCompatActivity() {
             if ((month + 1) < 10){
                 mes = "0${month + 1}"
             }else {
-                mes = "$month + 1}"
+                mes = "${month + 1}"
             }
 
 

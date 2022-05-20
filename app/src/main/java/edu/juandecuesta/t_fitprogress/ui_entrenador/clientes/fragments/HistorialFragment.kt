@@ -161,14 +161,14 @@ class HistorialFragment : Fragment() {
                         for (dc in documento.documentChanges) {
                             when (dc.type) {
                                 DocumentChange.Type.ADDED -> {
-                                    entreno.entrenamiento =
-                                        documento.documents[0].toObject(
-                                            Entrenamiento::class.java
-                                        )!!
-                                    entrenamientosDep.add(entreno)
-                                    entrenamientosDep.sortByDescending { e -> e.fechaFormat }
-
                                     if (_binding != null) {
+                                        entreno.entrenamiento =
+                                            documento.documents[0].toObject(
+                                                Entrenamiento::class.java
+                                            )!!
+                                        entrenamientosDep.add(entreno)
+                                        entrenamientosDep.sortByDescending { e -> e.fechaFormat }
+
                                         binding.tvInfoRvHistorial.isVisible =
                                             false
                                         recyclerAdapter.RecyclerAdapter(
@@ -179,15 +179,15 @@ class HistorialFragment : Fragment() {
                                     }
                                 }
                                 DocumentChange.Type.MODIFIED -> {
-                                    entreno.entrenamiento = documento.documents[0].toObject(
-                                        Entrenamiento::class.java)!!
-                                    for (i in 0 until entrenamientosDep.size){
-                                        if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
-                                            entrenamientosDep.set(i,entreno)
-                                            entrenamientosDep.sortByDescending { e -> e.fechaFormat}
-                                        }
-                                    }
                                     if (_binding != null){
+                                        entreno.entrenamiento = documento.documents[0].toObject(
+                                            Entrenamiento::class.java)!!
+                                        for (i in 0 until entrenamientosDep.size){
+                                            if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
+                                                entrenamientosDep.set(i,entreno)
+                                                entrenamientosDep.sortByDescending { e -> e.fechaFormat}
+                                            }
+                                        }
                                         recyclerAdapter.RecyclerAdapter(entrenamientosDep, requireContext())
                                         recyclerAdapter.notifyDataSetChanged()
                                     }

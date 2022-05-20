@@ -118,13 +118,18 @@ class EntrenamientosFragment:Fragment() {
 
                     if (doc != null){
                         val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
-                        binding.tvSinEntrenam.isVisible = true
-                        entrenamientosViewModel.entrenamientos.clear()
-                        recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                        recyclerAdapter.notifyDataSetChanged()
+
+                        if (_binding != null){
+                            binding.tvSinEntrenam.isVisible = true
+                            entrenamientosViewModel.entrenamientos.clear()
+                            recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                            recyclerAdapter.notifyDataSetChanged()
+                        }
 
                         for (idEntren:String in entrenadorDb?.entrenamientos!!){
-                            binding.tvSinEntrenam.isVisible = false
+                            if (_binding != null){
+                                binding.tvSinEntrenam.isVisible = false
+                            }
 
                             db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),idEntren)
                                 .addSnapshotListener{doc, exc ->
@@ -138,20 +143,24 @@ class EntrenamientosFragment:Fragment() {
                                         for (dc in doc.documentChanges){
                                             when (dc.type){
                                                 DocumentChange.Type.ADDED -> {
-                                                    val entren = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)
-                                                    entrenamientosViewModel.entrenamientos.add(entren!!)
-                                                    recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                                                    recyclerAdapter.notifyDataSetChanged()
+                                                    if (_binding != null){
+                                                        val entren = doc.documents[0].toObject(
+                                                            Entrenamiento::class.java)
+                                                        entrenamientosViewModel.entrenamientos.add(entren!!)
+                                                        recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                                                        recyclerAdapter.notifyDataSetChanged()
+                                                    }
                                                 }
                                                 DocumentChange.Type.MODIFIED -> {
-                                                    val entren = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)
-                                                    for (i in 0 until entrenamientosViewModel.entrenamientos.size){
-                                                        if (entrenamientosViewModel.entrenamientos[i].id == entren!!.id){
-                                                            entrenamientosViewModel.entrenamientos.set(i,entren)
-                                                            recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                                                            recyclerAdapter.notifyDataSetChanged()
+                                                    if (_binding != null){
+                                                        val entren = doc.documents[0].toObject(
+                                                            Entrenamiento::class.java)
+                                                        for (i in 0 until entrenamientosViewModel.entrenamientos.size){
+                                                            if (entrenamientosViewModel.entrenamientos[i].id == entren!!.id){
+                                                                entrenamientosViewModel.entrenamientos.set(i,entren)
+                                                                recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                                                                recyclerAdapter.notifyDataSetChanged()
+                                                            }
                                                         }
                                                     }
 

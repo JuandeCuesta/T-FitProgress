@@ -94,41 +94,38 @@ class CalendarioFragment : Fragment() {
                     for (dc in doc.documentChanges){
                         when (dc.type){
                             DocumentChange.Type.ADDED -> {
-                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                if (deportistaDB?.entrenamientos != null){
-                                    for (e in deportistaDB.entrenamientos!!){
-                                        val calendar = Calendar.getInstance()
-                                        val day = e.fecha.split("/")[0].toInt()
-                                        val month = (e.fecha.split("/")[1].toInt() - 1)
-                                        val year = e.fecha.split("/")[2].toInt()
-                                        calendar.set(year,month,day)
-                                        val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
-                                        mEventDays.add(eventDay)
-                                        if (_binding != null){
+                                if (_binding != null){
+                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                    if (deportistaDB?.entrenamientos != null){
+                                        for (e in deportistaDB.entrenamientos!!){
+                                            val calendar = Calendar.getInstance()
+                                            val day = e.fecha.split("/")[0].toInt()
+                                            val month = (e.fecha.split("/")[1].toInt() - 1)
+                                            val year = e.fecha.split("/")[2].toInt()
+                                            calendar.set(year,month,day)
+                                            val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
+                                            mEventDays.add(eventDay)
                                             binding.calendarView.setEvents(mEventDays)
                                         }
                                     }
                                 }
-
                             }
                             DocumentChange.Type.MODIFIED -> {
-                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                if (deportistaDB?.entrenamientos != null){
-                                    for (e in deportistaDB.entrenamientos!!){
-                                        val calendar = Calendar.getInstance()
-                                        val day = e.fecha.split("/")[0].toInt()
-                                        val month = (e.fecha.split("/")[1].toInt() - 1)
-                                        val year = e.fecha.split("/")[2].toInt()
-                                        calendar.set(year,month,day)
-                                        val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
-                                        mEventDays.add(eventDay)
-                                        if (_binding != null){
+                                if (_binding != null){
+                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                    if (deportistaDB?.entrenamientos != null){
+                                        for (e in deportistaDB.entrenamientos!!){
+                                            val calendar = Calendar.getInstance()
+                                            val day = e.fecha.split("/")[0].toInt()
+                                            val month = (e.fecha.split("/")[1].toInt() - 1)
+                                            val year = e.fecha.split("/")[2].toInt()
+                                            calendar.set(year,month,day)
+                                            val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
+                                            mEventDays.add(eventDay)
                                             binding.calendarView.setEvents(mEventDays)
                                         }
-
                                     }
                                 }
-
                             }
                         }
                     }
@@ -226,10 +223,11 @@ class CalendarioFragment : Fragment() {
                                     for (dc in documento.documentChanges) {
                                         when (dc.type) {
                                             DocumentChange.Type.ADDED -> {
-                                                entreno.entrenamiento = documento.documents[0].toObject(
-                                                    Entrenamiento::class.java)!!
-                                                entrenamientos.add(entreno)
+
                                                 if (_binding != null){
+                                                    entreno.entrenamiento = documento.documents[0].toObject(
+                                                        Entrenamiento::class.java)!!
+                                                    entrenamientos.add(entreno)
                                                     setUpRecyclerView()
                                                     recyclerAdapter.notifyDataSetChanged()
                                                     binding.tvInfoRV.isVisible = false
@@ -238,16 +236,15 @@ class CalendarioFragment : Fragment() {
 
                                             }
                                             DocumentChange.Type.MODIFIED -> {
-                                                entreno.entrenamiento = documento.documents[0].toObject(
-                                                    Entrenamiento::class.java)!!
-                                                entrenamientos.add(entreno)
                                                 if (_binding != null){
+                                                    entreno.entrenamiento = documento.documents[0].toObject(
+                                                        Entrenamiento::class.java)!!
+                                                    entrenamientos.add(entreno)
                                                     setUpRecyclerView()
                                                     recyclerAdapter.notifyDataSetChanged()
                                                     binding.tvInfoRV.isVisible = false
                                                     binding.txtFechaSelect.isVisible = false
                                                 }
-
 
                                             }
                                             else -> {}
