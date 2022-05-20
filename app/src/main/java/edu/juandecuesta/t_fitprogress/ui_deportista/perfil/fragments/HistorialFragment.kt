@@ -21,6 +21,7 @@ import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
 import edu.juandecuesta.t_fitprogress.databinding.FragmentHistorialDeportistaBinding
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import java.text.SimpleDateFormat
@@ -42,6 +43,7 @@ class HistorialFragment : Fragment() {
         _binding = FragmentHistorialDeportistaBinding.inflate(inflater)
 
         entrenamientosDep.clear()
+        setUpRecyclerView()
         loadRecyclerViewAdapter()
 
         return binding.root
@@ -70,102 +72,140 @@ class HistorialFragment : Fragment() {
         _binding = null
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         entrenamientosDep.clear()
         loadRecyclerViewAdapter()
-    }
+    }*/
 
     private fun loadRecyclerViewAdapter(){
 
-        db.collection("users").document(deportistaMain.email)
-            .addSnapshotListener{ doc, exc ->
-                if (exc != null){
-                    Log.w(ContentValues.TAG, "Listen failed.", exc)
-                    return@addSnapshotListener
-                }
-
-                if (doc != null){
-                    val deportistaDB = doc.toObject(DeportistaDB::class.java)
-                    if (_binding != null){
-                        setUpRecyclerView()
-                        recyclerAdapter.notifyDataSetChanged()
+        try {
+            db.collection("users").whereEqualTo(FieldPath.documentId(),
+                deportistaMain.email)
+                .addSnapshotListener { document, except ->
+                    if (except != null) {
+                        Log.w(ContentValues.TAG, "Listen failed.", except)
+                        return@addSnapshotListener
                     }
 
+                    if (document != null) {
+                        val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
+                        if (_binding != null){
+                            setUpRecyclerView()
+                            recyclerAdapter.notifyDataSetChanged()
+                        }
 
-                    if (deportistaDB!!.entrenamientos != null) {
-                        var posicion = 0;
-                        for (entre:Entrenamiento_DeportistaDB in deportistaDB.entrenamientos!!){
-                            val entreno = Entrenamiento_Deportista()
-                            entreno.posicion = posicion
-                            posicion++
-
-                            entreno.deportista = deportistaDB
-                            val sdf = SimpleDateFormat("dd/MM/yyyy")
-                            entreno.fechaFormat = sdf.parse(entre.fecha)
-
-
-                            if (Functions().calcularFecha(entre.fecha) == 0){
-                                entreno.fecha = "Hoy - ${entre.fecha}"
-                            } else if (Functions().calcularFecha(entre.fecha) > 0){
-                                entreno.fecha = entre.fecha
-                            }else{
-                                continue
-                            }
-
-
-                            entreno.realizado = entre.realizado
-
-                            db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),entre.entrenamiento)
-                                .addSnapshotListener{doc, exc ->
-                                    if (exc != null){
-                                        Log.w(ContentValues.TAG, "Listen failed.", exc)
-                                        return@addSnapshotListener
+                        for (dc in document.documentChanges) {
+                            when (dc.type) {
+                                DocumentChange.Type.ADDED -> {
+                                    if (deportistaDB != null) {
+                                        mostrarentrenos(deportistaDB)
                                     }
+                                }
+                                DocumentChange.Type.MODIFIED -> {
 
-                                    if (doc != null){
-                                        for (dc in doc.documentChanges){
-                                            when (dc.type){
-                                                DocumentChange.Type.ADDED -> {
-                                                    entreno.entrenamiento = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)!!
-                                                    entrenamientosDep.add(entreno)
-                                                    entrenamientosDep.sortByDescending { e -> e.fechaFormat}
+                                    entrenamientosDep.clear()
+                                    if (deportistaDB != null) {
+                                        mostrarentrenos(deportistaDB)
+                                    }
+                                }
+                                else -> {
+                                    if (deportistaDB != null) {
+                                        mostrarentrenos(deportistaDB)
+                                    }
+                                }
+                            }
+                        }
 
-                                                    if (_binding != null){
-                                                        setUpRecyclerView()
-                                                        recyclerAdapter.notifyDataSetChanged()
-                                                        binding.tvInfoRvHistorial.isVisible = false
-                                                    }
-                                                }
-                                                DocumentChange.Type.MODIFIED -> {
-                                                    entreno.entrenamiento = doc.documents[0].toObject(
-                                                        Entrenamiento::class.java)!!
 
-                                                    for (i in 0 until entrenamientosDep.size){
-                                                        if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
-                                                            entrenamientosDep.set(i,entreno)
-                                                            entrenamientosDep.sortByDescending { e -> e.fechaFormat}
-                                                        }
-                                                    }
+                    }
+                }
 
-                                                    if (_binding != null){
-                                                        setUpRecyclerView()
-                                                        recyclerAdapter.notifyDataSetChanged()
-                                                        binding.tvInfoRvHistorial.isVisible = false
-                                                    }
-                                                }
-                                                else -> {}
-                                            }
+        }catch (e:Exception){
+            e.message?.let { Log.d("HISTORIAL", it) }
+        }
+
+    }
+
+
+    private fun mostrarentrenos(deportistaDB: DeportistaDB){
+        if (deportistaDB.entrenamientos != null) {
+
+            var posicion = 0
+            for (entre in deportistaDB.entrenamientos!!) {
+                val entreno = Entrenamiento_Deportista()
+                entreno.posicion = posicion
+                entreno.prueba = entre.prueba
+                posicion++
+                entreno.deportista = deportistaDB
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                entreno.fechaFormat = sdf.parse(entre.fecha)
+
+                if (Functions().calcularFecha(entre.fecha) == 0){
+                    entreno.fecha = "Hoy - ${entre.fecha}"
+                } else if (Functions().calcularFecha(entre.fecha) > 0){
+                    entreno.fecha = entre.fecha
+                }else{
+                    continue
+                }
+
+                entreno.realizado = entre.realizado
+
+                db.collection("entrenamientos").whereEqualTo(
+                    FieldPath.documentId(),
+                    entre.entrenamiento
+                ).addSnapshotListener { documento, excepcion ->
+                    if (excepcion != null) {
+                        Log.w(
+                            ContentValues.TAG,
+                            "Listen failed.",
+                            excepcion
+                        )
+                        return@addSnapshotListener
+                    }
+
+                    if (documento != null) {
+                        for (dc in documento.documentChanges) {
+                            when (dc.type) {
+                                DocumentChange.Type.ADDED -> {
+                                    entreno.entrenamiento =
+                                        documento.documents[0].toObject(
+                                            Entrenamiento::class.java
+                                        )!!
+                                    entrenamientosDep.add(entreno)
+                                    entrenamientosDep.sortByDescending { e -> e.fechaFormat }
+
+                                    if (_binding != null) {
+                                        binding.tvInfoRvHistorial.isVisible = false
+                                        setUpRecyclerView()
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                                DocumentChange.Type.MODIFIED -> {
+                                    entreno.entrenamiento = documento.documents[0].toObject(
+                                        Entrenamiento::class.java)!!
+                                    for (i in 0 until entrenamientosDep.size){
+                                        if (entrenamientosDep[i].entrenamiento.id == entreno.entrenamiento.id){
+                                            entrenamientosDep.set(i,entreno)
+                                            entrenamientosDep.sortByDescending { e -> e.fechaFormat}
                                         }
                                     }
-
+                                    if (_binding != null){
+                                        setUpRecyclerView()
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
                                 }
+                                else -> {}
+                            }
                         }
                     }
 
                 }
             }
+        }
     }
+
+
 
 }
