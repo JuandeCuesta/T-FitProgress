@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isSuccessful){
                         InicioSesion(email)
                     }else{
-                        Toast.makeText(this,"Error al iniciar sesión",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,"Usuario y/o contraseña incorrectos",Toast.LENGTH_LONG).show()
                         limpiarCampos()
 
                     }
@@ -160,12 +160,17 @@ class LoginActivity : AppCompatActivity() {
                                 showHomeDeportista(deportista)
                             }else {
                                 val currentUser = FirebaseAuth.getInstance().currentUser
-                                currentUser?.delete()?.addOnCompleteListener {task ->
-                                    if (task.isSuccessful) {
-                                        db.collection("users").document(deportista.email).delete().addOnSuccessListener {
-                                            db.collection("chats").document(deportista.email).delete()
-                                            limpiarCampos ()
-                                            Toast.makeText(this,"Cuenta eliminada, si quieres volver a acceder debes volver a registrarte.",Toast.LENGTH_LONG).show()
+                                db.collection("users").document(deportista.email).delete().addOnSuccessListener {
+                                    db.collection("chats").document(deportista.email).delete().addOnSuccessListener {
+                                        currentUser?.delete()?.addOnCompleteListener {task ->
+                                            if (task.isSuccessful) {
+                                                limpiarCampos()
+                                                Toast.makeText(
+                                                    this,
+                                                    "Cuenta eliminada, si quieres volver a acceder debes volver a registrarte.",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
                                         }
                                     }
                                 }

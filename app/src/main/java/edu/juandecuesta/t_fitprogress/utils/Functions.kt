@@ -56,7 +56,8 @@ class Functions {
         val anyo = f.split("/")[2].toInt()
         fecha.set(anyo,(mes-1), dia)
         val diasemana = fecha.get(Calendar.DAY_OF_WEEK)
-        val array = context.resources.getStringArray(R.array.diasSemana)
+        val array:Array<String> = arrayOf("Domingo", "Lunes", "Martes" ,"Miércoles", "Jueves", "Viernes", "Sábado")
+        //val array = context.resources.getStringArray(R.array.diasSemana)
         val fSemana = "${array[diasemana-1]} - $f"
         return fSemana
     }

@@ -51,7 +51,7 @@ class DescripcionFragment : Fragment() {
         cargar()
 
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
 
             if (modoEdit){
                 val builder = AlertDialog.Builder(requireContext())
@@ -116,7 +116,7 @@ class DescripcionFragment : Fragment() {
                     deportistaMain.nombre = binding.etNombre.text.toString()
                     deportistaMain.apellido = binding.apellido1.text.toString()
                     deportistaMain.objetivo = binding.etObjetivos.text.toString()
-                    deportistaMain.descripcionPersonal = if (binding.etDescripPersonal.text.toString() != textoEjemplo) binding.etDescripPersonal.text.toString() else ""
+                    deportistaMain.descripcionPersonal = if (binding.etDescripPersonal.text.toString() == requireContext().resources.getString(R.string.descripcion_basica_extendida)) "" else binding.etDescripPersonal.text.toString()
                     if (imagenActualizada){
                         guardarImagen()
                     } else {

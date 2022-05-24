@@ -120,7 +120,7 @@ class EditEjercicioActivity : AppCompatActivity() {
     }
 
     private fun actualizarDatos(){
-        ejercicio.nombre = binding.etNombreEjerc.text.toString()
+        ejercicio.nombre = binding.etNombreEjerc.text.toString().uppercase()
         ejercicio.descripcion = if (TextUtils.isEmpty(binding.etInstrucciones.text.toString())) "" else binding.etInstrucciones.text.toString()
         ejercicio.urlVideo = if (TextUtils.isEmpty(binding.etURLVideo.text.toString())) "" else binding.etURLVideo.text.toString()
         ejercicio.grupoMuscular = binding.etGrupoMuscular.text.toString()

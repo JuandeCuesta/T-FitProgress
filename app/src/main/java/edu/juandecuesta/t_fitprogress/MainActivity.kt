@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         var entrenadorMain: EntrenadorDB = EntrenadorDB()
         var deportistaMain = DeportistaDB()
         var esentrenador:Boolean = false
+        lateinit var searchView: SearchView
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -164,8 +166,8 @@ class MainActivity : AppCompatActivity() {
 
         val myIntent = Intent (this, LoginActivity::class.java)
         startActivity(myIntent)
-        db.terminate()
         finish()
+        db.terminate()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -174,9 +176,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+
         if(binding.drawerLayout.isOpen){
             binding.drawerLayout.close()
-        }else {
+        }else if (!searchView.isIconified()){
+            searchView.setIconified(true)
+        } else {
             super.onBackPressed()
         }
     }

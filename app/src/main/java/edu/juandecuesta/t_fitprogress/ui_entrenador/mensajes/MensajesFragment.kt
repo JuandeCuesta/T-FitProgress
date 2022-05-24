@@ -26,6 +26,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.core.view.isVisible
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
@@ -148,7 +149,7 @@ class MensajesFragment:Fragment() {
         inflater.inflate(R.menu.main, menu)
 
         val search = menu?.findItem(R.id.app_bar_search)
-        val searchView = search?.actionView as SearchView
+        searchView = search?.actionView as SearchView
         searchView.queryHint = "Buscar"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

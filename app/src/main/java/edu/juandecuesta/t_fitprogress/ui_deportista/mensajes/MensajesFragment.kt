@@ -133,11 +133,8 @@ class MensajesFragment:Fragment() {
                                 DocumentChange.Type.ADDED -> {
                                     if (_binding!= null){
                                         mychat = dc.document.toObject(Chat::class.java)
-
                                         mychat.mensajes.forEach { m -> m.leido = true }
-
                                         db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
-
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }
@@ -146,11 +143,8 @@ class MensajesFragment:Fragment() {
                                 DocumentChange.Type.MODIFIED -> {
                                     if (_binding!= null){
                                         mychat = dc.document.toObject(Chat::class.java)
-
                                         mychat.mensajes.forEach { m -> m.leido = true }
-
                                         db.collection("chats").document(current).collection("mensajes").document(deportistaMain.entrenador).update("mensajes", mychat.mensajes)
-
                                         setUpRecyclerView()
                                         recyclerAdapter.notifyDataSetChanged()
                                     }
@@ -174,8 +168,6 @@ class MensajesFragment:Fragment() {
                 }
 
                 if (doc != null){
-                    yourchat.mensajes.clear()
-
                     for (dc in doc.documentChanges){
                         if (dc.document.id == current) {
                             when (dc.type){

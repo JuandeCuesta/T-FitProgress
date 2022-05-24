@@ -28,7 +28,6 @@ class FullDialogActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityFullDialogBinding
     private val recyclerAdapter = RecyclerAdapterSelectEntrenamiento()
-    val entrenamientoSeleccionado = Entrenamiento()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +67,16 @@ class FullDialogActivity : AppCompatActivity() {
     private fun setUpRecyclerView() {
 
         binding.tvSinEntrenamSelect.isVisible = true
+        binding.tlFecha.isVisible = false
+        binding.tlSearch.isVisible = false
+        binding.rvSelectEntren.isVisible = false
 
         if (entrenamientos.size > 0){
 
             binding.tvSinEntrenamSelect.isVisible = false
+            binding.tlFecha.isVisible = true
+            binding.tlSearch.isVisible = true
+            binding.rvSelectEntren.isVisible = true
 
             binding.rvSelectEntren.setHasFixedSize(true)
             binding.rvSelectEntren.layoutManager = LinearLayoutManager(this)
@@ -136,7 +141,7 @@ class FullDialogActivity : AppCompatActivity() {
                 true
             }
             edu.juandecuesta.t_fitprogress.R.id.action_save -> {
-                if (comprobarCampos()){
+                if (entrenamientos.size > 0 && comprobarCampos()){
                     var entrenamiento = Entrenamiento_DeportistaDB()
                     entrenamiento.fecha = binding.etFecha.text.toString()
                     entrenamiento.entrenamiento = recyclerAdapter.itemSelected.id

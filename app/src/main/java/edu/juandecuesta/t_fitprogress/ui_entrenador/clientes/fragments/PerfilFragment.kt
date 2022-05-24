@@ -158,7 +158,9 @@ class PerfilFragment : Fragment() {
         binding.etSexo.setText(deportista.sexo)
         binding.etExperiencia.setText(deportista.experiencia)
         binding.etObjetivosShow.setText(deportista.objetivo)
-        binding.etDescripPersonalShow.setText(deportista.descripcionPersonal)
+        if (deportista.descripcionPersonal == ""){
+            binding.etDescripPersonalShow.text?.clear()
+        } else binding.etDescripPersonalShow.setText(deportista.descripcionPersonal)
 
         Glide.with(this)
             .load(deportista.urlImagen)

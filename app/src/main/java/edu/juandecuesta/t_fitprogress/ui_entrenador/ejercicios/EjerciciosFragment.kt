@@ -20,6 +20,7 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
 
 class EjerciciosFragment : Fragment() {
 
@@ -68,7 +69,7 @@ class EjerciciosFragment : Fragment() {
         inflater.inflate(R.menu.main, menu)
 
         val search = menu?.findItem(R.id.app_bar_search)
-        val searchView = search?.actionView as SearchView
+        searchView = search?.actionView as SearchView
         searchView.queryHint = "Buscar ejercicio"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

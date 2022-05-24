@@ -113,9 +113,21 @@
                     <View
                         android:id="@+id/divider3"
                         android:layout_width="match_parent"
-                        android:layout_marginBottom="4dp"
                         android:layout_height="1dp"
                         android:background="?android:attr/listDivider"/>
+                    <TextView
+                        android:id="@+id/imcDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:inputType="textMultiLine"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/test_descripcion_deport_imc"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -223,7 +235,6 @@
                     android:clickable="true"
                     android:paddingHorizontal="6dp"
                     android:drawableStart="@drawable/ic_baseline_cancel_24"
-
                     android:drawableEnd="@drawable/ic_expand_more"
                     android:gravity="center_vertical|center_horizontal"
                     android:paddingVertical="12dp"
@@ -269,8 +280,40 @@
                         android:id="@+id/divider5"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginBottom="4dp"
                         android:background="?android:attr/listDivider"/>
+
+                    <TextView
+                        android:id="@+id/fuerzaDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:inputType="textMultiLine"
+                        android:paddingHorizontal="8dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/test_descripcion_deport_fondos"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tabla_1_fuerza"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingTop="12dp"
+                        android:paddingHorizontal="8dp"
+                        android:text="@string/tipo_fondos"
+                        android:textSize="14sp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="135dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tipoflexion" />
 
                     <com.google.android.material.textfield.TextInputLayout
 
@@ -415,8 +458,20 @@
                         android:id="@+id/divider4"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginBottom="4dp"
                         android:background="?android:attr/listDivider"/>
+                    <TextView
+                        android:id="@+id/CooperDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:inputType="textMultiLine"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/test_descripcion_deport_cooper"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tlCooper"

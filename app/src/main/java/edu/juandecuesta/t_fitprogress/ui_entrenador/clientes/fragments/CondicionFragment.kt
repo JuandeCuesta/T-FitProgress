@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
@@ -58,6 +60,7 @@ class CondicionFragment : Fragment() {
 
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -156,9 +159,39 @@ class CondicionFragment : Fragment() {
                     cargarFondos()
                     cargarVo2()
                 }
+                for (dc in doc.documents){
+                    db.collection("users").document(deportista.email).collection("evaluaciones").whereEqualTo(
+                        FieldPath.documentId(), dc.id).addSnapshotListener { value, exc ->
+                        if (exc != null){
+                            Log.w(ContentValues.TAG, "Listen failed.", exc)
+                            return@addSnapshotListener
+                        }
+                        if (value != null){
+                            for (vc in value.documentChanges){
+                                when (vc.type){
+                                    DocumentChange.Type.MODIFIED -> {
+                                        val evaluacion = vc.document.toObject(Evaluacion_Deportista::class.java)
+                                        evaluacion.id = vc.document.id
+
+                                        for (i in 0 until evaluaciones.size){
+                                            if (evaluaciones[i].id == evaluacion.id){
+                                                evaluaciones.set(i, evaluacion)
+                                            }
+                                        }
+                                        if (_binding != null){
+                                            cargarImc()
+                                            cargarFondos()
+                                            cargarVo2()
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
             }
         }
-
     }
 
     private fun cargarImc() {

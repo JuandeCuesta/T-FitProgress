@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.databinding.ActivityCreateMessageBinding
@@ -23,6 +24,7 @@ class CreateMessageActivity : AppCompatActivity() {
     private var mychat: Chat = Chat()
     private var yourchat: Chat = Chat()
     private var deportista = DeportistaDB()
+    private val db = FirebaseFirestore.getInstance()
 
 
 
@@ -91,6 +93,7 @@ class CreateMessageActivity : AppCompatActivity() {
         }
     }
 
+
     private fun setUpRecyclerView() {
 
         if (mychat.mensajes.size > 0){
@@ -109,46 +112,52 @@ class CreateMessageActivity : AppCompatActivity() {
     private fun loadRecyclerViewAdapter(){
 
         val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
-        db.collection("chats").document(current).collection("mensajes")
-            .addSnapshotListener{ doc, exc ->
-                if (exc != null){
-                    Log.w(ContentValues.TAG, "Listen failed.", exc)
-                    return@addSnapshotListener
-                }
-
-                if (doc != null){
-                    mychat.mensajes.clear()
-                    for (dc in doc.documentChanges){
-                        if (dc.document.id == deportista.email){
-                            when (dc.type){
-                                DocumentChange.Type.ADDED -> {
-                                    mychat = dc.document.toObject(Chat::class.java)
-
-                                    mychat.mensajes.forEach { m -> m.leido = true }
-
-                                    db.collection("chats").document(current).collection("mensajes").document(deportista.email).update("mensajes", mychat.mensajes)
-
-                                    setUpRecyclerView()
-                                    recyclerAdapter.notifyDataSetChanged()
-                                }
-                                DocumentChange.Type.MODIFIED -> {
-                                    mychat = dc.document.toObject(Chat::class.java)
-
-                                    mychat.mensajes.forEach { m -> m.leido = true }
-
-                                    db.collection("chats").document(current).collection("mensajes").document(deportista.email).update("mensajes", mychat.mensajes)
-
-                                    setUpRecyclerView()
-                                    recyclerAdapter.notifyDataSetChanged()
-                                }
-                            }
-                        }else continue
+        if (deportista.email != ""){
+            db.collection("chats").document(current).collection("mensajes").whereEqualTo(FieldPath.documentId(), deportista.email)
+                .addSnapshotListener{ doc, exc ->
+                    if (exc != null){
+                        Log.w(ContentValues.TAG, "Listen failed.", exc)
+                        return@addSnapshotListener
                     }
 
+                    if (doc != null){
+                        for (dc in doc.documentChanges){
+                            if (dc.document.id == deportista.email){
+                                when (dc.type){
+                                    DocumentChange.Type.ADDED -> {
+                                        if (deportista.email != ""){
+                                            mychat = dc.document.toObject(Chat::class.java)
+                                            mychat.mensajes.forEach { m -> m.leido = true }
+                                            db.collection("chats").document(current).collection("mensajes").document(deportista.email).update("mensajes", mychat.mensajes)
+                                            setUpRecyclerView()
+                                            recyclerAdapter.notifyDataSetChanged()
+                                        }
+                                    }
+                                    DocumentChange.Type.MODIFIED -> {
+
+                                        if (deportista.email != ""){
+                                            mychat = dc.document.toObject(Chat::class.java)
+                                            mychat.mensajes.forEach { m -> m.leido = true }
+                                            db.collection("chats").document(current).collection("mensajes").document(deportista.email).update("mensajes", mychat.mensajes)
+                                            setUpRecyclerView()
+                                            recyclerAdapter.notifyDataSetChanged()
+                                        }
+                                    }
+                                }
+                            }else continue
+                        }
+
+                    }
                 }
-            }
+        }
+
     }
 
+    override fun onBackPressed() {
+        deportista = DeportistaDB()
+        super.onBackPressed()
+
+    }
 
     private fun loadOtherChat(){
 
@@ -160,7 +169,7 @@ class CreateMessageActivity : AppCompatActivity() {
                 }
 
                 if (doc != null){
-                    yourchat.mensajes.clear()
+                    //yourchat.mensajes.clear()
                     for (dc in doc.documentChanges){
                         when (dc.type){
                             DocumentChange.Type.ADDED -> {

@@ -20,13 +20,12 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
 
 class EntrenamientosFragment:Fragment() {
     private lateinit var entrenamientosViewModel: EntrenamientosViewModel
     private var _binding: EntFragmentEntrenamientosBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private val recyclerAdapter = RecyclerAdapterEntrenamientos()
 
@@ -69,7 +68,7 @@ class EntrenamientosFragment:Fragment() {
         inflater.inflate(R.menu.main, menu)
 
         val search = menu?.findItem(R.id.app_bar_search)
-        val searchView = search?.actionView as SearchView
+        searchView = search?.actionView as SearchView
         searchView.queryHint = "Buscar entrenamiento"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -105,11 +104,58 @@ class EntrenamientosFragment:Fragment() {
 
     }
 
+    private fun mostrarentrenos (idEntren:String){
+        if (_binding != null){
+            binding.tvSinEntrenam.isVisible = false
+        }
+
+        db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),idEntren)
+            .addSnapshotListener{doc, exc ->
+                if (exc != null){
+                    Log.w(ContentValues.TAG, "Listen failed.", exc)
+                    return@addSnapshotListener
+                }
+
+                if (doc != null){
+
+                    for (dc in doc.documentChanges){
+                        when (dc.type){
+                            DocumentChange.Type.ADDED -> {
+                                if (_binding != null){
+                                    val entren = doc.documents[0].toObject(
+                                        Entrenamiento::class.java)
+                                    entrenamientosViewModel.entrenamientos.add(entren!!)
+                                    setUpRecyclerView()
+                                }
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                if (_binding != null){
+                                    val entren = doc.documents[0].toObject(
+                                        Entrenamiento::class.java)
+                                    for (i in 0 until entrenamientosViewModel.entrenamientos.size){
+                                        if (entrenamientosViewModel.entrenamientos[i].id == entren!!.id){
+                                            entrenamientosViewModel.entrenamientos.set(i,entren)
+                                        }
+                                    }
+                                    if (_binding != null){
+                                        setUpRecyclerView()
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+            }
+    }
+
     private fun loadRecyclerViewAdapter(){
 
         try {
             val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
-            db.collection("users").document(current)
+            db.collection("users").whereEqualTo(FieldPath.documentId(), current)
                 .addSnapshotListener{ doc, exc ->
                     if (exc != null){
                         Log.w(ContentValues.TAG, "Listen failed.", exc)
@@ -117,59 +163,27 @@ class EntrenamientosFragment:Fragment() {
                     }
 
                     if (doc != null){
-                        val entrenadorDb = doc.toObject(EntrenadorDB::class.java)
 
-                        if (_binding != null){
-                            binding.tvSinEntrenam.isVisible = true
-                            entrenamientosViewModel.entrenamientos.clear()
-                            recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                            recyclerAdapter.notifyDataSetChanged()
-                        }
-
-                        for (idEntren:String in entrenadorDb?.entrenamientos!!){
-                            if (_binding != null){
-                                binding.tvSinEntrenam.isVisible = false
-                            }
-
-                            db.collection("entrenamientos").whereEqualTo(FieldPath.documentId(),idEntren)
-                                .addSnapshotListener{doc, exc ->
-                                    if (exc != null){
-                                        Log.w(ContentValues.TAG, "Listen failed.", exc)
-                                        return@addSnapshotListener
+                        for (dc in doc.documentChanges){
+                            when (dc.type){
+                                DocumentChange.Type.ADDED -> {
+                                    val entrenadorDb = dc.document.toObject(EntrenadorDB::class.java)
+                                    for (idEntren:String in entrenadorDb?.entrenamientos!!){
+                                        mostrarentrenos(idEntren)
                                     }
-
-                                    if (doc != null){
-
-                                        for (dc in doc.documentChanges){
-                                            when (dc.type){
-                                                DocumentChange.Type.ADDED -> {
-                                                    if (_binding != null){
-                                                        val entren = doc.documents[0].toObject(
-                                                            Entrenamiento::class.java)
-                                                        entrenamientosViewModel.entrenamientos.add(entren!!)
-                                                        recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                                                        recyclerAdapter.notifyDataSetChanged()
-                                                    }
-                                                }
-                                                DocumentChange.Type.MODIFIED -> {
-                                                    if (_binding != null){
-                                                        val entren = doc.documents[0].toObject(
-                                                            Entrenamiento::class.java)
-                                                        for (i in 0 until entrenamientosViewModel.entrenamientos.size){
-                                                            if (entrenamientosViewModel.entrenamientos[i].id == entren!!.id){
-                                                                entrenamientosViewModel.entrenamientos.set(i,entren)
-                                                                recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
-                                                                recyclerAdapter.notifyDataSetChanged()
-                                                            }
-                                                        }
-                                                    }
-
-                                                }
-                                            }
-                                        }
-                                    }
-
                                 }
+                                DocumentChange.Type.MODIFIED -> {
+                                    val entrenadorDb = dc.document.toObject(EntrenadorDB::class.java)
+                                    entrenamientosViewModel.entrenamientos.clear()
+                                    if (_binding != null){
+                                        recyclerAdapter.RecyclerAdapter(entrenamientosViewModel.entrenamientos, requireContext())
+                                        recyclerAdapter.notifyDataSetChanged()
+                                    }
+                                    for (idEntren:String in entrenadorDb?.entrenamientos!!){
+                                        mostrarentrenos(idEntren)
+                                    }
+                                }
+                            }
                         }
 
                     }

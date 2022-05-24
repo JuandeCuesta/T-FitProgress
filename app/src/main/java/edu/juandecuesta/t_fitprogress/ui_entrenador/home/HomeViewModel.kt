@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 
 class HomeViewModel : ViewModel() {
-
+    var recyclercargado = false
     var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
         get() = field
         set(value) {

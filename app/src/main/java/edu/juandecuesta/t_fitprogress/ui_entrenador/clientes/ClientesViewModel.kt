@@ -5,6 +5,7 @@ import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 
 class ClientesViewModel : ViewModel() {
 
+    var recyclercargado = false
     var deportistas: MutableList<DeportistaDB> = arrayListOf()
         get() = field
         set(value) {

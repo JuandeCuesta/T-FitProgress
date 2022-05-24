@@ -2,6 +2,7 @@ package edu.juandecuesta.t_fitprogress.ui_deportista.calendario
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import androidx.core.view.isVisible
@@ -17,6 +18,7 @@ import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.databinding.DepFragmentCalendarioBinding
 import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
+import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
@@ -34,6 +36,7 @@ class CalendarioFragment : Fragment() {
     private val mEventDays: MutableList<EventDay> = ArrayList()
     private var entrenamientos: MutableList<Entrenamiento_Deportista> = arrayListOf()
     private val recyclerAdapter = RecyclerAdapterHomeDeportista()
+    var posicion = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,8 +71,8 @@ class CalendarioFragment : Fragment() {
             binding.txtFechaSelect.text = fecha
             binding.txtFechaSelect.isVisible = true
             binding.tvInfoRV.isVisible = true
-            setUpRecyclerView()
-            loadRecyclerViewAdapter(fecha)
+
+            cargarfecha(fecha)
         }
 
         return binding.root
@@ -94,36 +97,35 @@ class CalendarioFragment : Fragment() {
                     for (dc in doc.documentChanges){
                         when (dc.type){
                             DocumentChange.Type.ADDED -> {
-                                if (_binding != null){
+
                                     val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
                                     if (deportistaDB?.entrenamientos != null){
+                                        posicion = 0
                                         for (e in deportistaDB.entrenamientos!!){
-                                            val calendar = Calendar.getInstance()
-                                            val day = e.fecha.split("/")[0].toInt()
-                                            val month = (e.fecha.split("/")[1].toInt() - 1)
-                                            val year = e.fecha.split("/")[2].toInt()
-                                            calendar.set(year,month,day)
-                                            val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
-                                            mEventDays.add(eventDay)
-                                            binding.calendarView.setEvents(mEventDays)
+                                            addeventday(e.fecha)
+                                            mostrarentreno(deportistaDB, e)
                                         }
                                     }
-                                }
                             }
                             DocumentChange.Type.MODIFIED -> {
-                                if (_binding != null){
-                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                    if (deportistaDB?.entrenamientos != null){
-                                        for (e in deportistaDB.entrenamientos!!){
-                                            val calendar = Calendar.getInstance()
-                                            val day = e.fecha.split("/")[0].toInt()
-                                            val month = (e.fecha.split("/")[1].toInt() - 1)
-                                            val year = e.fecha.split("/")[2].toInt()
-                                            calendar.set(year,month,day)
-                                            val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
-                                            mEventDays.add(eventDay)
-                                            binding.calendarView.setEvents(mEventDays)
+                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                if (deportistaDB?.entrenamientos != null){
+                                    val copy:MutableList<Entrenamiento_Deportista> = arrayListOf()
+                                    for (i in 0 until entrenamientos.size){
+                                        if (entrenamientos[i].deportista.email != deportistaDB.email){
+                                            copy.add(entrenamientos[i])
                                         }
+                                    }
+                                    entrenamientos.clear()
+                                    entrenamientos.addAll(copy)
+                                    mEventDays.clear()
+                                    for (ent in entrenamientos){
+                                        addeventday(ent.fecha)
+                                    }
+                                    posicion = 0
+                                    for (e in deportistaDB.entrenamientos!!){
+                                        addeventday(e.fecha)
+                                        mostrarentreno(deportistaDB, e)
                                     }
                                 }
                             }
@@ -134,25 +136,43 @@ class CalendarioFragment : Fragment() {
             }
     }
 
+    fun addeventday (fecha: String){
+        val calendar = Calendar.getInstance()
+        val day = fecha.split("/")[0].toInt()
+        val month = (fecha.split("/")[1].toInt() - 1)
+        val year = fecha.split("/")[2].toInt()
+        calendar.set(year,month,day)
+        val eventDay = EventDay(calendar, R.drawable.icon_entrenamiento_black)
+        mEventDays.add(eventDay)
 
-    override fun onResume() {
-        super.onResume()
-        mEventDays.clear()
-        cargarDatos()
-        entrenamientos.clear()
-        if (binding.txtFechaSelect.text.toString() != ""){
-            setUpRecyclerView()
-            loadRecyclerViewAdapter(binding.txtFechaSelect.text.toString())
+        if (_binding != null) {
+            binding.calendarView.setEvents(mEventDays)
         }
     }
 
-    private fun setUpRecyclerView() {
+    fun cargarfecha(fecha: String){
+        var copy:MutableList<Entrenamiento_Deportista> = arrayListOf()
+        copy.addAll(entrenamientos)
+        copy = copy.filter { e -> Functions().calcularEntreFechas(fecha,e.fecha) == 0 } as MutableList<Entrenamiento_Deportista>
+        recyclerAdapter.RecyclerAdapter(copy, requireContext())
+        recyclerAdapter.notifyDataSetChanged()
+        setUpRecyclerView(copy)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (binding.txtFechaSelect.text.toString() != ""){
+            cargarfecha(binding.txtFechaSelect.text.toString())
+        }
+    }
+
+    private fun setUpRecyclerView(copy:MutableList<Entrenamiento_Deportista>) {
 
         binding.tvInfoRV.isVisible = true
         binding.txtFechaSelect.isVisible = true
 
         //Si el listado tiene algún dato se quitará el textview y se cargará el adapter en el recyclerview
-        if (entrenamientos.size > 0) {
+        if (copy.size > 0) {
 
             binding.tvInfoRV.isVisible = false
             binding.txtFechaSelect.isVisible = false
@@ -160,106 +180,77 @@ class CalendarioFragment : Fragment() {
             binding.rvEntrenamientoFecha.setHasFixedSize(true)
             binding.rvEntrenamientoFecha.layoutManager = LinearLayoutManager(requireContext())
 
-            recyclerAdapter.RecyclerAdapter(entrenamientos, requireContext())
+            recyclerAdapter.RecyclerAdapter(copy, requireContext())
             binding.rvEntrenamientoFecha.adapter = recyclerAdapter
         }
     }
 
-    private fun loadRecyclerViewAdapter(fecha:String) {
 
-        val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
-        db.collection("users").document(current)
-            .addSnapshotListener { document, except ->
-                if (except != null) {
-                    Log.w(ContentValues.TAG, "Listen failed.", except)
-                    return@addSnapshotListener
-                }
+    fun mostrarentreno (deportistaDB: DeportistaDB,entre: Entrenamiento_DeportistaDB){
 
-                if (document != null) {
-                    val deportistaDB = document.toObject(DeportistaDB::class.java)
+        val entreno = Entrenamiento_Deportista()
+        entreno.posicion = posicion
+        entreno.prueba = entre.prueba
+        posicion++
+        entreno.deportista = deportistaDB
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        entreno.fechaFormat = sdf.parse(entre.fecha)
+        entreno.fecha = entre.fecha
 
-                    entrenamientos.clear()
-                    if (_binding != null){
-                        setUpRecyclerView()
-                        recyclerAdapter.notifyDataSetChanged()
-                    }
+        entreno.realizado = entre.realizado
 
+        db.collection("entrenamientos").whereEqualTo(
+            FieldPath.documentId(),
+            entre.entrenamiento
+        ).addSnapshotListener { documento, excepcion ->
+            if (excepcion != null) {
+                Log.w(
+                    ContentValues.TAG,
+                    "Listen failed.",
+                    excepcion
+                )
+                return@addSnapshotListener
+            }
 
-                    if (deportistaDB!!.entrenamientos != null) {
-                        var posicion = 0
-                        for (entre in deportistaDB.entrenamientos!!) {
+            if (documento != null) {
 
-                            val entreno = Entrenamiento_Deportista()
-                            entreno.posicion = posicion
-                            entreno.prueba = entre.prueba
-                            posicion++
-                            entreno.deportista = deportistaDB
-                            val sdf = SimpleDateFormat("dd/MM/yyyy")
-                            entreno.fechaFormat = sdf.parse(entre.fecha)
+                for (dc in documento.documentChanges) {
+                    when (dc.type) {
+                        DocumentChange.Type.ADDED -> {
 
-                            //Cogemos solo la fecha seleccionada
-                            if (Functions().calcularEntreFechas(fecha,entre.fecha) == 0) {
-                                entreno.fecha = entre.fecha
-                            } else {
-                                continue
-                            }
-                            entreno.realizado = entre.realizado
-
-                            db.collection("entrenamientos").whereEqualTo(
-                                FieldPath.documentId(),
-                                entre.entrenamiento
-                            ).addSnapshotListener { documento, excepcion ->
-                                if (excepcion != null) {
-                                    Log.w(
-                                        ContentValues.TAG,
-                                        "Listen failed.",
-                                        excepcion
-                                    )
-                                    return@addSnapshotListener
+                            entreno.entrenamiento = documento.documents[0].toObject(
+                                Entrenamiento::class.java)!!
+                            entrenamientos.add(entreno)
+                            if (_binding != null){
+                                if (!TextUtils.isEmpty(binding.txtFechaSelect.text)){
+                                    cargarfecha(binding.txtFechaSelect.text.toString())
                                 }
-
-                                if (documento != null) {
-
-                                    for (dc in documento.documentChanges) {
-                                        when (dc.type) {
-                                            DocumentChange.Type.ADDED -> {
-
-                                                if (_binding != null){
-                                                    entreno.entrenamiento = documento.documents[0].toObject(
-                                                        Entrenamiento::class.java)!!
-                                                    entrenamientos.add(entreno)
-                                                    setUpRecyclerView()
-                                                    recyclerAdapter.notifyDataSetChanged()
-                                                    binding.tvInfoRV.isVisible = false
-                                                    binding.txtFechaSelect.isVisible = false
-                                                }
-
-                                            }
-                                            DocumentChange.Type.MODIFIED -> {
-                                                if (_binding != null){
-                                                    entreno.entrenamiento = documento.documents[0].toObject(
-                                                        Entrenamiento::class.java)!!
-                                                    entrenamientos.add(entreno)
-                                                    setUpRecyclerView()
-                                                    recyclerAdapter.notifyDataSetChanged()
-                                                    binding.tvInfoRV.isVisible = false
-                                                    binding.txtFechaSelect.isVisible = false
-                                                }
-
-                                            }
-                                            else -> {}
-                                        }
-                                    }
-                                }
-
                             }
+
                         }
-                    }
+                        DocumentChange.Type.MODIFIED -> {
+                            entreno.entrenamiento = documento.documents[0].toObject(
+                                Entrenamiento::class.java)!!
 
+                            for (i in 0 until entrenamientos.size){
+                                if (entrenamientos[i].entrenamiento.id == entreno.entrenamiento.id){
+                                    entrenamientos.set(i, entreno)
+                                }
+                            }
+                            if (_binding != null){
+                                if (!TextUtils.isEmpty(binding.txtFechaSelect.text)){
+                                    cargarfecha(binding.txtFechaSelect.text.toString())
+                                }
+                            }
+
+
+                        }
+                        else -> {}
+                    }
                 }
             }
 
+        }
     }
-
 
 }

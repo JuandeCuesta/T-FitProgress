@@ -18,6 +18,8 @@ import android.graphics.Color
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FieldPath
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.R
@@ -26,6 +28,7 @@ import edu.juandecuesta.t_fitprogress.model.Evaluacion_Cooper
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Deportista
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Fondos
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Imc
+import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
@@ -45,7 +48,6 @@ class CondicionFragment : Fragment() {
         val root: View = binding.root
 
         cargarevaluaciones()
-
 
 
         return root
@@ -73,6 +75,37 @@ class CondicionFragment : Fragment() {
                     cargarImc()
                     cargarFondos()
                     cargarVo2()
+                }
+                for (dc in doc.documents){
+                    db.collection("users").document(deportistaMain.email).collection("evaluaciones").whereEqualTo(
+                        FieldPath.documentId(), dc.id).addSnapshotListener { value, exc ->
+                        if (exc != null){
+                            Log.w(ContentValues.TAG, "Listen failed.", exc)
+                            return@addSnapshotListener
+                        }
+                        if (value != null){
+                            for (vc in value.documentChanges){
+                                when (vc.type){
+                                    DocumentChange.Type.MODIFIED -> {
+                                        val evaluacion = vc.document.toObject(Evaluacion_Deportista::class.java)
+                                        evaluacion.id = vc.document.id
+
+                                        for (i in 0 until evaluaciones.size){
+                                            if (evaluaciones[i].id == evaluacion.id){
+                                                evaluaciones.set(i, evaluacion)
+                                            }
+                                        }
+                                        if (_binding != null){
+                                            cargarImc()
+                                            cargarFondos()
+                                            cargarVo2()
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 }
             }
         }

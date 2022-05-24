@@ -30,6 +30,7 @@ class EditEntrenamientoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditEntrenamientoBinding
     private var entrenamiento = Entrenamiento()
     var ejercicios: MutableList<Ejercicio> = arrayListOf()
+    var copy: MutableList<Ejercicio> = arrayListOf()
     var ejerciciosEntrenamiento: MutableList<Ejercicio> = arrayListOf()
     var ejerciciosSelect: MutableList<Ejercicio> = arrayListOf()
     val itemsSeleccionados: ArrayList<Int> = ArrayList()
@@ -61,7 +62,17 @@ class EditEntrenamientoActivity : AppCompatActivity() {
         loadRecyclerViewAdapter()
 
         binding.btnAddEjerc.setOnClickListener {
-            if (ejercicios.size > 0){
+            if (TextUtils.isEmpty(binding.ettipoEntren.text.toString())){
+                binding.tlTipoEntren.error = "Información necesaria para seleccionar ejercicios"
+            } else{
+                binding.tlTipoEntren.error = null
+                copy.addAll(ejercicios)
+                ejercicios.clear()
+                for (e in copy){
+                    if (e.tipo == binding.ettipoEntren.text.toString()){
+                        ejercicios.add(e)
+                    }
+                }
                 mostrarDialog()
             }
         }

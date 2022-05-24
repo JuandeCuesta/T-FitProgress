@@ -136,14 +136,17 @@
     <string name="test_fuerza">Fuerza actual: %1$s flexiones (%2$s)</string>
     <string name="test_imc">IMC actual: %1$s kg/m2 (%2$s)</string>
     <string name="test_descripcion_imc">Para determinar si una persona está por encima de su peso ideal y le conviene adelgazar, o es demasiado delgada se utiliza el IMC o Índice de Masa Corporal, también conocido como BMI (Body Mass Index) o IQ (Índice de Quetelet). Se trata de una fórmula que nos permite calcular la masa corporal de una persona.</string>
+    <string name="test_descripcion_deport_imc">Rellena los siguientes datos para determinar tu Índice de masa corporal (IMC).</string>
+
     <string name="mostrar_formula">Los resultados se obtienen mediante la siguiente fórmula:</string>
     <string name="mostrar_tabla">Los resultados se interpretan según la siguiente tabla:</string>
-
+    <string name="test_descripcion_deport_fondos">Para determinar el rango de fuerza muscular debes realizar el mayor número de flexiones en 1 minuto.</string>
+    <string name="tipo_fondos">Las flexiones o fondos se pueden realizar de dos maneras (más abajo se indica el tipo de flexión que debe utilizar el usuario):</string>
     <string name="test_descripcion_fondos">El test de fuerza determina la resistencia de los músculos de la mitad superior de tu cuerpo tomando como medida la cantidad de flexiones de brazo que puedes realizar en 60 segundos.</string>
     <string name="mas_test_descripcion_fondos">Para obtener los resultados las flexiones se puede realizar de dos maneras: Utilizando el cuerpo entero (deportistas masculinos) o apoyando las rodillas en el suelo (deportistas femeninos).</string>
      <string name="tabla_1_fondos">Interpretación de resultados para flexiones normales:</string>
     <string name="tabla_2_fondos">Interpretación de resultados para flexiones modificadas:</string>
-
+    <string name="test_descripcion_deport_cooper">Para medir el rango de resistencia y el consumo de oxigeno máximo (VO2max), será necesario correr o andar la mayor distancia posible en 12 minutos.</string>
     <string name="test_descripcion_cooper">Este test es una prueba de resistencia que consiste en recorrer la mayor distancia posible calculada en metros a una velocidad constante durante un lapso de 12 minutos. De esta manera, funciona como evaluación de la capacidad aeróbica (VO2 max).</string>
     <string name="mostrar_formula_cooper">El VO2max se obtienen mediante la siguiente fórmula:</string>
 

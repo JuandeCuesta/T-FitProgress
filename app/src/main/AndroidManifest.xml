@@ -27,6 +27,7 @@
         <activity
             android:name=".ui_entrenador.mensajes.CreateMessageActivity"
             android:exported="false"
+            android:noHistory="true"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor" />
         <activity

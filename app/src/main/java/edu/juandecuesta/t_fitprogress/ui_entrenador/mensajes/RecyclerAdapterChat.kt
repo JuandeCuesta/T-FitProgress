@@ -66,9 +66,6 @@ class RecyclerAdapterChat : RecyclerView.Adapter<RecyclerAdapterChat.ViewHolder>
 
         fun bind(chat: Chat, context: Context) {
             var nombreCompleto = (chat.deportista.nombre + " " + chat.deportista.apellido)
-            if (chat.deportista.apellido.indexOf(" ") > -1){
-                nombreCompleto = (chat.deportista.nombre + " " + chat.deportista.apellido.split(" ")[0])
-            }
 
             binding.tvNombreUsuario.text = nombreCompleto
 

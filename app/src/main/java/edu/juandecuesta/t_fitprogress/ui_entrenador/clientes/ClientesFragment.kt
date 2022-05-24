@@ -19,6 +19,7 @@ import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
 import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
+import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEjerciciosBinding
 
 
@@ -41,12 +42,11 @@ class ClientesFragment : Fragment() {
             ViewModelProvider(this).get(ClientesViewModel::class.java)
 
         _binding = EntFragmentClientesBinding.inflate(inflater, container, false)
+        clientesViewModel.deportistas.clear()
+        loadRecyclerViewAdapter()
 
         val root: View = binding.root
 
-        /*clientesViewModel.deportistas.clear()
-        setUpRecyclerView()
-        loadRecyclerViewAdapter()*/
         setHasOptionsMenu(true)
         return root
     }
@@ -59,9 +59,7 @@ class ClientesFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        clientesViewModel.deportistas.clear()
         setUpRecyclerView()
-        loadRecyclerViewAdapter()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,7 +70,7 @@ class ClientesFragment : Fragment() {
         inflater.inflate(R.menu.main, menu)
 
         val search = menu?.findItem(R.id.app_bar_search)
-        val searchView = search?.actionView as SearchView
+        searchView = search?.actionView as SearchView
         searchView.queryHint = "Buscar deportista"
 
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
@@ -91,18 +89,12 @@ class ClientesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    /*override fun onResume() {
-        super.onResume()
-        clientesViewModel.deportistas.clear()
-        setUpRecyclerView()
-        loadRecyclerViewAdapter()
-    }*/
 
     private fun setUpRecyclerView() {
 
         binding.tvSinClientes.isVisible = true
 
-        if (entrenadorMain.deportistas.size > 0){
+        if (clientesViewModel.deportistas.size > 0){
 
             binding.tvSinClientes.isVisible = false
 
@@ -127,29 +119,31 @@ class ClientesFragment : Fragment() {
                     for (dc in doc.documentChanges){
                         when (dc.type){
                             DocumentChange.Type.ADDED -> {
+                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                clientesViewModel.deportistas.add(deportistaDB!!)
+
                                 if (_binding != null){
-                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                    clientesViewModel.deportistas.add(deportistaDB!!)
-                                    recyclerAdapter.RecyclerAdapter(clientesViewModel.deportistas, requireContext())
-                                    recyclerAdapter.notifyDataSetChanged()
+                                    setUpRecyclerView()
                                 }
                             }
                             DocumentChange.Type.MODIFIED -> {
-                                if (_binding != null){
-                                    val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
-                                    for (i in 0 until clientesViewModel.deportistas.size){
-                                        if (clientesViewModel.deportistas[i].email == deportistaDB!!.email){
-                                            if (!deportistaDB.deshabilitada){
-                                                clientesViewModel.deportistas.set(i,deportistaDB)
-                                                setUpRecyclerView()
-                                                recyclerAdapter.notifyDataSetChanged()
-                                            } else {
-                                                clientesViewModel.deportistas.removeAt(i)
-                                                setUpRecyclerView()
-                                                recyclerAdapter.notifyDataSetChanged()
-                                            }
+                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                val copy:MutableList<DeportistaDB> = arrayListOf()
+
+                                for (i in 0 until clientesViewModel.deportistas.size){
+                                    if (clientesViewModel.deportistas[i].email == deportistaDB!!.email){
+                                        if (!deportistaDB.deshabilitada){
+                                            copy.add(deportistaDB)
                                         }
+                                    }else {
+                                        copy.add(clientesViewModel.deportistas[i])
                                     }
+                                }
+                                clientesViewModel.deportistas.clear()
+                                clientesViewModel.deportistas.addAll(copy)
+                                if (_binding != null){
+                                    setUpRecyclerView()
+                                    recyclerAdapter.notifyDataSetChanged()
                                 }
 
                             }
@@ -161,9 +155,8 @@ class ClientesFragment : Fragment() {
     }
 
     private fun loadRecyclerViewAdapter(){
-
         val current = FirebaseAuth.getInstance().currentUser?.email ?: ""
-
+        clientesViewModel.recyclercargado = true
         db.collection("users").whereEqualTo(FieldPath.documentId(), current).addSnapshotListener { doc, exc ->
             if (exc != null){
                 Log.w(TAG, "Listen failed.", exc)
@@ -171,20 +164,11 @@ class ClientesFragment : Fragment() {
             }
 
             if (doc != null){
-                if (_binding != null){
-                    binding.tvSinClientes.isVisible = true
-                    clientesViewModel.deportistas.clear()
-                    setUpRecyclerView()
-                    recyclerAdapter.notifyDataSetChanged()
-                }
-
 
                 for (dc in doc.documentChanges){
                     when (dc.type){
                         DocumentChange.Type.ADDED -> {
                             if (_binding != null){
-                                clientesViewModel.deportistas.clear()
-                                recyclerAdapter.notifyDataSetChanged()
                                 val entrenadorDb = dc.document.toObject(EntrenadorDB::class.java)
                                 for (emailDep:String in entrenadorDb?.deportistas!!){
                                     cargarcliente(emailDep)
