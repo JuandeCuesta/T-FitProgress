@@ -1,4 +1,4 @@
-package edu.juandecuesta.t_fitprogress.documentFirebase
+package edu.juandecuesta.t_fitprogress.model
 
 import java.io.Serializable
 

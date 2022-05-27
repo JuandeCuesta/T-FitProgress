@@ -14,12 +14,11 @@ import com.applandeo.materialcalendarview.EventDay
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeEntrenador
@@ -102,7 +101,8 @@ class CalendarioActivity : AppCompatActivity() {
                                     for (dc in doc.documentChanges){
                                         when (dc.type){
                                             DocumentChange.Type.ADDED -> {
-                                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                                val deportistaDB = doc.documents[0].toObject(
+                                                    DeportistaDB::class.java)
                                                 posicion = 0
                                                 if (deportistaDB?.entrenamientos != null){
                                                     for (e in deportistaDB.entrenamientos!!){
@@ -113,7 +113,8 @@ class CalendarioActivity : AppCompatActivity() {
 
                                             }
                                             DocumentChange.Type.MODIFIED -> {
-                                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                                val deportistaDB = doc.documents[0].toObject(
+                                                    DeportistaDB::class.java)
                                                 if (deportistaDB?.entrenamientos != null){
                                                     val copy:MutableList<Entrenamiento_Deportista> = arrayListOf()
                                                     for (i in 0 until entrenamientos.size){
@@ -158,7 +159,7 @@ class CalendarioActivity : AppCompatActivity() {
         binding.calendarView.setEvents(mEventDays)
     }
 
-    fun mostrarentreno (deportistaDB: DeportistaDB,entre: Entrenamiento_DeportistaDB){
+    fun mostrarentreno (deportistaDB: DeportistaDB, entre: Entrenamiento_DeportistaDB){
 
         val entreno = Entrenamiento_Deportista()
         entreno.posicion = posicion

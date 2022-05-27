@@ -8,13 +8,13 @@ import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityRegisterBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
 
 import android.app.DatePickerDialog
 import android.widget.ArrayAdapter
 
 import edu.juandecuesta.t_fitprogress.ui_entrenador.dialogAddEntrenamiento.DatePickerFragment
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Ejercicio
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
@@ -296,7 +296,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveDeportista(entrenador: String):DeportistaDB{
+    private fun saveDeportista(entrenador: String): DeportistaDB {
         var deportista = DeportistaDB()
         deportista.nombre = binding.etNombre.text.toString()
         deportista.apellido = binding.apellido1.text.toString()

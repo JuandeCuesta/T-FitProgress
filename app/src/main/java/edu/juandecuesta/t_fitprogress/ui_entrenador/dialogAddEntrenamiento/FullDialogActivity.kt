@@ -10,16 +10,14 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityFullDialogBinding
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.entrenamientos
 
-import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import android.text.Editable
 import android.text.TextUtils
 import android.widget.Toast
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
 

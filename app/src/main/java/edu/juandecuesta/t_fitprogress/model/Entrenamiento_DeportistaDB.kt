@@ -1,22 +1,27 @@
 package edu.juandecuesta.t_fitprogress.model
 
 import java.io.Serializable
+import java.text.SimpleDateFormat
 
-open class Usuario: Serializable {
-    var nombre:String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
-    var apellido:String = ""
-        get() = field
-        set(value) {
-            field = value
-        }
-    var soyEntrenador:Boolean = true
+class Entrenamiento_DeportistaDB: Serializable {
+
+    var fecha: String = ""
         get() = field
         set(value) {
             field = value
         }
 
+    var prueba:String = ""
+
+    var entrenamiento:String=""
+        get() = field
+        set(value) {
+            field = value
+        }
+
+    var realizado:Boolean = false
+        get() = field
+        set(value) {
+            field = value
+        }
 }

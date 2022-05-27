@@ -6,18 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.*
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
@@ -228,7 +224,7 @@ class EvaluacionFragment : Fragment() {
                     entrenamientoDeportistadb.entrenamiento = entrenamiento.entrenamiento
                     entrenamientoDeportistadb.fecha = entrenamiento.fecha
                     posicion = 0
-                    for (e:Entrenamiento_DeportistaDB in deportistaMain.entrenamientos!!){
+                    for (e: Entrenamiento_DeportistaDB in deportistaMain.entrenamientos!!){
                         if (e.prueba == entrenamientoDeportistadb.prueba){
                             deportistaMain.entrenamientos!![posicion] = entrenamientoDeportistadb
                         }

@@ -1,9 +1,5 @@
-package edu.juandecuesta.t_fitprogress.documentFirebase
+package edu.juandecuesta.t_fitprogress.model
 
-import edu.juandecuesta.t_fitprogress.model.Evaluacion_Cooper
-import edu.juandecuesta.t_fitprogress.model.Evaluacion_Deportista
-import edu.juandecuesta.t_fitprogress.model.Evaluacion_Fondos
-import edu.juandecuesta.t_fitprogress.model.Evaluacion_Imc
 import java.io.Serializable
 
 class DeportistaDB:Serializable {

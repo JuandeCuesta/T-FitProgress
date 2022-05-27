@@ -11,9 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.databinding.ActivityCreateMessageBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Chat
 import edu.juandecuesta.t_fitprogress.model.Mensaje
 import java.util.*

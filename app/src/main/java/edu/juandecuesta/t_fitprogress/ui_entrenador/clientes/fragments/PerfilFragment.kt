@@ -4,29 +4,20 @@ import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentHomeBinding
 import edu.juandecuesta.t_fitprogress.databinding.FragmentPerfilBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity.Companion.deportista
-import edu.juandecuesta.t_fitprogress.utils.Functions
-
 
 
 class PerfilFragment : Fragment() {

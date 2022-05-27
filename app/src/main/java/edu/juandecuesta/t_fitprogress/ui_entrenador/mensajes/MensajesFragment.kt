@@ -8,17 +8,15 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.FragmentMensajesBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.model.Chat
 
 import android.content.DialogInterface
@@ -27,7 +25,6 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 
@@ -117,11 +114,13 @@ class MensajesFragment:Fragment() {
                                     for (dc in doc.documentChanges){
                                         when (dc.type){
                                             DocumentChange.Type.ADDED -> {
-                                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                                val deportistaDB = doc.documents[0].toObject(
+                                                    DeportistaDB::class.java)
                                                 deportistas.add(deportistaDB!!)
                                             }
                                             DocumentChange.Type.MODIFIED -> {
-                                                val deportistaDB = doc.documents[0].toObject(DeportistaDB::class.java)
+                                                val deportistaDB = doc.documents[0].toObject(
+                                                    DeportistaDB::class.java)
                                                 for (i in 0 until deportistas.size){
                                                     if (deportistas[i].email == deportistaDB!!.email){
                                                         deportistas[i] = deportistaDB
@@ -214,7 +213,8 @@ class MensajesFragment:Fragment() {
                                                 when (dc.type){
                                                     DocumentChange.Type.ADDED -> {
                                                         if (_binding!=null){
-                                                            val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                                                            val deportistaDB = dc.document.toObject(
+                                                                DeportistaDB::class.java)
                                                             chat.deportista = deportistaDB
                                                             chats.add(chat)
                                                             chats.sortByDescending { c -> Functions().formatearFechayHora(c.mensajes.first().fecha) }
@@ -224,7 +224,8 @@ class MensajesFragment:Fragment() {
                                                     }
                                                     DocumentChange.Type.MODIFIED -> {
                                                         if (_binding!=null){
-                                                            val deportistaDB = dc.document.toObject(DeportistaDB::class.java)
+                                                            val deportistaDB = dc.document.toObject(
+                                                                DeportistaDB::class.java)
                                                             chats.forEach { c ->
                                                                 if (c.deportista.email == deportistaDB.email){
                                                                     c.deportista = deportistaDB

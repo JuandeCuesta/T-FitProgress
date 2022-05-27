@@ -15,13 +15,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentCondicionBinding
-import edu.juandecuesta.t_fitprogress.databinding.FragmentCondicionBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Cooper
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Deportista
 import edu.juandecuesta.t_fitprogress.model.Evaluacion_Fondos

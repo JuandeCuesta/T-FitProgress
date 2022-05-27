@@ -24,9 +24,8 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityMainBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class MainActivity : AppCompatActivity() {

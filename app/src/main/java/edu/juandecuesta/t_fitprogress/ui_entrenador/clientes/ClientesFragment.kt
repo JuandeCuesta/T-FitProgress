@@ -13,14 +13,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.MainActivity.Companion.entrenadorMain
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentEjerciciosBinding
 
 
 class ClientesFragment : Fragment() {

@@ -1,25 +1,19 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.pruebas_fisicas
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import com.google.firebase.firestore.FirebaseFirestore
-import edu.juandecuesta.t_fitprogress.MainActivity
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.esentrenador
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.*
-import edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.ShowClientActivity
-import edu.juandecuesta.t_fitprogress.ui_entrenador.mensajes.CreateMessageActivity
 import edu.juandecuesta.t_fitprogress.utils.Functions
 
 class ShowPruebasActivity : AppCompatActivity() {

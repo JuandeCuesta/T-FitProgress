@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.RvEntrenadorClienteBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
 import edu.juandecuesta.t_fitprogress.utils.Functions
 import kotlin.collections.ArrayList
 
@@ -21,7 +21,7 @@ class RecyclerAdapterClientesEntrenador: RecyclerView.Adapter<RecyclerAdapterCli
     var deportistas: MutableList<DeportistaDB> = ArrayList()
     var copy: MutableList<DeportistaDB> = ArrayList()
 
-    fun RecyclerAdapter(deportistas: MutableList<DeportistaDB> ,context: Context){
+    fun RecyclerAdapter(deportistas: MutableList<DeportistaDB>, context: Context){
         this.deportistas = deportistas
 
         this.context = context

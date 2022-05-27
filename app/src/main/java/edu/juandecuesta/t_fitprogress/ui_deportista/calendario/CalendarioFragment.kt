@@ -12,13 +12,11 @@ import com.applandeo.materialcalendarview.EventDay
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.R
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
 import edu.juandecuesta.t_fitprogress.databinding.DepFragmentCalendarioBinding
-import edu.juandecuesta.t_fitprogress.databinding.FragmentEvaluacionBinding
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.ui_entrenador.home.RecyclerAdapterHomeDeportista
@@ -186,7 +184,7 @@ class CalendarioFragment : Fragment() {
     }
 
 
-    fun mostrarentreno (deportistaDB: DeportistaDB,entre: Entrenamiento_DeportistaDB){
+    fun mostrarentreno (deportistaDB: DeportistaDB, entre: Entrenamiento_DeportistaDB){
 
         val entreno = Entrenamiento_Deportista()
         entreno.posicion = posicion

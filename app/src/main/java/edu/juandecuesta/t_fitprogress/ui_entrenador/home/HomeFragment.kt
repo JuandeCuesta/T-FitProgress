@@ -2,7 +2,6 @@ package edu.juandecuesta.t_fitprogress.ui_entrenador.home
 
 import android.content.ContentValues
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,25 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import edu.juandecuesta.t_fitprogress.R
 import edu.juandecuesta.t_fitprogress.databinding.EntFragmentHomeBinding
 import android.view.MenuInflater
-import android.view.MenuItem.OnActionExpandListener
 import android.widget.SearchView
-import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.db
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.deportistaMain
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.esentrenador
 import edu.juandecuesta.t_fitprogress.MainActivity.Companion.searchView
-import edu.juandecuesta.t_fitprogress.databinding.EntFragmentClientesBinding
 import edu.juandecuesta.t_fitprogress.ui_entrenador.calendario.CalendarioActivity
-import edu.juandecuesta.t_fitprogress.documentFirebase.DeportistaDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.EntrenadorDB
-import edu.juandecuesta.t_fitprogress.documentFirebase.Entrenamiento_DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.DeportistaDB
+import edu.juandecuesta.t_fitprogress.model.EntrenadorDB
+import edu.juandecuesta.t_fitprogress.model.Entrenamiento_DeportistaDB
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento
 import edu.juandecuesta.t_fitprogress.model.Entrenamiento_Deportista
 import edu.juandecuesta.t_fitprogress.utils.Functions
@@ -316,13 +308,15 @@ class HomeFragment : Fragment() {
                                                 for (dc in document.documentChanges) {
                                                     when (dc.type) {
                                                         DocumentChange.Type.ADDED -> {
-                                                            val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
+                                                            val deportistaDB = document.documents[0].toObject(
+                                                                DeportistaDB::class.java)
                                                             if (deportistaDB != null) {
                                                                 mostrarentrenos(deportistaDB)
                                                             }
                                                         }
                                                         DocumentChange.Type.MODIFIED -> {
-                                                            val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
+                                                            val deportistaDB = document.documents[0].toObject(
+                                                                DeportistaDB::class.java)
                                                             val copy:MutableList<Entrenamiento_Deportista> = arrayListOf()
                                                             for(i in 0 until homeViewModel.entrenamientos.size){
                                                                 if (deportistaDB != null) {
@@ -375,13 +369,15 @@ class HomeFragment : Fragment() {
                                                 for (dc in document.documentChanges) {
                                                     when (dc.type) {
                                                         DocumentChange.Type.ADDED -> {
-                                                            val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
+                                                            val deportistaDB = document.documents[0].toObject(
+                                                                DeportistaDB::class.java)
                                                             if (deportistaDB != null) {
                                                                 mostrarentrenos(deportistaDB)
                                                             }
                                                         }
                                                         DocumentChange.Type.MODIFIED -> {
-                                                            val deportistaDB = document.documents[0].toObject(DeportistaDB::class.java)
+                                                            val deportistaDB = document.documents[0].toObject(
+                                                                DeportistaDB::class.java)
                                                             val copy:MutableList<Entrenamiento_Deportista> = arrayListOf()
                                                             for(i in 0 until homeViewModel.entrenamientos.size){
                                                                 if (deportistaDB != null) {
