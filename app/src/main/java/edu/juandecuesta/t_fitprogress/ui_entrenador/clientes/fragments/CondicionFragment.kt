@@ -51,6 +51,8 @@ class CondicionFragment : Fragment() {
 
         binding.btnAddPrueba.setOnClickListener {
             if (verficarCampo()){
+                binding.idProgress.isVisible = true
+                binding.btnAddPrueba.setText("Añadiendo prueba física...")
                 guardar()
             }
         }
@@ -90,11 +92,15 @@ class CondicionFragment : Fragment() {
 
                         db.collection("users").document(ShowClientActivity.deportista.email)
                             .update("evaluacionfisica", evaluaciones).addOnSuccessListener{
-                                Toast.makeText(requireContext(), "Pruebas físicas añadidas con éxito", Toast.LENGTH_LONG).show()
                                 binding.etFechaPrueba.text?.clear()
+                                binding.idProgress.isVisible = false
+                                binding.btnAddPrueba.setText("Añadir fecha")
+                                Toast.makeText(requireContext(), "Pruebas físicas añadidas con éxito", Toast.LENGTH_LONG).show()
                             }
 
                     }.addOnFailureListener {
+                        binding.idProgress.isVisible = false
+                        binding.btnAddPrueba.setText("Añadir fecha")
                         Toast.makeText(requireContext(), "Ha habido un error al añadir las pruebas físicas", Toast.LENGTH_LONG).show()
                     }
 

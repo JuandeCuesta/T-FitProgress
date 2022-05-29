@@ -23,10 +23,10 @@
                 android:layout_marginVertical="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:hint="Selecciona día de evaluación"
+                android:hint="Selecciona día para realizar la evaluación"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddPrueba"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -44,16 +44,23 @@
 
             <Button
                 android:id="@+id/btnAddPrueba"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/verde"
                 android:text="Añadir fecha"
-                app:layout_constraintBottom_toBottomOf="@+id/tlFechaPrueba"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tlFechaPrueba"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintEnd_toEndOf="@+id/tlFechaPrueba"
+                app:layout_constraintStart_toStartOf="@+id/tlFechaPrueba"
+                app:layout_constraintTop_toBottomOf="@+id/tlFechaPrueba" />
 
+            <ProgressBar
+                android:id="@+id/id_progress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tlFechaPrueba"
+                app:layout_constraintTop_toTopOf="@+id/tlFechaPrueba"
+                tools:layout_editor_absoluteX="16dp" />
             <TextView
                 android:id="@+id/textIMC"
                 android:layout_width="wrap_content"
@@ -66,7 +73,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tlFechaPrueba" />
+                app:layout_constraintTop_toBottomOf="@+id/btnAddPrueba" />
 
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/chartImc"
@@ -148,9 +155,10 @@
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/chartCooper"
                 android:layout_width="match_parent"
-                android:padding="5dp"
                 android:layout_height="250dp"
                 android:layout_margin="8dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

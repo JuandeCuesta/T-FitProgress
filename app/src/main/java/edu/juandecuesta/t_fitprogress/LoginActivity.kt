@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.juandecuesta.t_fitprogress.databinding.ActivityLoginBinding
@@ -37,6 +38,9 @@ class LoginActivity : AppCompatActivity() {
 
                 val email = binding.username.text.toString()
                 val password = binding.password.text.toString()
+                binding.idProgress.isVisible = true
+                binding.login.setText(R.string.iniciando_sesion)
+
 
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
@@ -46,6 +50,8 @@ class LoginActivity : AppCompatActivity() {
                     }else{
                         Toast.makeText(this,"Usuario y/o contraseña incorrectos",Toast.LENGTH_LONG).show()
                         limpiarCampos()
+                        binding.idProgress.isVisible = false
+                        binding.login.setText(R.string.sign_in)
 
                     }
                 }
@@ -116,6 +122,8 @@ class LoginActivity : AppCompatActivity() {
             putExtra("esentrenador", true)
             putExtra("entrenador", entrenador)
         }
+        binding.idProgress.isVisible = false
+        binding.login.setText(R.string.sign_in)
         startActivity(homeIntent)
         finish()
         db.terminate()
@@ -126,6 +134,8 @@ class LoginActivity : AppCompatActivity() {
             putExtra("esentrenador", false)
             putExtra("deportista", deportista)
         }
+        binding.idProgress.isVisible = false
+        binding.login.setText(R.string.sign_in)
         startActivity(homeIntent)
         finish()
         db.terminate()

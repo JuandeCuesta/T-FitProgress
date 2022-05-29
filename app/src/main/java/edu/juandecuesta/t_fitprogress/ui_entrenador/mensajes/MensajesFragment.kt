@@ -45,8 +45,6 @@ class MensajesFragment:Fragment() {
 
         val root: View = binding.root
 
-        cargarClientes()
-        loadDeportistaChat()
         setHasOptionsMenu(true)
 
         binding.floatingActionButton.setOnClickListener {
@@ -60,10 +58,15 @@ class MensajesFragment:Fragment() {
         return root
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onStart() {
+        super.onStart()
+        cargarClientes()
+        loadDeportistaChat()
     }
 
 
@@ -177,8 +180,6 @@ class MensajesFragment:Fragment() {
 
             recyclerAdapter.RecyclerAdapter(chats, requireContext())
             binding.rvChats.adapter = recyclerAdapter
-            var dividerItemDecoration = DividerItemDecoration(requireContext(), LinearLayout.VERTICAL)
-            binding.rvChats.addItemDecoration(dividerItemDecoration)
         }
 
     }
