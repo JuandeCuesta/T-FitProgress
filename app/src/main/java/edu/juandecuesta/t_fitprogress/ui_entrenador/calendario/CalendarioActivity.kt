@@ -225,11 +225,13 @@ class CalendarioActivity : AppCompatActivity() {
     private fun setUpRecyclerView(copy:MutableList<Entrenamiento_Deportista>) {
 
         binding.tvInfoRV.isVisible = true
+        binding.rvEntrenamientoFecha.isVisible = false
 
         //Si el listado tiene algún dato se quitará el textview y se cargará el adapter en el recyclerview
         if (copy.size > 0) {
 
             binding.tvInfoRV.isVisible = false
+            binding.rvEntrenamientoFecha.isVisible = true
 
             binding.rvEntrenamientoFecha.setHasFixedSize(true)
             binding.rvEntrenamientoFecha.layoutManager = LinearLayoutManager(this)
