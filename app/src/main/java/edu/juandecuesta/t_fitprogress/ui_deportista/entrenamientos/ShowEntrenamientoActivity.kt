@@ -1,6 +1,7 @@
 package edu.juandecuesta.t_fitprogress.ui_deportista.entrenamientos
 
 import android.content.ContentValues
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,7 +39,13 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
 
         if (entrenamiento.realizado){
             binding.selectionButton.check(R.id.btnSiRealizado)
-        } else binding.selectionButton.check(R.id.btnNoRealizado)
+            binding.btnSiRealizado.setBackgroundColor(Color.parseColor("#FF689F38"))
+            binding.btnNoRealizado.setBackgroundColor(Color.TRANSPARENT)
+        } else{
+            binding.selectionButton.check(R.id.btnNoRealizado)
+            binding.btnNoRealizado.setBackgroundColor(Color.parseColor("#A81818"))
+            binding.btnSiRealizado.setBackgroundColor(Color.TRANSPARENT)
+        }
 
         cargarDatos()
 
@@ -49,6 +56,8 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
             if (isChecked){
                 when (checkedId){
                     R.id.btnNoRealizado -> {
+                        binding.btnNoRealizado.setBackgroundColor(Color.parseColor("#A81818"))
+                        binding.btnSiRealizado.setBackgroundColor(Color.TRANSPARENT)
                         deportistaMain.entrenamientos?.get(entrenamiento.posicion)?.realizado  = false
                         db.collection("users").document(deportistaMain.email).update("entrenamientos", deportistaMain.entrenamientos).addOnSuccessListener {
                             Toast.makeText(this,"Datos modificados correctamente", Toast.LENGTH_LONG).show()
@@ -57,6 +66,8 @@ class ShowEntrenamientoActivity : AppCompatActivity() {
                         }
                     }
                     R.id.btnSiRealizado -> {
+                        binding.btnSiRealizado.setBackgroundColor(Color.parseColor("#FF689F38"))
+                        binding.btnNoRealizado.setBackgroundColor(Color.TRANSPARENT)
                         deportistaMain.entrenamientos?.get(entrenamiento.posicion)?.realizado = true
                         db.collection("users").document(deportistaMain.email).update("entrenamientos", deportistaMain.entrenamientos).addOnSuccessListener {
                             Toast.makeText(this,"Datos modificados correctamente", Toast.LENGTH_LONG).show()

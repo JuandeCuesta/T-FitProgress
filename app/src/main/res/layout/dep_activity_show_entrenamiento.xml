@@ -182,12 +182,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No realizado" />
+
         <Button
             android:id="@+id/btnSiRealizado"
+            style="@style/btnSiRealizado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/btnSiRealizado"
-            android:text="Realizado"/>
+            android:text="Realizado" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 

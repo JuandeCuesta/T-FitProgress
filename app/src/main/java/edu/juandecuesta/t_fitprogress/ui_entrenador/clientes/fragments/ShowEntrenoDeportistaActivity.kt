@@ -1,6 +1,7 @@
 package edu.juandecuesta.t_fitprogress.ui_entrenador.clientes.fragments
 
 import android.content.ContentValues
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -125,7 +126,13 @@ class ShowEntrenoDeportistaActivity : AppCompatActivity() {
         }
         if (entrenamiento.realizado){
             binding.selectionButton.check(R.id.btnSiRealizado)
-        } else binding.selectionButton.check(R.id.btnNoRealizado)
+            binding.btnSiRealizado.setBackgroundColor(Color.parseColor("#FF689F38"))
+            binding.btnNoRealizado.setBackgroundColor(Color.TRANSPARENT)
+        } else {
+            binding.selectionButton.check(R.id.btnNoRealizado)
+            binding.btnNoRealizado.setBackgroundColor(Color.parseColor("#A81818"))
+            binding.btnSiRealizado.setBackgroundColor(Color.TRANSPARENT)
+        }
         binding.btnNoRealizado.isClickable = false
         binding.btnSiRealizado.isClickable = false
     }
