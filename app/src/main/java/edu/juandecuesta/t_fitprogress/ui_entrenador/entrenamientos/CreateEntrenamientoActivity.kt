@@ -53,7 +53,7 @@ class CreateEntrenamientoActivity : AppCompatActivity() {
                 binding.tlTipoEntren.error = "Información necesaria para seleccionar ejercicios"
             } else{
                 binding.tlTipoEntren.error = null
-                copy
+
                 ejercicios.clear()
                 for (e in copy){
                     if (e.tipo == binding.ettipoEntren.text.toString()){

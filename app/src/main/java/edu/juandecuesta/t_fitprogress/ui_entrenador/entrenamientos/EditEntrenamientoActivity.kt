@@ -56,7 +56,6 @@ class EditEntrenamientoActivity : AppCompatActivity() {
         adapterList.adapterList(this, ejerciciosSelect)
         binding.lvExercise.adapter = adapterList
 
-
         cargarEjercicios()
         setUpRecyclerView()
         loadRecyclerViewAdapter()
@@ -66,7 +65,6 @@ class EditEntrenamientoActivity : AppCompatActivity() {
                 binding.tlTipoEntren.error = "Información necesaria para seleccionar ejercicios"
             } else{
                 binding.tlTipoEntren.error = null
-                copy.addAll(ejercicios)
                 ejercicios.clear()
                 for (e in copy){
                     if (e.tipo == binding.ettipoEntren.text.toString()){
@@ -154,7 +152,8 @@ class EditEntrenamientoActivity : AppCompatActivity() {
 
                 db.collection("ejercicios").document(id).get().addOnSuccessListener {
                         ejerc ->
-                    ejerc.toObject(Ejercicio::class.java)?.let { it1 -> ejercicios.add(it1) }
+                    ejerc.toObject(Ejercicio::class.java)?.let { it1 -> ejercicios.add(it1)
+                        copy.add(it1)}
                 }
             }
         }
